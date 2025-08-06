@@ -1,0 +1,109 @@
+
+import { parseCookies } from "nookies";
+import { createContext, useContext, useState } from "react";
+
+const ContextStatus = createContext();
+
+const ContextStatusProvider = ContextStatus.Provider;
+
+function StatusProvider({ children }) {
+
+   const cookie = parseCookies();
+   let items = cookie?.hasOwnProperty("lexzinCart")
+     ? [...JSON.parse(cookie?.lexzinCart)]
+     : [];
+
+  const [cartItems, setCartItems] = useState(items);
+  const [isPopupShow,setIsPopupShow] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+ const [type, setType] = useState(cookie?.type ? cookie?.type : null);
+ const [promoValue, setPromoValue] = useState(
+   cookie?.promovalue ? cookie?.promovalue : null
+ );
+ const [couponId, setCouponId] = useState(
+   cookie?.couponid ? cookie?.couponid : ""
+ );
+
+ const [orderObj, setOrderObj] = useState(cookie.orderObj);
+
+ const [renderMe, setIsRenderMe] = useState(false);
+
+ const [drawerOpen,setDrawerOpen] = useState(false);
+
+ const [searchModal,setSearchModal] = useState(false);
+
+  const [resetToken, setResetToken] = useState(
+    cookie?.resetToken ? cookie?.resetToken : ""
+  );
+
+  const [token, setToken] = useState(cookie?.token ? cookie?.token : "");
+  const [userData, setUserData] = useState(cookie?.user ? cookie?.user : "");
+  const [image, setImage] = useState(cookie?.image ? cookie?.image : "");
+  const [userNo, setuserNo] = useState(cookie?.userNo ? cookie?.userNo : "");
+  const [phone, setPhone] = useState(
+    cookie?.customerPhone ? cookie?.customerPhone : ""
+  );
+const [userId, setUserId] = useState(cookie?.userId ? cookie?.userId : null);
+  const [profileMenu, setProfileMenu] = useState(false);
+ 
+  const [sideCategory,setSideCategory] = useState(false);
+
+  const [tabIndex, setTabIndex] = useState(1);
+
+  return (
+    <ContextStatusProvider
+      value={{
+        isPopupShow,
+        setIsPopupShow,
+        isCartOpen,
+        setIsCartOpen,
+        cartItems,
+        setCartItems,
+        orderObj,
+        setOrderObj,
+        type,
+        setType,
+        promoValue,
+        setPromoValue,
+        couponId,
+        setCouponId,
+        renderMe,
+        setIsRenderMe,
+        drawerOpen,
+        setDrawerOpen,
+        searchModal,
+        setSearchModal,
+        token,
+        setToken,
+        userData,
+        setUserData,
+        image,
+        setImage,
+        userNo,
+        setuserNo,
+        phone,
+        setPhone,
+        userId,
+        setUserId,
+        profileMenu,
+        setProfileMenu,
+        sideCategory,
+        setSideCategory,
+        resetToken,
+        setResetToken,
+        tabIndex,
+        setTabIndex,
+      }}
+    >
+      {children}
+    </ContextStatusProvider>
+  );
+}
+
+function useStatus() {
+  const all = useContext(ContextStatus);
+  return all;
+}
+
+export { StatusProvider, useStatus };
