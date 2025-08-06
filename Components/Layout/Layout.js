@@ -1,4 +1,5 @@
 
+"use client";
 import { Fragment, useEffect, useState } from "react";
 
 import { useStatus } from "@/context/contextStatus";

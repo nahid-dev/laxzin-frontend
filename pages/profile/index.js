@@ -1,5 +1,3 @@
-
-
 import ChangePassword from "@/Components/Profile/ChangePassword";
 import MyOrder from "@/Components/Profile/MyOrder";
 import MyProfile from "@/Components/Profile/MyProfile";
@@ -9,13 +7,12 @@ import { useState } from "react";
 const Profile = () => {
   const [step, setStep] = useState("profile");
 
-
   const handleClick = (value) => {
     setStep(value);
   };
 
   return (
-    <>
+    <div suppressHydrationWarning>
       <Head>
         <title>profile</title>
         <meta name="description" content="Lexzin" />
@@ -23,9 +20,7 @@ const Profile = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div
-        className={`bg-gray-100 md:pt-[50px]  pt-[10px] `}
-      >
+      <div className={`bg-gray-100 md:pt-[50px]  pt-[10px] `}>
         <div className="lg:max-w-7xl xs:max-w-[60rem] max-w-[24rem]   mx-auto min-h-[600px] pt-5 pb-5">
           <div className="grid grid-cols-1 md:grid-cols-12  gap-8 md:gap-3 sm:gap-3">
             <div className="md:col-span-3  col-span-full">
@@ -129,7 +124,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

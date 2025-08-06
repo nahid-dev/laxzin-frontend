@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   reactStrictMode: false,
   // onDemandEntries: {
@@ -9,9 +11,10 @@ module.exports = {
 
   //   largePageDataBytes: 128 * 100000,
   // },
+
   images: {
     minimumCacheTTL: 120,
-     unoptimized: true,
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
