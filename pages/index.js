@@ -59,14 +59,9 @@ useEffect(() => {
   fetchData();
 }, []);
 
-
-  // console.log("data", data);
-  
-
-
   return (
     <>
-      <main className="min-h-[700px] ">
+      <main className="min-h-[700px]">
         <div>
           <Swiper
             slidesPerView={1}
@@ -312,13 +307,10 @@ useEffect(() => {
                 ))}
             </div>
             <div className="lg:col-span-4 col-span-full lg:order-2 order-1 h-full ">
-              <img
-                src={
-                   `${imageHostName}/storage/${data?.section?.image_path}${data?.section?.image}`
-                    
-                }
-                // width={500}
-                // height={500}
+              <Image
+                src={`${imageHostName}/storage/${data?.section?.image_path}${data?.section?.image}`}
+                width={500}
+                height={500}
                 className="object-fill w-full h-full"
                 priority
                 alt="banner"
@@ -519,13 +511,10 @@ useEffect(() => {
             modules={[Autoplay, Navigation, Pagination]}
           >
             <SwiperSlide>
-              <img
-                src={
-                  `${imageHostName}/storage/${data?.banner?.image_path}${data?.banner?.image}`
-                   
-                }
-                // height={300}
-                // width={1800}
+              <Image
+                src={`${imageHostName}/storage/${data?.banner?.image_path}${data?.banner?.image}`}
+                height={300}
+                width={1800}
                 className="w-full md:h-[500px] h-auto object-fill"
                 alt="banner"
                 // unoptimized={!isOptimizedImage}

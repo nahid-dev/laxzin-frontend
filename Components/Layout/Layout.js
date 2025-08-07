@@ -1,5 +1,3 @@
-
-"use client";
 import { Fragment, useEffect, useState } from "react";
 
 import { useStatus } from "@/context/contextStatus";
@@ -13,35 +11,26 @@ import Footer from "./Footer";
 import Navbar from "./Navbar/Navbar";
 import SideProfileMenu from "./SideProfileMenu";
 
-
-
 const Layout = ({ children }) => {
-  
- const {
-   cartItems,
-   setCartItems,
+  const { cartItems, setCartItems } = useStatus();
 
-  
- } = useStatus();
+  const [catData, setCatData] = useState([]);
 
-    const [catData, setCatData] = useState([]);
+  const [contactInfo, setContactInfo] = useState(null);
 
-    const [contactInfo, setContactInfo] = useState(null);
+  useEffect(() => {
+    let getData = async () => {
+      const [catRes, contactRes] = await Promise.all([
+        request(`navbar-categories`),
 
- useEffect(() => {
-   let getData = async () => {
+        request(`contact-info`),
+      ]);
 
-       const [catRes, contactRes] = await Promise.all([
-         request(`navbar-categories`),
-         
-         request(`contact-info`),
-       ]);
-
-         setCatData(catRes?.categories);
-          setContactInfo(contactRes?.data);
-   };
-   getData();
- }, [1]);
+      setCatData(catRes?.categories);
+      setContactInfo(contactRes?.data);
+    };
+    getData();
+  }, [1]);
 
   return (
     <>
@@ -54,7 +43,6 @@ const Layout = ({ children }) => {
       <div className="font-body">
         <div className="relative">
           <Navbar catData={catData} contactInfo={contactInfo} />
-
           <Fragment>{children}</Fragment>
           <Cart cartItems={cartItems} setCartItems={setCartItems} />
           <SearchModal />
@@ -69,4 +57,3 @@ const Layout = ({ children }) => {
 };
 
 export default Layout;
-

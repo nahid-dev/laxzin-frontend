@@ -13,7 +13,7 @@ function StatusProvider({ children }) {
      ? [...JSON.parse(cookie?.lexzinCart)]
      : [];
 
-  const [cartItems, setCartItems] = useState(items);
+   const [cartItems, setCartItems] = useState([]);
   const [isPopupShow,setIsPopupShow] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 

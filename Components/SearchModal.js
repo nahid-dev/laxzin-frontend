@@ -26,9 +26,9 @@ const SearchModal = () => {
    
 
   return (
-    <div>
+    <>
       {searchModal && (
-        <div className="fixed top-0 left-0 h-screen w-full z-10 md:bg-[#fffffff2] bg-[#25201ef2]">
+        <div className="fixed top-0 left-0 h-screen w-full z-50 md:bg-[#fffffff2] bg-[#25201ef2]">
           <div className="px-3  pt-8 mx-4">
             <div className="flex justify-end items-center ">
               <div onClick={() => handleClose()} className="cursor-pointer">
@@ -64,7 +64,7 @@ const SearchModal = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
