@@ -30,7 +30,10 @@ const Navbar = ({ catData, contactInfo }) => {
     setImage,
     setuserNo,
   } = useStatus();
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const isDevelopment = process.env.NEXT_PUBLIC_MODE === "development";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,8 +47,6 @@ const Navbar = ({ catData, contactInfo }) => {
   const handleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
-
-  const router = useRouter();
 
   // const search = (val) => {
   //   if (val !== "") {
@@ -99,14 +100,33 @@ const Navbar = ({ catData, contactInfo }) => {
         <div className="hidden md:flex justify-between items-center px-6">
           {/* BRAND LOGO */}
           <div onClick={() => router.push("/")} className="w-[140px] h-[60px]">
-            <Image
-              src={`${imageHostName}/storage/${contactInfo?.logo}`}
-              height={800}
-              width={800}
-              className="h-full w-full object-cover cursor-pointer"
-              priority
-              alt="logo"
-            />
+            {isScrolled ? (
+              <Image
+                src={
+                  isDevelopment
+                    ? "/assets/logo/laxzin-logo-black.png"
+                    : `${imageHostName}/storage/${contactInfo?.logo}`
+                }
+                height={800}
+                width={800}
+                className="h-full w-full object-cover cursor-pointer"
+                priority
+                alt="logo"
+              />
+            ) : (
+              <Image
+                src={
+                  isDevelopment
+                    ? "/assets/logo/laxzin-logo-white.png"
+                    : `${imageHostName}/storage/${contactInfo?.logo}`
+                }
+                height={800}
+                width={800}
+                className="h-full w-full object-cover cursor-pointer"
+                priority
+                alt="logo"
+              />
+            )}
           </div>
           {/* NAVBAR ITEMS */}
           <div className="sm:block">
