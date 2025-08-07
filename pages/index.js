@@ -1,4 +1,3 @@
-"use client";
 import {
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
@@ -18,7 +17,7 @@ import request from "@/lib/request";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 import HighlightSection from "@/Components/Layout/HighlightSection";
 
@@ -27,13 +26,14 @@ import SectionProductList from "@/Components/SectionProductList";
 import { IoSparkles } from "react-icons/io5";
 import { Button } from "antd";
 import { GoChevronRight } from "react-icons/go";
+import LazyImage from "@/Components/LazyImage";
+import Loader from "@/Components/Loader";
 
 export default function Home() {
   const [step, setStep] = useState("featured");
   const [slider, setSlider] = useState([]);
   const [data, setData] = useState([]);
-  const [isOptimizedImage, setIsOptimizedImage] = useState(true);
-  const [hoveredBrand, setHoveredBrand] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let fetchData = async () => {
@@ -43,12 +43,16 @@ export default function Home() {
       ]);
 
       setData(res);
-
       setSlider(sliderRes?.sliders);
+      setLoading(false);
     };
 
     fetchData();
   }, []);
+
+  const categories =
+    data?.laxzin_published_category?.concat(data?.laxzin_published_category) ||
+    [];
 
   const handleClick = (value) => {
     setStep(value);
@@ -58,38 +62,44 @@ export default function Home() {
     <main className="min-h-[700px]">
       {/* HERO SLIDER SECTION */}
       <div>
-        <Swiper
-          slidesPerView={1}
-          autoplay={{
-            delay: 2200,
-            disableOnInteraction: true,
-          }}
-          pagination={false}
-          navigation={{
-            nextEl: ".button-next-slide",
-            prevEl: ".button-prev-slide",
-          }}
-          modules={[Autoplay, Navigation, Pagination]}
-        >
-          {slider?.map((slide, index) => (
-            <SwiperSlide key={index}>
-              <div className="md:h-[700px] sm:h-[500px]  xs:h-[350px] h-[200px] w-full">
-                <Image
-                  width={2000}
-                  height={100}
-                  alt="slider"
-                  priority
-                  src={`${imageHostName}/storage/${slide?.image_path}${slide?.image}`}
-                  className="h-full w-full object-fill"
-                />
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {loading ? (
+          <Loader />
+        ) : (
+          <Swiper
+            slidesPerView={1}
+            autoplay={{
+              delay: 2200,
+              disableOnInteraction: true,
+            }}
+            pagination={false}
+            navigation={{
+              nextEl: ".button-next-slide",
+              prevEl: ".button-prev-slide",
+            }}
+            modules={[Autoplay, Navigation, Pagination]}
+          >
+            {slider?.map((slide, index) => (
+              <SwiperSlide key={index}>
+                <div className="md:h-[700px] sm:h-[500px]  xs:h-[350px] h-[200px] w-full">
+                  <Suspense fallback={<Loader />}>
+                    <LazyImage
+                      width={2000}
+                      height={100}
+                      alt="slider"
+                      priority
+                      src={`${imageHostName}/storage/${slide?.image_path}${slide?.image}`}
+                      className="h-full w-full object-fill"
+                    />
+                  </Suspense>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </div>
 
       {/* BRAND SECTION */}
-      <div className="py-10 lg:py-24 bg-white">
+      <div className="py-10 lg:py-24 bg-white flex flex-col gap-6">
         {/* Header */}
         <div className="text-center flex flex-col gap-2 md:gap-4 items-center">
           <div className="inline-flex w-fit items-center space-x-2 bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-medium">
@@ -98,7 +108,7 @@ export default function Home() {
           </div>
 
           <h2 className="font-medium text-primary text-2xl lg:text-4xl">
-            Our Brands
+            Our Categories
           </h2>
 
           <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto px-4 md:px-0">
@@ -110,91 +120,83 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="relative pt-6 md:pt-12  brand px-4 md:px-0">
-          <Swiper
-            slidesPerView={6}
-            spaceBetween={10}
-            autoplay={{
-              delay: 2200,
-              disableOnInteraction: false,
-            }}
-            navigation={{
-              nextEl: ".button-next-slide",
-              prevEl: ".button-prev-slide",
-            }}
-            modules={[Autoplay, Navigation]}
-            breakpoints={{
-              270: {
-                slidesPerView: 2,
-                spaceBetween: 9,
-              },
+        <div className="relative brand px-4 md:px-0">
+          {loading ? (
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 container mx-auto gap-5 md:gap-10">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-100 h-[150px] w-full rounded-lg animate-pulse"
+                ></div>
+              ))}
+            </div>
+          ) : (
+            <div className="relative w-full">
+              {/* Arrows */}
+              <div className="button-prev-slide absolute left-0 top-1/2 -translate-y-1/2 z-10 cursor-pointer p-2 bg-white shadow-md rounded-full">
+                <svg
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  className="text-gray-700"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12.293 15.707a1 1 0 01-1.414 0L5.586 10l5.293-5.707a1 1 0 011.414 1.414L8.414 10l3.879 4.293a1 1 0 010 1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
 
-              320: {
-                slidesPerView: 2,
-                spaceBetween: 9,
-              },
-
-              375: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-              },
-
-              425: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-              },
-
-              480: {
-                slidesPerView: 2,
-                spaceBetween: 18,
-              },
-              768: {
-                slidesPerView: 5,
-                spaceBetween: 10,
-              },
-              1024: {
-                slidesPerView: 5,
-                spaceBetween: 18,
-              },
-              1150: {
-                slidesPerView: 6,
-                spaceBetween: 18,
-              },
-              1440: {
-                slidesPerView: 6,
-                spaceBetween: 18,
-              },
-              1500: {
-                slidesPerView: 6,
-                spaceBetween: 18,
-              },
-            }}
-          >
-            {data?.laxzin_published_category?.map((item, index) => (
-              // w-[130px] h-[160px] xs:w-[60px] xs:h-[80px] xms:w-[70px] xms:h-[90px] xls:w-[80px] xls:h-[100px] sm:w-[80px] sm:h-[100px] md:w-[90px] md:h-[110px]
-              <SwiperSlide
-                key={index}
-                // className="bg-white border rounded-lg hover:shadow-md cursor-pointer"
+              <Swiper
+                slidesPerView="auto"
+                spaceBetween={20}
+                loop={true}
+                autoplay={{
+                  delay: 2200,
+                  disableOnInteraction: false,
+                }}
+                navigation={{
+                  nextEl: ".button-next-slide",
+                  prevEl: ".button-prev-slide",
+                }}
+                modules={[Autoplay, Navigation]}
+                className="pl-2 pr-2"
               >
-                <Link href={`/product-list/${item?.slug}`}>
-                  <div
-                    className={`group relative overflow-hidden rounded-2xl border border-gray-100 hover:border-gray-200 transition-all duration-500 hover:shadow-2xl hover:shadow-gray-200/50 cursor-pointer transform hover:-translate-y-2 p-5`}
-                    onMouseEnter={() => setHoveredBrand(item?.id)}
-                    onMouseLeave={() => setHoveredBrand(null)}
-                  >
-                    <PublishedCategoryCard item={item} />
-                    <div className="flex-1">
-                      <h3
-                        className={`text-lg font-medium text-gray-600 text-center group-hover:text-gray-900 transition-colors duration-300`}
-                      >
-                        {item?.name}
-                      </h3>
-                    </div>
-                  </div>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                {categories?.map((item, index) => (
+                  <SwiperSlide key={index} className="!w-fit">
+                    <Link href={`/product-list/${item?.slug}`}>
+                      <div className="group rounded-2xl border border-gray-100 hover:border-gray-200 transition-all duration-300 hover:shadow-2xl hover:shadow-gray-200/50 cursor-pointer transform hover:-translate-y-1 w-fit p-5 pt-0 pb-6">
+                        <PublishedCategoryCard item={item} />
+                        <div>
+                          <h3 className="text-base md:text-lg font-medium text-gray-600 text-center group-hover:text-gray-900 transition-colors duration-300">
+                            {item?.name}
+                          </h3>
+                        </div>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              <div className="button-next-slide absolute right-0 top-1/2 -translate-y-1/2 z-10 cursor-pointer p-2 bg-white shadow-md rounded-full">
+                <svg
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  className="text-gray-700"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M7.707 4.293a1 1 0 010 1.414L3.414 10l4.293 4.293a1 1 0 11-1.414 1.414L1.586 10l4.707-4.707a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
