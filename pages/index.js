@@ -1,4 +1,6 @@
 import {
+  MdChevronRight,
+  MdOutlineDoubleArrow,
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
@@ -24,10 +26,10 @@ import HighlightSection from "@/Components/Layout/HighlightSection";
 import PublishedCategoryCard from "@/Components/PublishedCategoryCard";
 import SectionProductList from "@/Components/SectionProductList";
 import { IoSparkles } from "react-icons/io5";
-import { Button } from "antd";
-import { GoChevronRight } from "react-icons/go";
 import LazyImage from "@/Components/LazyImage";
 import Loader from "@/Components/Loader";
+import { FaChevronRight, FaFire, FaStar } from "react-icons/fa";
+import SectionHeader from "@/Components/SectionHeader";
 
 export default function Home() {
   const [step, setStep] = useState("featured");
@@ -49,10 +51,6 @@ export default function Home() {
 
     fetchData();
   }, []);
-
-  const categories =
-    data?.laxzin_published_category?.concat(data?.laxzin_published_category) ||
-    [];
 
   const handleClick = (value) => {
     setStep(value);
@@ -99,24 +97,20 @@ export default function Home() {
       </div>
 
       {/* BRAND SECTION */}
-      <div className="py-10 lg:py-24 bg-white flex flex-col gap-6">
+      <div className="py-8 lg:py-12 bg-white flex flex-col gap-6">
         {/* Header */}
-        <div className="text-center flex flex-col gap-2 md:gap-4 items-center">
-          <div className="inline-flex w-fit items-center space-x-2 bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-medium">
+        <div className="text-center flex flex-col gap-1 md:gap-2 items-center">
+          <div className="inline-flex w-fit items-center space-x-2 bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-xs md:text-sm font-medium">
             <IoSparkles size={18} />
             <span>Premium Beauty Collections</span>
           </div>
 
-          <h2 className="font-medium text-primary text-2xl lg:text-4xl">
+          <h2 className="font-medium text-primary text-xl lg:text-2xl">
             Our Categories
           </h2>
 
-          <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto px-4 md:px-0">
-            Every Age. Every Lifestyle. We Help Everyone Be At Their Best.
-            <br />
-            <span className="text-sm md:text-base text-gray-500">
-              Discover our curated collection of premium beauty solutions
-            </span>
+          <p className="max-w-3xl mx-auto px-4 md:px-0 text-gray-600">
+            Every age. Every lifestyle. We help everyone be at their best.
           </p>
         </div>
 
@@ -131,23 +125,11 @@ export default function Home() {
               ))}
             </div>
           ) : (
-            <div className="relative w-full">
+            <div className="relative w-full px-5 md:px-10 mx-auto">
               {/* Arrows */}
-              <div className="button-prev-slide absolute left-0 top-1/2 -translate-y-1/2 z-10 cursor-pointer p-2 bg-white shadow-md rounded-full">
-                <svg
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="text-gray-700"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.293 15.707a1 1 0 01-1.414 0L5.586 10l5.293-5.707a1 1 0 011.414 1.414L8.414 10l3.879 4.293a1 1 0 010 1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
+              <button className="button-prev-slide-brand size-[28px] md:size-[38px] grid place-items-center absolute top-[45%] left-0 md:left-5 cursor-pointer bg-white shadow-xl border z-30 rounded-full">
+                <MdOutlineKeyboardArrowLeft size={20} className="text-black" />
+              </button>
 
               <Swiper
                 slidesPerView="auto"
@@ -158,13 +140,13 @@ export default function Home() {
                   disableOnInteraction: false,
                 }}
                 navigation={{
-                  nextEl: ".button-next-slide",
-                  prevEl: ".button-prev-slide",
+                  nextEl: ".button-next-slide-brand",
+                  prevEl: ".button-prev-slide-brand",
                 }}
                 modules={[Autoplay, Navigation]}
                 className="pl-2 pr-2"
               >
-                {categories?.map((item, index) => (
+                {data?.laxzin_published_category?.map((item, index) => (
                   <SwiperSlide key={index} className="!w-fit">
                     <Link href={`/product-list/${item?.slug}`}>
                       <div className="group rounded-2xl border border-gray-100 hover:border-gray-200 transition-all duration-300 hover:shadow-2xl hover:shadow-gray-200/50 cursor-pointer transform hover:-translate-y-1 w-fit p-5 pt-0 pb-6">
@@ -180,48 +162,60 @@ export default function Home() {
                 ))}
               </Swiper>
 
-              <div className="button-next-slide absolute right-0 top-1/2 -translate-y-1/2 z-10 cursor-pointer p-2 bg-white shadow-md rounded-full">
-                <svg
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="text-gray-700"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.707 4.293a1 1 0 010 1.414L3.414 10l4.293 4.293a1 1 0 11-1.414 1.414L1.586 10l4.707-4.707a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
+              <button className="button-next-slide-brand size-[28px] md:size-[38px] grid place-items-center absolute top-[45%] right-0 md:right-5 cursor-pointer bg-white shadow-xl border z-30 rounded-full">
+                <MdOutlineKeyboardArrowRight size={20} className="text-black" />
+              </button>
             </div>
           )}
         </div>
       </div>
 
       {/* BEST SELLING SECTION */}
-      <div className="bg-gray-800 xs:px-6 px-2 py-4">
-        <p className=" text-center uppercase text-xl text-white ">
-          Best selling
-        </p>
-
-        <div className="bg-white rounded-md my-3 px-6 py-4 relative">
+      <div className=" xs:px-6 px-2 py-8 lg:py-12 flex flex-col gap-6">
+        {/* HEADER */}
+        <SectionHeader
+          title="Best Selling Products"
+          helperText="Discover our most popular skincare essentials loved by thousands of customers"
+          icon={<FaStar size={14} className="text-blue-600" />}
+          badgeTheme={{
+            bgColor: "bg-blue-100",
+            textColor: "text-blue-600",
+          }}
+          badgeText="Customer Favorites"
+        />
+        {/* CONTENT */}
+        <div className="bg-white rounded-xl px-6 py-4 lg:px-8 lg:py-6 relative shadow-lg">
           <div className="flex justify-between items-center">
-            <p className=" text-center uppercase text-xl text-black ">
-              Best selling
-            </p>
-            <div>
+            <h2 className="md:text-xl text-primary dark:text-white font-medium">
+              Featured Collection
+            </h2>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3">
+                <button className="button-prev-slide p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-200 cursor-pointer">
+                  <MdOutlineKeyboardArrowLeft
+                    size={20}
+                    className="text-primary"
+                  />
+                </button>
+
+                <button className="button-next-slide p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-20 cursor-pointer">
+                  <MdOutlineKeyboardArrowRight
+                    size={20}
+                    className="text-primary"
+                  />
+                </button>
+              </div>
               <Link
                 href={`/all-product`}
-                className="rounded-md bg-black text-white capitalize px-3 py-1"
+                className="rounded-md bg-primary text-white capitalize px-3 py-1 text-xs md:text-base text-nowrap font-medium hover:bg-[#383838] transition-colors duration-200"
               >
                 shop all
               </Link>
             </div>
           </div>
 
-          <div className="py-3">
+          {/* SWIPER SLIDER FOR BEST SELLING PRODUCTS */}
+          <div className="pt-3 md:pt-6">
             <Swiper
               slidesPerView={4}
               spaceBetween={20}
@@ -274,11 +268,11 @@ export default function Home() {
                   spaceBetween: 18,
                 },
                 1820: {
-                  slidesPerView: 5,
+                  slidesPerView: 6,
                   spaceBetween: 18,
                 },
                 2000: {
-                  slidesPerView: 5,
+                  slidesPerView: 6,
                   spaceBetween: 18,
                 },
               }}
@@ -288,23 +282,70 @@ export default function Home() {
                   <ProductCard item={item} />
                 </SwiperSlide>
               ))}
-              <button className="button-prev-slide w-[30px] h-[30px]   grid place-items-center absolute top-[20px]  xs:right-[220px] right-[150px]   cursor-pointer">
-                <MdOutlineKeyboardArrowLeft size={20} className="text-black" />
-              </button>
-
-              <button className="button-next-slide w-[30px] h-[30px]  grid place-items-center absolute top-[20px]   xs:right-[150px] right-[100px] cursor-pointer">
-                <MdOutlineKeyboardArrowRight size={20} className="text-black" />
-              </button>
             </Swiper>
           </div>
         </div>
       </div>
+
       {/* HOT DEALS SECTION */}
-      <div className="bg-gray-100 py-4 px-6 ">
-        <p className=" text-center uppercase text-2xl text-black font-semibold py-6">
-          Hot deals
-        </p>
-        <div className="grid grid-cols-12  bg-white px-4  py-4 rounded-md mt-4">
+      <div className="px-6 py-8 lg:py-12">
+        <SectionHeader
+          title="HOT DEALS"
+          helperText="Grab the best offers before they're gone!"
+          icon={<FaFire size={14} className="text-orange-600" />}
+          badgeTheme={{
+            bgColor: "bg-orange-100",
+            textColor: "text-orange-600",
+          }}
+          badgeText="Best Price"
+        />
+        <div className="bg-white rounded-xl px-6 py-4 lg:px-8 lg:py-6 relative shadow-lg mt-3 md:mt-6">
+          <div className="flex items-center justify-between py-3">
+            <div className="md:text-xl text-primary dark:text-white font-medium">
+              {data?.section?.name}
+              <span className="text-sm hidden lg:inline xl:inline xxl:inline font-medium text-gray-500 xs:text-[10px] xms:text-[10px] xls:text-[10px] sm:text-[12px] ml-2">
+                {data?.section?.meta_name}
+              </span>
+            </div>
+            <Link
+              href={`/category/${data?.section?.slug}`}
+              className="rounded-md bg-primary text-white capitalize px-3 py-1 text-xs md:text-base text-nowrap font-medium hover:bg-[#383838] transition-colors duration-200"
+            >
+              <div className="flex items-center flex-column group">
+                <span className="mr-1 font-medium text-tahiti-500">
+                  View All
+                </span>
+                <MdChevronRight size={20} className="text-white" />
+              </div>
+            </Link>
+          </div>
+          <div className="grid items-stretch grid-cols-2 gap-5">
+            {/* 🔹 Left Banner */}
+            <div className="col-span-2 lg:col-span-1 overflow-hidden rounded-lg">
+              <div className="w-full h-full max-h-[390px]">
+                <Image
+                  src={`${imageHostName}/storage/${data?.section?.image_path}${data?.section?.image}`}
+                  className="object-cover w-full h-full rounded-lg"
+                  loading="lazy"
+                  width={720}
+                  height={720}
+                  alt="Hot Deals Banner"
+                />
+              </div>
+            </div>
+            {/* 🔹 Right Column: 3 Product Cards beside banner */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 col-span-2 lg:col-span-1">
+              {data?.section?.section_product_list
+                ?.slice(0, 3)
+                .map((product, index) => (
+                  <ProductCard key={index} item={product} />
+                ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Old data */}
+        {/* <div className="grid grid-cols-12 px-4  py-4 rounded-md mt-4 border border-red-500">
           <div className="lg:col-span-8 col-span-full lg:order-1 order-2 grid xs:grid-cols-2 grid-cols-1">
             {data?.section?.section_product_list
               ?.slice(0, 4)
@@ -330,11 +371,11 @@ export default function Home() {
               // onError={() => setIsOptimizedImage(false)}
             />
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* FEATURED, POPULAR, CATEGORY SECTION */}
-      <div className="bg-gray-100">
+      <div className="bg-gray-50">
         <div className=" pt-14 pb-14">
           <div>
             <div className="flex justify-center items-center space-x-8 pb-5">
@@ -379,7 +420,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="bg-gray-100 ">
+      <div className="bg-gray-100">
         {data?.laxzin_section_category?.map((item, index) => (
           <div key={index}>
             {item?.products?.length > 0 ? (
