@@ -16,7 +16,11 @@ const FreaturedCompo = () => {
         <div className="bg-white">
           <Link href={`/product/make-up`} className="relative group">
             <div className="h-auto w-full">
-              <Image src={ProdOne} className="object-contain w-full" />
+              <Image
+                src={ProdOne}
+                className="object-contain w-full"
+                alt="Image"
+              />
             </div>
             <div className="absolute bottom-0 hidden group-hover:block w-full cursor-pointer">
               <div className="flex items-center justify-center">
