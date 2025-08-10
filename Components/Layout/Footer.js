@@ -169,7 +169,7 @@ const Footer = ({ contactInfo }) => {
                   <Link
                     key={index}
                     href={link?.link}
-                    className="inline text-gray-300 hover:text-secondary"
+                    className="inline text-gray-300 hover:text-secondary w-fit"
                   >
                     {link?.name}
                   </Link>
@@ -183,19 +183,19 @@ const Footer = ({ contactInfo }) => {
               <div className="flex flex-col gap-3">
                 <div
                   onClick={() => router.push("/auth")}
-                  className="inline text-gray-300 hover:text-secondary cursor-pointer"
+                  className="inline text-gray-300 hover:text-secondary cursor-pointer w-fit"
                 >
                   <div className="">Login</div>
                 </div>
                 <div
                   onClick={() => handleRouteOrder()}
-                  className="inline text-gray-300 hover:text-secondary cursor-pointer"
+                  className="inline text-gray-300 hover:text-secondary cursor-pointer w-fit"
                 >
                   <div className="">Order History</div>
                 </div>
                 <div
                   onClick={() => handleRoute()}
-                  className="inline text-gray-300 hover:text-secondary cursor-pointer"
+                  className="inline text-gray-300 hover:text-secondary cursor-pointer w-fit"
                 >
                   <div className="">My Wishlist</div>
                 </div>
@@ -208,7 +208,7 @@ const Footer = ({ contactInfo }) => {
                 <div className="py-1 flex gap-3">
                   <Link
                     href={"/faq"}
-                    className="inline text-gray-300 hover:text-secondary cursor-pointer"
+                    className="inline text-gray-300 hover:text-secondary cursor-pointer w-fit"
                   >
                     Faq
                   </Link>
@@ -224,7 +224,7 @@ const Footer = ({ contactInfo }) => {
                   <Link
                     key={index}
                     href="#"
-                    className="inline text-gray-300 hover:text-secondary"
+                    className="inline text-gray-300 hover:text-secondary w-fit"
                   >
                     {link?.name}
                   </Link>
@@ -270,7 +270,7 @@ const Footer = ({ contactInfo }) => {
                     src={"/assets/slider/play.webp"}
                     width={120}
                     height={60}
-                    alt="facebook"
+                    alt="Play Store"
                   />
                 </Link>
                 <div>
@@ -278,7 +278,7 @@ const Footer = ({ contactInfo }) => {
                     src={"/assets/slider/app.webp"}
                     width={120}
                     height={60}
-                    alt="facebook"
+                    alt="app Store"
                   />
                 </div>
               </div>

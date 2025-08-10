@@ -10,6 +10,7 @@ import { useStatus } from "@/context/contextStatus";
 import { setCookie } from "nookies";
 import { useRouter } from "next/router";
 import PlaceholderImage from "@/public/image/placeholder_600x.webp";
+import { SlHandbag } from "react-icons/sl";
 
 const ProductCard = ({ item }) => {
   const [count, setCount] = useState(1);
@@ -80,7 +81,7 @@ const ProductCard = ({ item }) => {
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl group flex flex-col">
+    <div className="bg-white border border-gray-200 rounded-xl group flex flex-col overflow-hidden">
       <Link href={`/product/${item?.slug}`} className="relative group">
         {item?.image?.length > 0 ? (
           <div className="h-[100px] xs:h-[250px] overflow-hidden">
@@ -162,10 +163,13 @@ const ProductCard = ({ item }) => {
       {/* CARD BUTTON */}
       <div className="w-full">
         <button
-          className="bg-primary  py-3 text-white text-center w-full uppercase text-xs md:text-sm font-semibold rounded-b-xl"
+          className="bg-primary  py-3 text-white text-center w-full uppercase text-xs md:text-sm font-semibold rounded-b-xl flex items-center justify-center gap-3"
           onClick={() => handleCart()}
         >
-          add to cart
+          <span>
+            <SlHandbag size={18} className="text-white" />
+          </span>
+          <span>add to cart</span>
         </button>
       </div>
     </div>
