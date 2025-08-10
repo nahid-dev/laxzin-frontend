@@ -50,7 +50,7 @@ export default function FeaturesSection() {
 
   return (
     <section className="w-full px-2 md:px-6 py-4 md:py-8 md:pb-12">
-      <div className="mx-auto relative">
+      <div className="mx-auto relative max-w-7xl w-full">
         {/* Left Navigation Arrow */}
         <button className="swiper-button-prev-custom size-[28px] md:size-[38px] grid place-items-center absolute top-[40%] -left-3 md:-left-5 cursor-pointer bg-white hover:bg-gray-100 shadow-xl border z-30 rounded-full">
           <MdOutlineKeyboardArrowLeft size={20} className="text-black" />
@@ -61,7 +61,7 @@ export default function FeaturesSection() {
           <MdOutlineKeyboardArrowRight size={20} className="text-black" />
         </button>
 
-        <div className="">
+        <div>
           <Swiper
             modules={[Navigation, Autoplay]}
             spaceBetween={20}
@@ -140,20 +140,6 @@ export default function FeaturesSection() {
         .features-swiper .swiper-slide > div {
           width: 100%;
         }
-
-        // @media (max-width: 768px) {
-        //   .swiper-button-prev-custom,
-        //   .swiper-button-next-custom {
-        //     width: 10px;
-        //     height: 10px;
-        //   }
-
-        //   .swiper-button-prev-custom svg,
-        //   .swiper-button-next-custom svg {
-        //     width: 4px;
-        //     height: 4px;
-        //   }
-        // }
       `}</style>
     </section>
   );

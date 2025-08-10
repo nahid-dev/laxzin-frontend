@@ -28,7 +28,7 @@ import SectionProductList from "@/Components/SectionProductList";
 import { IoSparkles } from "react-icons/io5";
 import LazyImage from "@/Components/LazyImage";
 import Loader from "@/Components/Loader";
-import { FaChevronRight, FaFire, FaStar } from "react-icons/fa";
+import { FaBolt, FaChevronRight, FaFire, FaStar, FaTags } from "react-icons/fa";
 import SectionHeader from "@/Components/SectionHeader";
 import SlideSectionHeader from "@/Components/SlideSectionHeader";
 import FeaturesSection from "@/Components/FeaturesSections";
@@ -99,10 +99,132 @@ export default function Home() {
         )}
       </div>
 
+      {/* COMBO SECTION */}
+      <div className="px-2 xs:px-6  py-4 lg:py-8 flex flex-col gap-6">
+        {/* HEADER */}
+        <SectionHeader
+          title="Combo Offers"
+          helperText="Grab the best bundle deals and save more"
+          icon={<FaTags size={14} className="text-green-600" />} // tag = deals/discounts
+          badgeTheme={{
+            bgColor: "bg-green-100",
+            textColor: "text-green-600",
+          }}
+          badgeText="Special Deals"
+        />
+
+        {/* CONTENT */}
+        <div className="bg-white rounded-xl px-6 py-4 lg:px-8 lg:py-6 relative shadow  max-w-7xl mx-auto w-full">
+          <div className="flex justify-between items-center">
+            <h2 className="md:text-xl text-primary dark:text-white font-medium">
+              Combo Products
+            </h2>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3">
+                <button className="button-prev-slide p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-200 cursor-pointer">
+                  <MdOutlineKeyboardArrowLeft
+                    size={20}
+                    className="text-primary"
+                  />
+                </button>
+
+                <button className="button-next-slide p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-20 cursor-pointer">
+                  <MdOutlineKeyboardArrowRight
+                    size={20}
+                    className="text-primary"
+                  />
+                </button>
+              </div>
+              <Link
+                href={`/combo-product`}
+                className="rounded-md bg-primary text-white capitalize px-3 py-1 text-xs md:text-base text-nowrap font-medium hover:bg-[#383838] transition-colors duration-200 flex items-center gap-1"
+              >
+                View all
+                <MdChevronRight
+                  size={20}
+                  className="text-white hidden md:block"
+                />
+              </Link>
+            </div>
+          </div>
+
+          {/* SWIPER SLIDER FOR BEST SELLING PRODUCTS */}
+          <div className="pt-3 md:pt-6">
+            <Swiper
+              slidesPerView={4}
+              spaceBetween={20}
+              autoplay={{
+                delay: 2200,
+                disableOnInteraction: true,
+              }}
+              pagination={false}
+              navigation={{
+                nextEl: ".button-next-slide",
+                prevEl: ".button-prev-slide",
+              }}
+              modules={[Autoplay, Navigation, Pagination]}
+              breakpoints={{
+                320: {
+                  slidesPerView: 1,
+                  spaceBetween: 9,
+                },
+                375: {
+                  slidesPerView: 2,
+                  spaceBetween: 9,
+                },
+
+                425: {
+                  slidesPerView: 2,
+                  spaceBetween: 9,
+                },
+
+                576: {
+                  slidesPerView: 2,
+                  spaceBetween: 10,
+                },
+
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 10,
+                },
+
+                1024: {
+                  slidesPerView: 4,
+                  spaceBetween: 18,
+                },
+
+                1280: {
+                  slidesPerView: 4,
+                  spaceBetween: 18,
+                },
+                1440: {
+                  slidesPerView: 5,
+                  spaceBetween: 18,
+                },
+                1820: {
+                  slidesPerView: 5,
+                  spaceBetween: 18,
+                },
+                2000: {
+                  slidesPerView: 6,
+                  spaceBetween: 18,
+                },
+              }}
+            >
+              {data?.best_selling_products?.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <ProductCard item={item} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </div>
+      </div>
+
       {/* CATEGORY SECTION */}
       <div className="py-4 md:py-8 bg-white flex flex-col gap-6">
         {/* Header */}
-        <div className="text-center flex flex-col gap-1 md:gap-2 items-center">
+        <div className="text-center flex flex-col gap-1 md:gap-2 items-center max-w-7xl mx-auto w-full">
           <div className="inline-flex w-fit items-center space-x-2 bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-xs md:text-sm font-medium">
             <IoSparkles size={18} />
             <span>Premium Beauty Collections</span>
@@ -117,7 +239,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="relative brand px-4 md:px-0">
+        <div className="relative brand px-4 md:px-0  max-w-7xl mx-auto w-full">
           {loading ? (
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 container mx-auto gap-5 md:gap-10">
               {Array.from({ length: 6 }).map((_, index) => (
@@ -173,8 +295,130 @@ export default function Home() {
         </div>
       </div>
 
+      {/* FLASH DEAL */}
+      <div className="px-2 xs:px-6  py-4 lg:py-8 flex flex-col gap-6">
+        {/* HEADER */}
+        <SectionHeader
+          title="Flash Deal"
+          helperText="Limited time offers – grab them before they're gone!"
+          icon={<FaBolt size={14} className="text-red-600" />} // bolt = speed/urgency
+          badgeTheme={{
+            bgColor: "bg-red-100",
+            textColor: "text-red-600",
+          }}
+          badgeText="Hurry Up!"
+        />
+
+        {/* CONTENT */}
+        <div className="bg-white rounded-xl px-6 py-4 lg:px-8 lg:py-6 relative shadow  max-w-7xl mx-auto w-full">
+          <div className="flex justify-between items-center">
+            <h2 className="md:text-xl text-primary dark:text-white font-medium">
+              Flash Deals
+            </h2>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3">
+                <button className="button-prev-slide p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-200 cursor-pointer">
+                  <MdOutlineKeyboardArrowLeft
+                    size={20}
+                    className="text-primary"
+                  />
+                </button>
+
+                <button className="button-next-slide p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-20 cursor-pointer">
+                  <MdOutlineKeyboardArrowRight
+                    size={20}
+                    className="text-primary"
+                  />
+                </button>
+              </div>
+              <Link
+                href={`/flash-deals`}
+                className="rounded-md bg-primary text-white capitalize px-3 py-1 text-xs md:text-base text-nowrap font-medium hover:bg-[#383838] transition-colors duration-200 flex items-center gap-1"
+              >
+                View all
+                <MdChevronRight
+                  size={20}
+                  className="text-white hidden md:block"
+                />
+              </Link>
+            </div>
+          </div>
+
+          {/* SWIPER SLIDER FOR BEST SELLING PRODUCTS */}
+          <div className="pt-3 md:pt-6">
+            <Swiper
+              slidesPerView={4}
+              spaceBetween={20}
+              autoplay={{
+                delay: 2200,
+                disableOnInteraction: true,
+              }}
+              pagination={false}
+              navigation={{
+                nextEl: ".button-next-slide",
+                prevEl: ".button-prev-slide",
+              }}
+              modules={[Autoplay, Navigation, Pagination]}
+              breakpoints={{
+                320: {
+                  slidesPerView: 1,
+                  spaceBetween: 9,
+                },
+                375: {
+                  slidesPerView: 2,
+                  spaceBetween: 9,
+                },
+
+                425: {
+                  slidesPerView: 2,
+                  spaceBetween: 9,
+                },
+
+                576: {
+                  slidesPerView: 2,
+                  spaceBetween: 10,
+                },
+
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 10,
+                },
+
+                1024: {
+                  slidesPerView: 4,
+                  spaceBetween: 18,
+                },
+
+                1280: {
+                  slidesPerView: 4,
+                  spaceBetween: 18,
+                },
+                1440: {
+                  slidesPerView: 5,
+                  spaceBetween: 18,
+                },
+                1820: {
+                  slidesPerView: 5,
+                  spaceBetween: 18,
+                },
+                2000: {
+                  slidesPerView: 6,
+                  spaceBetween: 18,
+                },
+              }}
+            >
+              {data?.best_selling_products?.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <ProductCard item={item} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </div>
+      </div>
+
       {/* SKIN CARE SECTION */}
-      <div className="px-2 md:px-4 py-4 md:py-8 relative brand">
+      <div className="px-2 md:px-4 py-4 md:py-8 relative brand  max-w-7xl mx-auto w-full">
         <h2 className="md:text-xl text-primary dark:text-white font-medium text-center mb-3">
           Choose your skin type
         </h2>
@@ -243,7 +487,7 @@ export default function Home() {
           badgeText="Customer Favorites"
         />
         {/* CONTENT */}
-        <div className="bg-white rounded-xl px-6 py-4 lg:px-8 lg:py-6 relative shadow-lg">
+        <div className="bg-white rounded-xl px-6 py-4 lg:px-8 lg:py-6 relative shadow-lg  max-w-7xl mx-auto w-full">
           <div className="flex justify-between items-center">
             <h2 className="md:text-xl text-primary dark:text-white font-medium">
               Collection
@@ -331,7 +575,7 @@ export default function Home() {
                   spaceBetween: 18,
                 },
                 1820: {
-                  slidesPerView: 6,
+                  slidesPerView: 5,
                   spaceBetween: 18,
                 },
                 2000: {
@@ -351,7 +595,7 @@ export default function Home() {
       </div>
 
       {/* HOT DEALS SECTION */}
-      <div className="px-2 md:px-6 py-4 md:py-8">
+      {/* <div className="px-2 md:px-6 py-4 md:py-8">
         <SectionHeader
           title="HOT DEALS"
           helperText="Grab the best offers before they're gone!"
@@ -383,7 +627,6 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid items-stretch grid-cols-2 gap-5 md:gap-10">
-            {/* 🔹 Left Banner */}
             <div className="col-span-2 lg:col-span-1 overflow-hidden rounded-lg">
               <div className="w-full h-full max-h-[390px]">
                 <Image
@@ -396,9 +639,8 @@ export default function Home() {
                 />
               </div>
             </div>
-            {/* 🔹 Right Column: 3 Product Cards slider beside banner */}
             <div className="col-span-2 lg:col-span-1 relative ">
-              <button className="button-prev-slide-hot-deals size-[28px] md:size-[38px] grid place-items-center absolute top-[45%] -left-3 md:-left-5 cursor-pointer bg-white hover:bg-gray-100 shadow-xl border z-30 rounded-full">
+              <button className="button-prev-slide-hot-deals size-[28px] md:size-[38px] grid place-items-center absolute top-[45%] -left-3 md:-left-5 cursor-pointer bg-white hover:bg-gray-100 shadow-xl border z-50 rounded-full">
                 <MdOutlineKeyboardArrowLeft size={20} className="text-black" />
               </button>
               <Swiper
@@ -468,16 +710,16 @@ export default function Home() {
                   </SwiperSlide>
                 ))}
               </Swiper>
-              <button className="button-next-slide-hot-deals size-[28px] md:size-[38px] grid place-items-center absolute top-[45%] -right-3 md:-right-5 cursor-pointer bg-white hover:bg-gray-100 shadow-xl border z-30 rounded-full">
+              <button className="button-next-slide-hot-deals size-[28px] md:size-[38px] grid place-items-center absolute top-[45%] -right-3 md:-right-5 cursor-pointer bg-white hover:bg-gray-100 shadow-xl border z-50 rounded-full">
                 <MdOutlineKeyboardArrowRight size={20} className="text-black" />
               </button>
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* FEATURED SECTION */}
-      <div className="px-2 xs:px-6 py-4 md:py-8">
+      {/* <div className="px-2 xs:px-6 py-4 md:py-8">
         <div className="bg-white rounded-xl px-6 py-4 lg:px-8 lg:py-6 relative shadow-lg ">
           <SlideSectionHeader
             title="Featured Products"
@@ -556,9 +798,9 @@ export default function Home() {
             </Swiper>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* POPULAR SECTION */}
-      <div className="px-2 xs:px-6 py-4 md:py-8">
+      {/* <div className="px-2 xs:px-6 py-4 md:py-8">
         <div className="bg-white rounded-xl px-6 py-4 md:pb-6 shadow-lg">
           <div className="flex items-center justify-between py-3">
             <div className="md:text-xl text-primary dark:text-white font-medium">
@@ -577,7 +819,6 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid items-stretch grid-cols-2 gap-5 md:gap-10">
-            {/* 🔹 Left Banner */}
             <div className="col-span-2 lg:col-span-1 overflow-hidden rounded-lg">
               <div className="w-full h-full max-h-[390px]">
                 <Image
@@ -590,7 +831,6 @@ export default function Home() {
                 />
               </div>
             </div>
-            {/* 🔹 Right Column: 3 Product Cards slider beside banner */}
             <div className="col-span-2 lg:col-span-1 relative ">
               <button className="button-prev-slide-popular size-[28px] md:size-[38px] grid place-items-center absolute top-[45%] -left-3 md:-left-5 cursor-pointer bg-white hover:bg-gray-100 shadow-xl border z-30 rounded-full">
                 <MdOutlineKeyboardArrowLeft size={20} className="text-black" />
@@ -668,11 +908,12 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
+
       {/* CATEGORY SECTION */}
       <div className="px-2 xs:px-6 py-4 md:py-8">
         {/* TAB & DESKTOP VIEW */}
-        <div className="hidden md:block bg-white rounded-xl px-6 py-4 lg:px-8 lg:py-6 relative shadow-lg ">
+        <div className="hidden md:block bg-white rounded-xl px-6 py-4 lg:px-8 lg:py-6 relative shadow-lg max-w-7xl mx-auto w-full">
           <SlideSectionHeader
             title="Category Products"
             arrowLeft=""
@@ -690,7 +931,7 @@ export default function Home() {
           </div>
         </div>
         {/* MOBILE VIEW */}
-        <div className="md:hidden bg-white rounded-xl px-6 py-4 lg:px-8 lg:py-6 relative shadow-lg ">
+        <div className="md:hidden bg-white rounded-xl px-6 py-4 lg:px-8 lg:py-6 relative shadow-lg">
           <SlideSectionHeader
             title="Category Products"
             arrowLeft="button-prev-slide-category"
@@ -822,7 +1063,7 @@ export default function Home() {
         {dummyData?.map((item, index) => (
           <div key={index}>
             {item?.products?.length > 0 ? (
-              <div className="bg-white rounded-xl px-6 py-4 lg:px-8 lg:py-6 relative shadow-lg">
+              <div className="bg-white rounded-xl px-6 py-4 lg:px-8 lg:py-6 relative shadow max-w-7xl mx-auto w-full">
                 <SlideSectionHeader
                   title={item?.name}
                   arrowLeft={`button-prev-slide-${item?.slug}`}

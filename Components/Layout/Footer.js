@@ -76,7 +76,7 @@ const Footer = ({ contactInfo }) => {
   return (
     <div>
       <footer className="bg-primary text-white">
-        <div className="mx-auto px-4 py-16">
+        <div className="mx-auto px-4 md:px-0 py-16 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
             {/* Company Info */}
             <div className="space-y-4">
@@ -95,70 +95,11 @@ const Footer = ({ contactInfo }) => {
                 />
               </div>
 
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="text-gray-300 leading-relaxed">
                 Your trusted partner for premium beauty and skincare products in
                 Bangladesh. We bring you the finest quality cosmetics for your
                 daily beauty routine.
               </p>
-              {/* SOCIAL LINKS */}
-              <div className="flex items-center justify-start gap-5 py-5">
-                <Link href={`${data?.facebook}`} target="_blank">
-                  <Image
-                    src={"/assets/slider/facebook.webp"}
-                    width={30}
-                    height={30}
-                    alt="facebook"
-                  />
-                </Link>
-                <Link href={`${data?.instagram_link}`} target="_blank">
-                  <Image
-                    src={"/assets/slider/instagram.webp"}
-                    width={30}
-                    height={30}
-                    alt="facebook"
-                  />
-                </Link>
-                <Link href={`${data?.whatsapp_link}`} target="_blank">
-                  <Image
-                    src={"/assets/slider/whatsapp.webp"}
-                    width={30}
-                    height={30}
-                    alt="facebook"
-                  />
-                </Link>
-                <Link href={`${data?.youtube_link}`} target="_blank">
-                  <Image
-                    src={"/assets/slider/youtube.webp"}
-                    width={30}
-                    height={30}
-                    alt="facebook"
-                  />
-                </Link>
-                <Link href={`${data?.tiktok_link}`} target="_blank">
-                  <Image
-                    src={"/assets/slider/tik-tok.webp"}
-                    width={30}
-                    height={30}
-                    alt="facebook"
-                  />
-                </Link>
-                <Link href={`${data?.twitter_link}`} target="_blank">
-                  <Image
-                    src={"/assets/slider/twitter.webp"}
-                    width={30}
-                    height={30}
-                    alt="facebook"
-                  />
-                </Link>
-                <Link href={`${data?.pinterest_link}`} target="_blank">
-                  <Image
-                    src={"/assets/slider/pinterest.webp"}
-                    width={30}
-                    height={30}
-                    alt="facebook"
-                  />
-                </Link>
-              </div>
             </div>
 
             {/* Quick Links */}
@@ -254,6 +195,66 @@ const Footer = ({ contactInfo }) => {
             </div>
           </div>
 
+          {/* SOCIAL LINKS */}
+          <div className="flex items-center justify-start gap-5 py-5">
+            <Link href={`${data?.facebook}`} target="_blank">
+              <Image
+                src={"/assets/slider/facebook.webp"}
+                width={30}
+                height={30}
+                alt="facebook"
+              />
+            </Link>
+            <Link href={`${data?.instagram_link}`} target="_blank">
+              <Image
+                src={"/assets/slider/instagram.webp"}
+                width={30}
+                height={30}
+                alt="facebook"
+              />
+            </Link>
+            <Link href={`${data?.whatsapp_link}`} target="_blank">
+              <Image
+                src={"/assets/slider/whatsapp.webp"}
+                width={30}
+                height={30}
+                alt="facebook"
+              />
+            </Link>
+            <Link href={`${data?.youtube_link}`} target="_blank">
+              <Image
+                src={"/assets/slider/youtube.webp"}
+                width={30}
+                height={30}
+                alt="facebook"
+              />
+            </Link>
+            <Link href={`${data?.tiktok_link}`} target="_blank">
+              <Image
+                src={"/assets/slider/tik-tok.webp"}
+                width={30}
+                height={30}
+                alt="facebook"
+              />
+            </Link>
+            <Link href={`${data?.twitter_link}`} target="_blank">
+              <Image
+                src={"/assets/slider/twitter.webp"}
+                width={30}
+                height={30}
+                alt="facebook"
+              />
+            </Link>
+            <Link href={`${data?.pinterest_link}`} target="_blank">
+              <Image
+                src={"/assets/slider/pinterest.webp"}
+                width={30}
+                height={30}
+                alt="facebook"
+              />
+            </Link>
+          </div>
+
           {/* App Promotion Section */}
           <div className="py-4 border-y border-gray-600">
             <div className="xs:flex block justify-center items-center space-x-16">
@@ -261,7 +262,7 @@ const Footer = ({ contactInfo }) => {
                 Let&apos;s Do Beauty & Grooming Together
               </div>
 
-              <div className="flex items-center justify-center gap-2 py-2">
+              <div className="flex items-center justify-center gap-3 md:gap-5 py-2">
                 <Link
                   href={`https://play.google.com/store/apps/details?id=com.laxzinapp`}
                   target="_blank"

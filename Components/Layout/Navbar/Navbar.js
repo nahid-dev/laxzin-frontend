@@ -97,7 +97,7 @@ const Navbar = ({ catData, contactInfo }) => {
     >
       <header id="header" className={`py-2 px-2 w-full  z-10`}>
         {/* DESKTOP NAVBAR */}
-        <div className="hidden md:flex justify-between items-center px-6">
+        <div className="hidden md:flex justify-between items-center px-6 max-w-7xl mx-auto">
           {/* BRAND LOGO */}
           <div onClick={() => router.push("/")} className="w-[140px] h-[60px]">
             {isScrolled ? (
