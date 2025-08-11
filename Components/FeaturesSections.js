@@ -107,7 +107,7 @@ export default function FeaturesSection() {
                 spaceBetween: 30,
               },
             }}
-            className="features-swiper"
+            className="features-swiper my-0.5"
           >
             {features.map((feature, index) => {
               const IconComponent = feature.icon;
