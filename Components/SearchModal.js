@@ -1,29 +1,23 @@
-import { useStatus } from '@/context/contextStatus';
-import { useRouter } from 'next/router';
-import React from 'react'
-
+import { useStatus } from "@/context/contextStatus";
+import { useRouter } from "next/router";
+import React from "react";
 
 const SearchModal = () => {
- 
-    const { searchModal, setSearchModal } = useStatus(); 
+  const { searchModal, setSearchModal } = useStatus();
 
-    const router = useRouter();
+  const router = useRouter();
 
-       const search = (val) => {
-         
-         if (val !== "") {
-          
-           router.push(`/search/${val}`);
-         } else {
-           router.push(`/`);
-         }
-       };
-  
-    const handleClose = () =>{
-        setSearchModal(false);
+  const search = (val) => {
+    if (val !== "") {
+      router.push(`/search/${val}`);
+    } else {
+      router.push(`/`);
     }
-     
-   
+  };
+
+  const handleClose = () => {
+    setSearchModal(false);
+  };
 
   return (
     <>
@@ -66,6 +60,6 @@ const SearchModal = () => {
       )}
     </>
   );
-}
+};
 
-export default SearchModal
+export default SearchModal;

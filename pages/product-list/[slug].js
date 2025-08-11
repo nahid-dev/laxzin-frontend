@@ -63,7 +63,7 @@ useEffect(() => {
   return (
     <div className="bg-[#F3F3F3]">
       <CommonbgBanner name={`${router?.query?.slug}`} />
-      <div className="xl:max-w-[70rem] lg:max-w-[65rem] md:max-w-[50rem] sm:max-w-[36rem] max-w-[15rem] mx-auto">
+      <div className="lg:max-w-7xl md:max-w-[50rem] sm:max-w-[36rem] max-w-[15rem] mx-auto">
         <div className="mt-3 pb-4">
           {products?.length > 0 ? (
             <div>

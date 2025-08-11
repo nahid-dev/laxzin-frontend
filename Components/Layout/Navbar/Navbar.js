@@ -97,7 +97,7 @@ const Navbar = ({ catData, contactInfo }) => {
     >
       <header id="header" className={`py-2 px-2 w-full  z-10`}>
         {/* DESKTOP NAVBAR */}
-        <div className="hidden md:flex justify-between items-center px-6 max-w-7xl mx-auto">
+        <div className="hidden md:flex justify-between items-center max-w-7xl mx-auto">
           {/* BRAND LOGO */}
           <div onClick={() => router.push("/")} className="w-[140px] h-[60px]">
             {isScrolled ? (
@@ -109,7 +109,7 @@ const Navbar = ({ catData, contactInfo }) => {
                 }
                 height={800}
                 width={800}
-                className="h-full w-full object-cover cursor-pointer"
+                className="h-full w-full object-cover cursor-pointer -ml-5"
                 priority
                 alt="logo"
               />
@@ -122,7 +122,7 @@ const Navbar = ({ catData, contactInfo }) => {
                 }
                 height={800}
                 width={800}
-                className="h-full w-full object-cover cursor-pointer"
+                className="h-full w-full object-cover cursor-pointer -ml-5"
                 priority
                 alt="logo"
               />
@@ -243,22 +243,47 @@ const Navbar = ({ catData, contactInfo }) => {
         {/* MOBILE NAVBAR */}
         <div className="md:hidden flex justify-between items-center pt-3 xsm:px-2 px-0">
           <Link href={`/`} className="flex justify-start w-[150px] h-[60px]">
-            <Image
-              src={`${imageHostName}/storage/${contactInfo?.logo}`}
-              height={500}
-              width={500}
-              className="h-full w-full object-fill cursor-pointer"
-              priority
-              alt="logo"
-            />
+            {isScrolled ? (
+              <Image
+                src={
+                  isDevelopment
+                    ? "/assets/logo/laxzin-logo-black.png"
+                    : `${imageHostName}/storage/${contactInfo?.logo}`
+                }
+                height={800}
+                width={800}
+                className="h-full w-full object-cover cursor-pointer -ml-5"
+                priority
+                alt="logo"
+              />
+            ) : (
+              <Image
+                src={
+                  isDevelopment
+                    ? "/assets/logo/laxzin-logo-white.png"
+                    : `${imageHostName}/storage/${contactInfo?.logo}`
+                }
+                height={800}
+                width={800}
+                className="h-full w-full object-cover cursor-pointer -ml-5"
+                priority
+                alt="logo"
+              />
+            )}
           </Link>
 
           <div className="flex space-x-4 items-center">
             <div onClick={() => handleSearch()}>
-              <IoSearchOutline size={25} className={`text-white`} />
+              <IoSearchOutline
+                size={25}
+                className={`${isScrolled ? "text-primary" : "text-white"}`}
+              />
             </div>
             <div onClick={() => setDrawerOpen(true)}>
-              <RxHamburgerMenu size={25} className="text-white" />
+              <RxHamburgerMenu
+                size={25}
+                className={`${isScrolled ? "text-primary" : "text-white"}`}
+              />
             </div>
           </div>
         </div>

@@ -1,6 +1,5 @@
 import {
   MdChevronRight,
-  MdOutlineDoubleArrow,
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
@@ -10,9 +9,6 @@ import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import CategoryProd from "@/Components/Home/CategoryProd";
-import Featured from "@/Components/Home/Featured";
-import Popular from "@/Components/Home/Popular";
 import ProductCard from "@/Components/ProductDetails/ProductCard";
 import { imageHostName } from "@/lib/config";
 import request from "@/lib/request";
@@ -24,28 +20,23 @@ import { Suspense, useEffect, useState } from "react";
 import HighlightSection from "@/Components/Layout/HighlightSection";
 
 import PublishedCategoryCard from "@/Components/PublishedCategoryCard";
-import SectionProductList from "@/Components/SectionProductList";
 import { IoSparkles } from "react-icons/io5";
 import LazyImage from "@/Components/LazyImage";
 import Loader from "@/Components/Loader";
-import {
-  FaBolt,
-  FaChevronRight,
-  FaFire,
-  FaLeaf,
-  FaStar,
-  FaTags,
-} from "react-icons/fa";
+import { FaBolt, FaLeaf, FaStar, FaTags, FaThLarge } from "react-icons/fa";
 import SectionHeader from "@/Components/SectionHeader";
 import SlideSectionHeader from "@/Components/SlideSectionHeader";
 import FeaturesSection from "@/Components/FeaturesSections";
 import { dummyData, skinCareData } from "@/options";
+
+import CountdownBox from "@/Components/CountdownBox";
 
 export default function Home() {
   const [step, setStep] = useState("featured");
   const [slider, setSlider] = useState([]);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     let fetchData = async () => {
@@ -60,6 +51,10 @@ export default function Home() {
     };
 
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    setIsMounted(true);
   }, []);
 
   const handleClick = (value) => {
@@ -128,14 +123,14 @@ export default function Home() {
             </h2>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-3">
-                <button className="button-prev-slide p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-200 cursor-pointer">
+                <button className="button-prev-slide-combo p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-200 cursor-pointer">
                   <MdOutlineKeyboardArrowLeft
                     size={20}
                     className="text-primary"
                   />
                 </button>
 
-                <button className="button-next-slide p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-20 cursor-pointer">
+                <button className="button-next-slide-combo p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-20 cursor-pointer">
                   <MdOutlineKeyboardArrowRight
                     size={20}
                     className="text-primary"
@@ -161,13 +156,13 @@ export default function Home() {
               slidesPerView={4}
               spaceBetween={20}
               autoplay={{
-                delay: 2200,
+                delay: 2300,
                 disableOnInteraction: true,
               }}
               pagination={false}
               navigation={{
-                nextEl: ".button-next-slide",
-                prevEl: ".button-prev-slide",
+                nextEl: ".button-next-slide-combo",
+                prevEl: ".button-prev-slide-combo",
               }}
               modules={[Autoplay, Navigation, Pagination]}
               breakpoints={{
@@ -229,24 +224,20 @@ export default function Home() {
       </div>
 
       {/* CATEGORY SECTION */}
-      <div className="py-4 md:py-8 bg-white flex flex-col gap-6">
+      <div className="py-4 md:py-0 flex flex-col gap-6">
         {/* Header */}
-        <div className="text-center flex flex-col gap-1 md:gap-2 items-center max-w-7xl mx-auto w-full">
-          <div className="inline-flex w-fit items-center space-x-2 bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-xs md:text-sm font-medium">
-            <IoSparkles size={18} />
-            <span>Premium Beauty Collections</span>
-          </div>
+        <SectionHeader
+          title="All Categories"
+          helperText="Explore our full range of product categories"
+          icon={<IoSparkles size={14} className="text-pink-600" />}
+          badgeTheme={{
+            bgColor: "bg-pink-100",
+            textColor: "text-pink-600",
+          }}
+          badgeText="Premium Beauty Collections"
+        />
 
-          <h2 className="font-medium text-primary text-xl lg:text-2xl">
-            Our Categories
-          </h2>
-
-          <p className="max-w-3xl mx-auto px-4 md:px-0 text-gray-600">
-            Every age. Every lifestyle. We help everyone be at their best.
-          </p>
-        </div>
-
-        <div className="relative brand px-4 md:px-0  max-w-7xl mx-auto w-full">
+        <div className="relative brand px-4 md:px-0  max-w-7xl mx-auto w-full bg-white shadow py-4 md:py-8 rounded-xl">
           {loading ? (
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 container mx-auto gap-5 md:gap-10">
               {Array.from({ length: 6 }).map((_, index) => (
@@ -322,6 +313,7 @@ export default function Home() {
             <h2 className="md:text-xl text-primary dark:text-white font-medium">
               Flash Deals
             </h2>
+            {isMounted && <CountdownBox endDate="2025-08-30T23:59:59" />}
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-3">
                 <button className="button-prev-slide-flash p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-200 cursor-pointer">
@@ -425,7 +417,7 @@ export default function Home() {
       </div>
 
       {/* SKIN CARE SECTION */}
-      <div className="px-2 md:px-4 py-4 md:py-8 relative brand  max-w-7xl mx-auto w-full bg-white rounded-xl">
+      <div className="px-2 md:px-4 py-4 md:py-8 relative brand  max-w-7xl mx-auto w-full bg-white shadow rounded-xl">
         <h2 className="md:text-xl text-primary dark:text-white font-medium text-center mb-3">
           Choose your skin type
         </h2>
@@ -603,7 +595,7 @@ export default function Home() {
       </div>
 
       {/* BEST SELLING SECTION */}
-      <div className="px-2 xs:px-6  py-4 lg:py-8 flex flex-col gap-4">
+      <div className="px-2 xs:px-6  py-4 lg:py-8 lg:pt-0 flex flex-col gap-4">
         {/* HEADER */}
         <SectionHeader
           title="Best Selling Products"
@@ -724,9 +716,20 @@ export default function Home() {
       </div>
 
       {/* CATEGORY SECTION */}
-      <div className="px-2 xs:px-6 py-4 md:py-8">
+      <div className="px-2 xs:px-6 py-4 md:py-0 flex flex-col gap-4">
+        <SectionHeader
+          title="All Categories"
+          helperText="Explore our full range of product categories"
+          icon={<FaThLarge size={14} className="text-indigo-600" />} // grid = categories overview
+          badgeTheme={{
+            bgColor: "bg-indigo-100",
+            textColor: "text-indigo-600",
+          }}
+          badgeText="Browse All"
+        />
+
         {/* TAB & DESKTOP VIEW */}
-        <div className="hidden md:block bg-white rounded-xl p-2 md:p-4 relative shadow-lg max-w-7xl mx-auto w-full">
+        <div className="hidden md:block bg-white rounded-xl p-2 md:p-4 relative shadow max-w-7xl mx-auto w-full">
           <SlideSectionHeader
             title="All Category Products"
             arrowLeft=""

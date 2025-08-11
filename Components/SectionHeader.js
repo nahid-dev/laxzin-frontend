@@ -8,7 +8,7 @@ const SectionHeader = ({icon,badgeTheme, badgeText, title, helperText}) => {
       >
         {icon} {badgeText}
       </div>
-      <h2 className="font-medium text-primary dark:text-white text-xl lg:text-2xl !leading-none">
+      <h2 className="font-semibold text-primary dark:text-white text-xl lg:text-2xl !leading-none">
         {title}
       </h2>
       <p className="max-w-2xl mx-auto text-gray-600 dark:text-white">

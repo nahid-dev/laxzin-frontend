@@ -78,22 +78,22 @@ export default function FeaturesSection() {
             breakpoints={{
               // Mobile (320px and up)
               320: {
-                slidesPerView: 2,
+                slidesPerView: 1,
                 spaceBetween: 15,
               },
               // Small tablets (480px and up)
               480: {
-                slidesPerView: 2,
+                slidesPerView: 1,
                 spaceBetween: 20,
               },
               // Tablets (768px and up)
               768: {
-                slidesPerView: 3,
+                slidesPerView: 2,
                 spaceBetween: 25,
               },
               // Small laptops (1024px and up)
               1024: {
-                slidesPerView: 4,
+                slidesPerView: 3,
                 spaceBetween: 30,
               },
               // Large screens (1280px and up)
@@ -107,22 +107,24 @@ export default function FeaturesSection() {
                 spaceBetween: 30,
               },
             }}
-            className="features-swiper my-0.5"
+            className="features-swiper"
           >
             {features.map((feature, index) => {
               const IconComponent = feature.icon;
               return (
                 <SwiperSlide key={index}>
-                  <div className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-sm border border-slate-200 h-full">
-                    <div className="w-12 h-12 bg-slate-600 rounded-full flex items-center justify-center mb-4">
+                  <div className="flex p-4 bg-white rounded-lg shadow-sm border border-slate-200 gap-3 items-center">
+                    <div className="size-12 bg-slate-600 rounded-full flex items-center justify-center">
                       <IconComponent className="w-6 h-6 text-white" />
                     </div>
-                    <h3 className="font-semibold text-slate-800 text-base mb-1">
-                      {feature.title}
-                    </h3>
-                    <p className="text-slate-600 text-sm leading-relaxed">
-                      {feature.description}
-                    </p>
+                    <div className="flex-grow">
+                      <h3 className="font-semibold text-slate-800 text-base mb-1">
+                        {feature.title}
+                      </h3>
+                      <p className="text-slate-600 text-sm leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
                   </div>
                 </SwiperSlide>
               );

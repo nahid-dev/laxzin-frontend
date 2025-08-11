@@ -257,8 +257,8 @@ const Footer = ({ contactInfo }) => {
 
           {/* App Promotion Section */}
           <div className="py-4 border-y border-gray-600">
-            <div className="xs:flex block justify-center items-center space-x-16">
-              <div className="text-lg font-semibold text-white">
+            <div className="flex flex-col xs:flex-row justify-center items-center gap-3 md:gap-10">
+              <div className="text-lg font-semibold text-white text-center md:text-left">
                 Let&apos;s Do Beauty & Grooming Together
               </div>
 

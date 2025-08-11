@@ -29,7 +29,7 @@ module.exports = {
         secondary: "#FFE198",
       },
       fontFamily: {
-        body: ["Barlow", "sans-serif"],
+        body: ["Montserrat", "sans-serif"],
       },
     },
   },

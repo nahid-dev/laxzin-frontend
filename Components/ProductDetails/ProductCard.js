@@ -84,7 +84,7 @@ const ProductCard = ({ item }) => {
     <div className="bg-white border border-gray-200 rounded-xl group flex flex-col overflow-hidden">
       <Link href={`/product/${item?.slug}`} className="relative group">
         {item?.image?.length > 0 ? (
-          <div className="h-[100px] xs:h-[200px] overflow-hidden">
+          <div className="h-[100px] xs:h-[260px] w-full overflow-hidden">
             <Image
               width={480}
               height={480}
@@ -95,7 +95,7 @@ const ProductCard = ({ item }) => {
                     )}`
                   : "/assets/placeholder_600x.webp"
               }
-              className="rounded-t-xl object-contain h-full center-center w-full group-hover:scale-105 transition-all duration-300 ease-in-out"
+              className="rounded-t-xl object-contain h-full center-center w-full group-hover:scale-105 transition-all duration-200 ease-in-out"
               unoptimized={!isOptimizedImage}
               priority={false}
               onError={() => setIsOptimizedImage(false)}
