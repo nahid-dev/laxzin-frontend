@@ -6,7 +6,8 @@ import {
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import "swiper/css/effect-fade";
+import { Autoplay, Navigation, Pagination, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import ProductCard from "@/Components/ProductDetails/ProductCard";
@@ -16,8 +17,6 @@ import request from "@/lib/request";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
-
-import HighlightSection from "@/Components/Layout/HighlightSection";
 
 import PublishedCategoryCard from "@/Components/PublishedCategoryCard";
 import { IoSparkles } from "react-icons/io5";
@@ -30,6 +29,7 @@ import FeaturesSection from "@/Components/FeaturesSections";
 import { dummyData, skinCareData } from "@/options";
 
 import CountdownBox from "@/Components/CountdownBox";
+import SectionSubHeader from "@/Components/SectionSubHeader";
 
 export default function Home() {
   const [step, setStep] = useState("featured");
@@ -70,20 +70,22 @@ export default function Home() {
         ) : (
           <Swiper
             slidesPerView={1}
+            effect="fade"
             autoplay={{
               delay: 2200,
               disableOnInteraction: true,
             }}
-            pagination={false}
+            pagination={true}
             navigation={{
               nextEl: ".button-next-slide",
               prevEl: ".button-prev-slide",
             }}
-            modules={[Autoplay, Navigation, Pagination]}
+            loop={true}
+            modules={[Autoplay, Navigation, Pagination, EffectFade]}
           >
             {slider?.map((slide, index) => (
               <SwiperSlide key={index}>
-                <div className="md:h-[700px] sm:h-[500px]  xs:h-[350px] h-[200px] w-full">
+                <div className="md:h-[700px] sm:h-[500px] xs:h-[350px] h-[200px] w-full">
                   <Suspense fallback={<Loader />}>
                     <LazyImage
                       width={2000}
@@ -102,7 +104,7 @@ export default function Home() {
       </div>
 
       {/* COMBO SECTION */}
-      <div className="px-2 xs:px-6  py-4 lg:py-8 flex flex-col gap-4">
+      <div className="px-2 xs:px-6  py-4 flex flex-col gap-4">
         {/* HEADER */}
         <SectionHeader
           title="Combo Offers"
@@ -118,9 +120,10 @@ export default function Home() {
         {/* CONTENT */}
         <div className="bg-white rounded-xl p-2 md:p-4 relative shadow  max-w-7xl mx-auto w-full">
           <div className="flex justify-between items-center">
-            <h2 className="md:text-xl text-primary dark:text-white font-medium">
-              Combo Products
-            </h2>
+            <SectionSubHeader
+              title="Combo Offers"
+              helperText="Bundle deals & savings"
+            />
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-3">
                 <button className="button-prev-slide-combo p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-200 cursor-pointer">
@@ -151,7 +154,7 @@ export default function Home() {
           </div>
 
           {/* SWIPER SLIDER FOR BEST SELLING PRODUCTS */}
-          <div className="pt-3 md:pt-6">
+          <div className="pt-3">
             <Swiper
               slidesPerView={4}
               spaceBetween={20}
@@ -224,7 +227,7 @@ export default function Home() {
       </div>
 
       {/* CATEGORY SECTION */}
-      <div className="py-4 md:py-0 flex flex-col gap-6">
+      <div className="py-4 md:py-0 flex flex-col gap-4">
         {/* Header */}
         <SectionHeader
           title="All Categories"
@@ -237,7 +240,13 @@ export default function Home() {
           badgeText="Premium Beauty Collections"
         />
 
-        <div className="relative brand px-4 md:px-0  max-w-7xl mx-auto w-full bg-white shadow py-4 md:py-8 rounded-xl">
+        <div className="relative brand px-4 md:px-0  max-w-7xl mx-auto w-full bg-white shadow py-4 rounded-xl">
+          <div className="px-4">
+            <SectionSubHeader
+              title="Published Categories"
+              helperText="Discover our curated categories"
+            />
+          </div>
           {loading ? (
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 container mx-auto gap-5 md:gap-10">
               {Array.from({ length: 6 }).map((_, index) => (
@@ -294,7 +303,7 @@ export default function Home() {
       </div>
 
       {/* FLASH DEAL */}
-      <div className="px-2 xs:px-6  py-4 lg:py-8 flex flex-col gap-4">
+      <div className="px-2 xs:px-6  py-4 flex flex-col gap-4">
         {/* HEADER */}
         <SectionHeader
           title="Flash Deal"
@@ -310,9 +319,10 @@ export default function Home() {
         {/* CONTENT */}
         <div className="bg-white rounded-xl p-2 md:p-4 relative shadow  max-w-7xl mx-auto w-full">
           <div className="flex justify-between items-center">
-            <h2 className="md:text-xl text-primary dark:text-white font-medium">
-              Flash Deals
-            </h2>
+            <SectionSubHeader
+              title="Flash Deals"
+              helperText="Hurry, deals end soon"
+            />
             {isMounted && <CountdownBox endDate="2025-08-30T23:59:59" />}
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-3">
@@ -418,9 +428,10 @@ export default function Home() {
 
       {/* SKIN CARE SECTION */}
       <div className="px-2 md:px-4 py-4 md:py-8 relative brand  max-w-7xl mx-auto w-full bg-white shadow rounded-xl">
-        <h2 className="md:text-xl text-primary dark:text-white font-medium text-center mb-3">
-          Choose your skin type
-        </h2>
+        <SectionSubHeader
+          title="Skin Type"
+          helperText="Choose your skin type"
+        />
         <div className="relative w-full px-5 md:px-10 mx-auto">
           {/* Arrows */}
           <button className="button-prev-slide-skin size-[28px] md:size-[38px] grid place-items-center absolute top-[45%] left-0 md:left-5 cursor-pointer bg-white shadow-xl border z-30 rounded-full">
@@ -473,7 +484,7 @@ export default function Home() {
       </div>
 
       {/* NEW ARRIVAL */}
-      <div className="px-2 xs:px-6  py-4 lg:py-8 flex flex-col gap-4">
+      <div className="px-2 xs:px-6  py-4 flex flex-col gap-4">
         {/* HEADER */}
         <SectionHeader
           title="New Arrivals"
@@ -489,9 +500,10 @@ export default function Home() {
         {/* CONTENT */}
         <div className="bg-white rounded-xl p-2 md:p-4 relative shadow  max-w-7xl mx-auto w-full">
           <div className="flex justify-between items-center">
-            <h2 className="md:text-xl text-primary dark:text-white font-medium">
-              New Collection
-            </h2>
+            <SectionSubHeader
+              title="New Collection"
+              helperText="Check out the latest products in our collection"
+            />
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-3">
                 <button className="button-prev-slide-new p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-200 cursor-pointer">
@@ -522,7 +534,7 @@ export default function Home() {
           </div>
 
           {/* SWIPER SLIDER FOR BEST SELLING PRODUCTS */}
-          <div className="pt-3 md:pt-6">
+          <div className="pt-3 md:pt-4">
             <Swiper
               slidesPerView={4}
               spaceBetween={20}
@@ -594,8 +606,91 @@ export default function Home() {
         </div>
       </div>
 
+      {/* CATEGORY 1 */}
+      <div className="px-2 xs:px-6 py-4 md:py-8 flex flex-col gap-10">
+        {dummyData?.slice(0, 1)?.map((item, index) => (
+          <div key={index}>
+            {item?.products?.length > 0 ? (
+              <div className="bg-white rounded-xl p-2 md:p-4 relative shadow max-w-7xl mx-auto w-full">
+                <SlideSectionHeader
+                  title={item?.name}
+                  arrowLeft={`button-prev-slide-${item?.slug}`}
+                  arrowRight={`button-next-slide-${item?.slug}`}
+                  btnLink={`/product-category/${item?.slug}`}
+                  btnText="View All"
+                />
+                <div className="grid items-stretch grid-cols-2 gap-5 md:gap-5 mt-4">
+                  <div className="w-full h-full max-h-[390px] col-span-2 lg:col-span-1 overflow-hidden rounded-lg">
+                    <Image
+                      src={`${imageHostName}/storage/${data?.banner?.image_path}${data?.banner?.image}`}
+                      className="object-cover w-full h-full rounded-lg"
+                      loading="lazy"
+                      width={720}
+                      height={720}
+                      alt="Hot Deals Banner"
+                    />
+                  </div>
+                  <div className="col-span-2 lg:col-span-1 relative">
+                    <Swiper
+                      slidesPerView={3}
+                      spaceBetween={20}
+                      autoplay={{
+                        delay: index * 100 + 1800,
+                        disableOnInteraction: true,
+                      }}
+                      pagination={false}
+                      navigation={{
+                        nextEl: `.button-next-slide-${item?.slug}`,
+                        prevEl: `.button-prev-slide-${item?.slug}`,
+                      }}
+                      modules={[Autoplay, Navigation, Pagination]}
+                      breakpoints={{
+                        320: {
+                          slidesPerView: 2,
+                          spaceBetween: 9,
+                        },
+                        375: {
+                          slidesPerView: 2,
+                          spaceBetween: 9,
+                        },
+
+                        425: {
+                          slidesPerView: 2,
+                          spaceBetween: 9,
+                        },
+
+                        576: {
+                          slidesPerView: 3,
+                          spaceBetween: 10,
+                        },
+
+                        768: {
+                          slidesPerView: 3,
+                          spaceBetween: 10,
+                        },
+
+                        1024: {
+                          slidesPerView: 3,
+                          spaceBetween: 18,
+                        },
+                      }}
+                    >
+                      {item?.products?.map((item, index) => (
+                        <SwiperSlide key={index}>
+                          <ProductCard item={item} />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+          </div>
+        ))}
+      </div>
+
       {/* BEST SELLING SECTION */}
-      <div className="px-2 xs:px-6  py-4 lg:py-8 lg:pt-0 flex flex-col gap-4">
+      <div className="px-2 xs:px-6  py-4 lg:pt-0 flex flex-col gap-4">
         {/* HEADER */}
         <SectionHeader
           title="Best Selling Products"
@@ -610,9 +705,10 @@ export default function Home() {
         {/* CONTENT */}
         <div className="bg-white rounded-xl p-2 md:p-4 relative shadow  max-w-7xl mx-auto w-full">
           <div className="flex justify-between items-center">
-            <h2 className="md:text-xl text-primary dark:text-white font-medium">
-              Best Collection
-            </h2>
+            <SectionSubHeader
+              title="Best Selling Products"
+              helperText="Our most-loved skincare essentials"
+            />
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-3">
                 <button className="button-prev-slide-best p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-200 cursor-pointer">
@@ -643,7 +739,7 @@ export default function Home() {
           </div>
 
           {/* SWIPER SLIDER FOR BEST SELLING PRODUCTS */}
-          <div className="pt-3 md:pt-6">
+          <div className="pt-3 md:pt-4">
             <Swiper
               slidesPerView={4}
               spaceBetween={20}
@@ -715,6 +811,89 @@ export default function Home() {
         </div>
       </div>
 
+      {/* CATEGORY 2 */}
+      <div className="px-2 xs:px-6 py-4 md:py-8 flex flex-col gap-10">
+        {dummyData?.slice(1, 2)?.map((item, index) => (
+          <div key={index}>
+            {item?.products?.length > 0 ? (
+              <div className="bg-white rounded-xl p-2 md:p-4 relative shadow max-w-7xl mx-auto w-full">
+                <SlideSectionHeader
+                  title={item?.name}
+                  arrowLeft={`button-prev-slide-${item?.slug}`}
+                  arrowRight={`button-next-slide-${item?.slug}`}
+                  btnLink={`/product-category/${item?.slug}`}
+                  btnText="View All"
+                />
+                <div className="grid items-stretch grid-cols-2 gap-5 md:gap-5 mt-4">
+                  <div className="w-full h-full max-h-[390px] col-span-2 lg:col-span-1 overflow-hidden rounded-lg">
+                    <Image
+                      src={`${imageHostName}/storage/${data?.banner?.image_path}${data?.banner?.image}`}
+                      className="object-cover w-full h-full rounded-lg"
+                      loading="lazy"
+                      width={720}
+                      height={720}
+                      alt="Hot Deals Banner"
+                    />
+                  </div>
+                  <div className="col-span-2 lg:col-span-1 relative">
+                    <Swiper
+                      slidesPerView={3}
+                      spaceBetween={20}
+                      autoplay={{
+                        delay: index * 100 + 1800,
+                        disableOnInteraction: true,
+                      }}
+                      pagination={false}
+                      navigation={{
+                        nextEl: `.button-next-slide-${item?.slug}`,
+                        prevEl: `.button-prev-slide-${item?.slug}`,
+                      }}
+                      modules={[Autoplay, Navigation, Pagination]}
+                      breakpoints={{
+                        320: {
+                          slidesPerView: 2,
+                          spaceBetween: 9,
+                        },
+                        375: {
+                          slidesPerView: 2,
+                          spaceBetween: 9,
+                        },
+
+                        425: {
+                          slidesPerView: 2,
+                          spaceBetween: 9,
+                        },
+
+                        576: {
+                          slidesPerView: 3,
+                          spaceBetween: 10,
+                        },
+
+                        768: {
+                          slidesPerView: 3,
+                          spaceBetween: 10,
+                        },
+
+                        1024: {
+                          slidesPerView: 3,
+                          spaceBetween: 18,
+                        },
+                      }}
+                    >
+                      {item?.products?.map((item, index) => (
+                        <SwiperSlide key={index}>
+                          <ProductCard item={item} />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+          </div>
+        ))}
+      </div>
+
       {/* CATEGORY SECTION */}
       <div className="px-2 xs:px-6 py-4 md:py-0 flex flex-col gap-4">
         <SectionHeader
@@ -725,19 +904,27 @@ export default function Home() {
             bgColor: "bg-indigo-100",
             textColor: "text-indigo-600",
           }}
-          badgeText="Browse All"
+          badgeText="Categories"
         />
 
         {/* TAB & DESKTOP VIEW */}
         <div className="hidden md:block bg-white rounded-xl p-2 md:p-4 relative shadow max-w-7xl mx-auto w-full">
-          <SlideSectionHeader
-            title="All Category Products"
-            arrowLeft=""
-            arrowRight=""
-            btnLink={`/product-category/${data?.laxzin_category?.slug}`}
-            btnText="View All"
-            isDisableSlide={true}
-          />
+          <div className="flex justify-between items-center">
+            <SectionSubHeader
+              title="All Categories Products"
+              helperText="Explore our full range of product categories"
+            />
+            <Link
+              href={`/all-product`}
+              className="rounded-md bg-primary text-white capitalize px-3 py-1 text-xs md:text-base text-nowrap font-medium hover:bg-[#383838] transition-colors duration-200 flex items-center gap-1"
+            >
+              View all
+              <MdChevronRight
+                size={20}
+                className="text-white hidden md:block"
+              />
+            </Link>
+          </div>
           <div className="pt-3 md:pt-4 grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
             {data?.laxzin_category?.products
               ?.slice(0, 10)
@@ -828,9 +1015,9 @@ export default function Home() {
         </div>
       </div>
 
-      {/* PRODUCT CATEGORY WISE SECTION */}
+      {/* CATEGORY 3 AND OTHERS */}
       <div className="px-2 xs:px-6 py-4 md:py-8 flex flex-col gap-10">
-        {dummyData?.map((item, index) => (
+        {dummyData?.slice(2)?.map((item, index) => (
           <div key={index}>
             {item?.products?.length > 0 ? (
               <div className="bg-white rounded-xl p-2 md:p-4 relative shadow max-w-7xl mx-auto w-full">

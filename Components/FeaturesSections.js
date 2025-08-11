@@ -64,7 +64,7 @@ export default function FeaturesSection() {
         <div>
           <Swiper
             modules={[Navigation, Autoplay]}
-            spaceBetween={20}
+            spaceBetween={15}
             slidesPerView={1}
             navigation={{
               nextEl: ".swiper-button-next-custom",
@@ -83,17 +83,17 @@ export default function FeaturesSection() {
               },
               // Small tablets (480px and up)
               480: {
-                slidesPerView: 1,
+                slidesPerView: 2,
                 spaceBetween: 20,
               },
               // Tablets (768px and up)
               768: {
-                slidesPerView: 2,
+                slidesPerView: 3,
                 spaceBetween: 25,
               },
               // Small laptops (1024px and up)
               1024: {
-                slidesPerView: 3,
+                slidesPerView: 4,
                 spaceBetween: 30,
               },
               // Large screens (1280px and up)
@@ -113,15 +113,15 @@ export default function FeaturesSection() {
               const IconComponent = feature.icon;
               return (
                 <SwiperSlide key={index}>
-                  <div className="flex p-4 bg-white rounded-lg shadow-sm border border-slate-200 gap-3 items-center">
-                    <div className="size-12 bg-slate-600 rounded-full flex items-center justify-center">
-                      <IconComponent className="w-6 h-6 text-white" />
+                  <div className="flex p-3 bg-white rounded-lg shadow-sm border border-slate-200 gap-3 items-center">
+                    <div className="p-2 bg-slate-600 rounded-full block items-center justify-center">
+                      <IconComponent className="size-5 text-white" />
                     </div>
                     <div className="flex-grow">
-                      <h3 className="font-semibold text-slate-800 text-base mb-1">
+                      <h3 className="font-semibold text-slate-800 text-sm text-nowrap whitespace-nowrap">
                         {feature.title}
                       </h3>
-                      <p className="text-slate-600 text-sm leading-relaxed">
+                      <p className="text-slate-600 text-sm leading-none">
                         {feature.description}
                       </p>
                     </div>

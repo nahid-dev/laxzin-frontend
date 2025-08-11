@@ -35,7 +35,7 @@ const SlideSectionHeader = ({
               <MdOutlineKeyboardArrowRight size={20} className="text-primary" />
             </button>
           </div>
-        ):null}
+        ) : null}
 
         <Link
           href={btnLink}
