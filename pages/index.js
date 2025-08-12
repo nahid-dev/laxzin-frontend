@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-import { Autoplay, Navigation, Pagination, EffectFade } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import ProductCard from "@/Components/ProductDetails/ProductCard";
@@ -16,20 +16,26 @@ import request from "@/lib/request";
 
 import Image from "next/image";
 import Link from "next/link";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import PublishedCategoryCard from "@/Components/PublishedCategoryCard";
 import { IoSparkles } from "react-icons/io5";
-import LazyImage from "@/Components/LazyImage";
-import Loader from "@/Components/Loader";
 import { FaBolt, FaLeaf, FaStar, FaTags, FaThLarge } from "react-icons/fa";
 import SectionHeader from "@/Components/SectionHeader";
 import SlideSectionHeader from "@/Components/SlideSectionHeader";
-import FeaturesSection from "@/Components/FeaturesSections";
+import TrustBadgeSection from "@/Components/TrustBadgeSection";
 import { dummyData, skinCareData } from "@/options";
 
 import CountdownBox from "@/Components/CountdownBox";
 import SectionSubHeader from "@/Components/SectionSubHeader";
+import HeroSection from "@/Components/Home/HeroSection";
+import FeatureSection from "@/Components/Home/FeatureSection";
+import CategoryBanner from "@/Components/Home/CategoryBanner";
+import BestSellersSection from "@/Components/Home/BestSellersSection";
+import LimitedEdition from "@/Components/Home/LimitedEdition";
+import TrendingNowSection from "@/Components/Home/TrendingNowSection";
+import OurStorySection from "@/Components/Home/OurStorySection";
+import ContactUsSection from "@/Components/Home/ContuctUsSection";
 
 export default function Home() {
   const [step, setStep] = useState("featured");
@@ -37,6 +43,10 @@ export default function Home() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
+
+  const featureProducts = data?.featured_products || [];
+  const bestSellers = data?.best_selling_products || [];
+  const popularProducts = data?.popular_products || [];
 
   useEffect(() => {
     let fetchData = async () => {
@@ -64,246 +74,57 @@ export default function Home() {
   return (
     <main className="min-h-[700px]">
       {/* HERO SLIDER SECTION */}
-      <div>
-        {loading ? (
-          <Loader />
-        ) : (
-          <Swiper
-            slidesPerView={1}
-            effect="fade"
-            autoplay={{
-              delay: 2200,
-              disableOnInteraction: true,
-            }}
-            pagination={true}
-            navigation={{
-              nextEl: ".button-next-slide",
-              prevEl: ".button-prev-slide",
-            }}
-            loop={true}
-            modules={[Autoplay, Navigation, Pagination, EffectFade]}
-          >
-            {slider?.map((slide, index) => (
-              <SwiperSlide key={index}>
-                <div className="md:h-[700px] sm:h-[500px] xs:h-[350px] h-[200px] w-full">
-                  <Suspense fallback={<Loader />}>
-                    <LazyImage
-                      width={2000}
-                      height={100}
-                      alt="slider"
-                      priority
-                      src={`${imageHostName}/storage/${slide?.image_path}${slide?.image}`}
-                      className="h-full w-full object-fill"
-                    />
-                  </Suspense>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        )}
-      </div>
-
-      {/* COMBO SECTION */}
-      <div className="px-2 xs:px-6  py-4 flex flex-col gap-4">
-        {/* HEADER */}
-        <SectionHeader
-          title="Combo Offers"
-          helperText="Grab the best bundle deals and save more"
-          icon={<FaTags size={14} className="text-green-600" />} // tag = deals/discounts
-          badgeTheme={{
-            bgColor: "bg-green-100",
-            textColor: "text-green-600",
-          }}
-          badgeText="Special Deals"
+      <HeroSection
+        loading={loading}
+        imageHostName={imageHostName}
+        slider={slider}
+      />
+      {/* TRUST BADGE SECTION */}
+      <TrustBadgeSection />
+      {/* FEATURE SECTION */}
+      <FeatureSection featureProducts={featureProducts} loading={loading} />
+      {/* Category Banners */}
+      <section className="grid grid-cols-1 lg:grid-cols-2">
+        <CategoryBanner
+          title="HAIR CARE"
+          subtitle="Nourish. Strengthen. Shine."
+          image="/natural-hair-care-woman-bw.png"
+          bgColor="bg-black"
         />
-
-        {/* CONTENT */}
-        <div className="bg-white rounded-xl p-2 md:p-4 relative shadow  max-w-7xl mx-auto w-full">
-          <div className="flex justify-between items-center">
-            <SectionSubHeader
-              title="Combo Offers"
-              helperText="Bundle deals & savings"
-            />
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-3">
-                <button className="button-prev-slide-combo p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-200 cursor-pointer">
-                  <MdOutlineKeyboardArrowLeft
-                    size={20}
-                    className="text-primary"
-                  />
-                </button>
-
-                <button className="button-next-slide-combo p-1 md:p-1.5 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-20 cursor-pointer">
-                  <MdOutlineKeyboardArrowRight
-                    size={20}
-                    className="text-primary"
-                  />
-                </button>
-              </div>
-              <Link
-                href={`/combo-product`}
-                className="rounded-md bg-primary text-white capitalize px-3 py-1 text-xs md:text-base text-nowrap font-medium hover:bg-[#383838] transition-colors duration-200 flex items-center gap-1"
-              >
-                View all
-                <MdChevronRight
-                  size={20}
-                  className="text-white hidden md:block"
-                />
-              </Link>
-            </div>
-          </div>
-
-          {/* SWIPER SLIDER FOR BEST SELLING PRODUCTS */}
-          <div className="pt-3">
-            <Swiper
-              slidesPerView={4}
-              spaceBetween={20}
-              autoplay={{
-                delay: 2300,
-                disableOnInteraction: true,
-              }}
-              pagination={false}
-              navigation={{
-                nextEl: ".button-next-slide-combo",
-                prevEl: ".button-prev-slide-combo",
-              }}
-              modules={[Autoplay, Navigation, Pagination]}
-              breakpoints={{
-                320: {
-                  slidesPerView: 1,
-                  spaceBetween: 9,
-                },
-                375: {
-                  slidesPerView: 2,
-                  spaceBetween: 9,
-                },
-
-                425: {
-                  slidesPerView: 2,
-                  spaceBetween: 9,
-                },
-
-                576: {
-                  slidesPerView: 2,
-                  spaceBetween: 10,
-                },
-
-                768: {
-                  slidesPerView: 3,
-                  spaceBetween: 10,
-                },
-
-                1024: {
-                  slidesPerView: 4,
-                  spaceBetween: 18,
-                },
-
-                1280: {
-                  slidesPerView: 4,
-                  spaceBetween: 18,
-                },
-                1440: {
-                  slidesPerView: 5,
-                  spaceBetween: 18,
-                },
-                1820: {
-                  slidesPerView: 5,
-                  spaceBetween: 18,
-                },
-                2000: {
-                  slidesPerView: 6,
-                  spaceBetween: 18,
-                },
-              }}
-            >
-              {data?.best_selling_products?.map((item, index) => (
-                <SwiperSlide key={index}>
-                  <ProductCard item={item} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        </div>
-      </div>
-
-      {/* CATEGORY SECTION */}
-      <div className="py-4 md:py-0 flex flex-col gap-4">
-        {/* Header */}
-        <SectionHeader
-          title="All Categories"
-          helperText="Explore our full range of product categories"
-          icon={<IoSparkles size={14} className="text-pink-600" />}
-          badgeTheme={{
-            bgColor: "bg-pink-100",
-            textColor: "text-pink-600",
-          }}
-          badgeText="Premium Beauty Collections"
+        <CategoryBanner
+          title="SKIN CARE"
+          subtitle="Hydrate. Protect. Glow."
+          image="/glowing-skin-serum-bw.png"
+          bgColor="bg-gray-900"
         />
-
-        <div className="relative brand px-4 md:px-0  max-w-7xl mx-auto w-full bg-white shadow py-4 rounded-xl">
-          <div className="px-4">
-            <SectionSubHeader
-              title="Published Categories"
-              helperText="Discover our curated categories"
-            />
-          </div>
-          {loading ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 container mx-auto gap-5 md:gap-10">
-              {Array.from({ length: 6 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-100 h-[150px] w-full rounded-lg animate-pulse"
-                ></div>
-              ))}
-            </div>
-          ) : (
-            <div className="relative w-full px-5 md:px-10 mx-auto">
-              {/* Arrows */}
-              <button className="button-prev-slide-brand size-[28px] md:size-[38px] grid place-items-center absolute top-[45%] left-0 md:left-5 cursor-pointer bg-white shadow-xl border z-30 rounded-full">
-                <MdOutlineKeyboardArrowLeft size={20} className="text-black" />
-              </button>
-
-              <Swiper
-                slidesPerView="auto"
-                spaceBetween={20}
-                loop={true}
-                autoplay={{
-                  delay: 2200,
-                  disableOnInteraction: false,
-                }}
-                navigation={{
-                  nextEl: ".button-next-slide-brand",
-                  prevEl: ".button-prev-slide-brand",
-                }}
-                modules={[Autoplay, Navigation]}
-                className="pl-2 pr-2"
-              >
-                {data?.laxzin_published_category?.map((item, index) => (
-                  <SwiperSlide key={index} className="!w-fit">
-                    <Link href={`/product-list/${item?.slug}`}>
-                      <div className="group rounded-2xl border border-gray-100 hover:border-gray-200 transition-all duration-300 hover:shadow-2xl hover:shadow-gray-200/50 cursor-pointer transform hover:-translate-y-1 w-fit p-3 pt-0 pb-6">
-                        <PublishedCategoryCard item={item} />
-                        <div>
-                          <h3 className="text-sm md:text-base font-semibold text-gray-600 text-center group-hover:text-gray-900 transition-colors duration-300">
-                            {item?.name}
-                          </h3>
-                        </div>
-                      </div>
-                    </Link>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-
-              <button className="button-next-slide-brand size-[28px] md:size-[38px] grid place-items-center absolute top-[45%] right-0 md:right-5 cursor-pointer bg-white shadow-xl border z-30 rounded-full">
-                <MdOutlineKeyboardArrowRight size={20} className="text-black" />
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
+      </section>
+      <section className="grid grid-cols-1 lg:grid-cols-2">
+        <CategoryBanner
+          title="MAKEUP"
+          subtitle="Enhance. Define. Express."
+          image="/natural-makeup-bw.png"
+          bgColor="bg-gray-800"
+        />
+        <CategoryBanner
+          title="BODY CARE"
+          subtitle="Pamper. Soften. Rejuvenate."
+          image="/image/placeholder.png"
+          bgColor="bg-gray-700"
+        />
+      </section>
+      {/* BEST SELLING */}
+      <BestSellersSection bestSellers={bestSellers} loading={loading} />
+      {/* LIMITED EDITION */}
+      <LimitedEdition limitedEdition={popularProducts} />
+      {/* TRENDING PRODUCTS */}
+      <TrendingNowSection trendingProducts={featureProducts} />
+      {/* OUR STORY SECTION */}
+      <OurStorySection />
+      {/* CONTACT US SECTION */}
+      <ContactUsSection />
 
       {/* FLASH DEAL */}
-      <div className="px-2 xs:px-6  py-4 flex flex-col gap-4">
+      <div className=" px-2 xs:px-6  py-4 flex flex-col gap-4 hidden">
         {/* HEADER */}
         <SectionHeader
           title="Flash Deal"
@@ -427,7 +248,7 @@ export default function Home() {
       </div>
 
       {/* SKIN CARE SECTION */}
-      <div className="px-2 md:px-4 py-4 md:py-8 relative brand  max-w-7xl mx-auto w-full bg-white shadow rounded-xl">
+      <div className="px-2 md:px-4 py-4 md:py-8 relative brand  max-w-7xl mx-auto w-full bg-white shadow rounded-xl hidden hidden">
         <SectionSubHeader
           title="Skin Type"
           helperText="Choose your skin type"
@@ -484,7 +305,7 @@ export default function Home() {
       </div>
 
       {/* NEW ARRIVAL */}
-      <div className="px-2 xs:px-6  py-4 flex flex-col gap-4">
+      <div className="px-2 xs:px-6  py-4 flex flex-col gap-4 hidden">
         {/* HEADER */}
         <SectionHeader
           title="New Arrivals"
@@ -607,7 +428,7 @@ export default function Home() {
       </div>
 
       {/* CATEGORY 1 */}
-      <div className="px-2 xs:px-6 py-4 md:py-8 flex flex-col gap-10">
+      <div className="px-2 xs:px-6 py-4 md:py-8 flex flex-col gap-10 hidden">
         {dummyData?.slice(0, 1)?.map((item, index) => (
           <div key={index}>
             {item?.products?.length > 0 ? (
@@ -690,7 +511,7 @@ export default function Home() {
       </div>
 
       {/* BEST SELLING SECTION */}
-      <div className="px-2 xs:px-6  py-4 lg:pt-0 flex flex-col gap-4">
+      <div className="px-2 xs:px-6  py-4 lg:pt-0 flex flex-col gap-4 hidden">
         {/* HEADER */}
         <SectionHeader
           title="Best Selling Products"
@@ -812,7 +633,7 @@ export default function Home() {
       </div>
 
       {/* CATEGORY 2 */}
-      <div className="px-2 xs:px-6 py-4 md:py-8 flex flex-col gap-10">
+      <div className="px-2 xs:px-6 py-4 md:py-8 flex flex-col gap-10 hidden">
         {dummyData?.slice(1, 2)?.map((item, index) => (
           <div key={index}>
             {item?.products?.length > 0 ? (
@@ -895,7 +716,7 @@ export default function Home() {
       </div>
 
       {/* CATEGORY SECTION */}
-      <div className="px-2 xs:px-6 py-4 md:py-0 flex flex-col gap-4">
+      <div className="px-2 xs:px-6 py-4 md:py-0 flex flex-col gap-4 hidden">
         <SectionHeader
           title="All Categories"
           helperText="Explore our full range of product categories"
@@ -1016,7 +837,7 @@ export default function Home() {
       </div>
 
       {/* CATEGORY 3 AND OTHERS */}
-      <div className="px-2 xs:px-6 py-4 md:py-8 flex flex-col gap-10">
+      <div className="px-2 xs:px-6 py-4 md:py-8 flex flex-col gap-10 hidden">
         {dummyData?.slice(2)?.map((item, index) => (
           <div key={index}>
             {item?.products?.length > 0 ? (
@@ -1098,7 +919,7 @@ export default function Home() {
         ))}
       </div>
       {/* CONTACT US SECTION */}
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto hidden">
         <Image
           src={`https://admin.parisbeautybd.com/storage/banner/1754735292.png`}
           className="object-cover w-full h-full rounded-lg"
@@ -1108,7 +929,6 @@ export default function Home() {
           alt="Contact Us Banner"
         />
       </div>
-      <FeaturesSection />
     </main>
   );
 }

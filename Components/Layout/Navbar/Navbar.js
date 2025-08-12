@@ -15,6 +15,7 @@ import Image from "next/image";
 import { AiOutlineUser } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { useEffect, useState } from "react";
+import Button from "@/Components/Common/Button";
 
 const Navbar = ({ catData, contactInfo }) => {
   const {
@@ -91,15 +92,18 @@ const Navbar = ({ catData, contactInfo }) => {
     <div
       className={`w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? "fixed top-0 bg-white shadow-md"
-          : "absolute top-0 bg-transparent"
+          ? "sticky top-0 bg-white/95 backdrop-blur-md"
+          : "absolute top-0"
       }`}
     >
       <header id="header" className={`py-2 px-2 w-full  z-10`}>
         {/* DESKTOP NAVBAR */}
-        <div className="hidden md:flex justify-between items-center px-6 max-w-7xl mx-auto">
+        <div className="hidden md:flex justify-between items-center max-w-7xl mx-auto">
           {/* BRAND LOGO */}
-          <div onClick={() => router.push("/")} className="w-[140px] h-[60px]">
+          <div
+            onClick={() => router.push("/")}
+            className="w-[140px] h-[60px] -ml-5"
+          >
             {isScrolled ? (
               <Image
                 src={
@@ -135,14 +139,21 @@ const Navbar = ({ catData, contactInfo }) => {
                 <li key={index}>
                   <Link
                     href={`/product-list/${item?.slug}`}
-                    className="group relative flex space-x-2 items-center cursor-pointer   list-none"
+                    className="group relative flex space-x-2 items-center cursor-pointer list-none"
                   >
                     <p
-                      className={`uppercase text-sm font-medium ${
-                        isScrolled ? "text-primary" : "text-white"
-                      } hover:text-secondary`}
+                      className={`uppercase text-sm font-light tracking-[0.1em] ${
+                        isScrolled
+                          ? "text-primary hover:text-gray-600"
+                          : "text-white hover:text-gray-200"
+                      }  relative group`}
                     >
                       {item?.name}
+                      <div
+                        className={`absolute -bottom-1 left-0 w-full h-px transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${
+                          isScrolled ? "bg-black" : "bg-white"
+                        }`}
+                      ></div>
                     </p>
 
                     {item?.nav_sub_categories?.length > 0 ? (
@@ -182,22 +193,26 @@ const Navbar = ({ catData, contactInfo }) => {
               <FiSearch
                 size={25}
                 className={`${
-                  isScrolled ? "text-primary" : "text-white"
-                } cursor-pointer hover:text-secondary`}
+                  isScrolled
+                    ? "text-gray-800 hover:text-gray-600"
+                    : "text-white hover:text-gray-100"
+                } cursor-pointer `}
               />
             </div>
             {/* USER PROFILE */}
             <div
               className={`flex items-center justify-center space-x-2 ${
-                isScrolled ? "text-primary" : "text-white"
+                isScrolled ? "text-gray-800" : "text-white"
               }`}
             >
               {!token ? (
                 <Link
                   href={`/auth`}
                   className={`flex items-center gap-1 ${
-                    isScrolled ? "text-primary" : "text-white"
-                  } hover:text-secondary`}
+                    isScrolled
+                      ? "text-gray-800 hover:text-gray-600"
+                      : "text-white hover:text-gray-100"
+                  } `}
                 >
                   <div>
                     <AiOutlineUser size={25} />
@@ -228,15 +243,19 @@ const Navbar = ({ catData, contactInfo }) => {
                 <SlHandbag
                   size={25}
                   className={`${
-                    isScrolled ? "text-primary" : "text-white"
-                  } cursor-pointer group-hover:text-secondary`}
+                    isScrolled
+                      ? "text-gray-800 group-hover:text-gray-600"
+                      : "text-white hover:text-gray-100"
+                  } cursor-pointer `}
                 />
               </div>
 
-              <div className="bg-black rounded-full text-white text-[10px] w-[18px] h-[18px] flex items-center justify-center absolute top-[-13px] right-[-9px] group-hover:text-secondary">
+              <div className="bg-black rounded-full text-white text-[10px] w-[18px] h-[18px] flex items-center justify-center absolute top-[-13px] right-[-9px]">
                 {cartItems?.length}
               </div>
             </div>
+            {/* SHOP NOW BUTTON */}
+            {!token ? <Button className="md:ml-5">SHOP NOW</Button> : null}
           </div>
         </div>
 
@@ -255,12 +274,13 @@ const Navbar = ({ catData, contactInfo }) => {
 
           <div className="flex space-x-4 items-center">
             <div onClick={() => handleSearch()}>
-              <IoSearchOutline size={25} className={`text-white`} />
+              <IoSearchOutline size={25} className={`text-black`} />
             </div>
             <div onClick={() => setDrawerOpen(true)}>
-              <RxHamburgerMenu size={25} className="text-white" />
+              <RxHamburgerMenu size={25} className="text-black" />
             </div>
           </div>
+          {/* {!token ? <Button size="sm">SHOP NOW</Button> : null} */}
         </div>
       </header>
     </div>

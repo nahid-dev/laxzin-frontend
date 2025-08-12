@@ -1,5 +1,3 @@
-
-
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -25,11 +23,11 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: "#1f1f1f",
+        primary: "#000",
         secondary: "#FFE198",
       },
       fontFamily: {
-        body: ["Montserrat", "sans-serif"],
+        body: ["Geist", "sans-serif"],
       },
     },
   },

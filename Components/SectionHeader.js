@@ -1,19 +1,35 @@
 import React from "react";
 
-const SectionHeader = ({icon,badgeTheme, badgeText, title, helperText}) => {
+const SectionHeader = ({ title, className, subtitle }) => {
   return (
-    <div className="text-center flex flex-col gap-1 items-center  max-w-7xl mx-auto w-full">
-      <div
-        className={`inline-flex gap-2 items-center justify-center ${badgeTheme.bgColor} ${badgeTheme.textColor} px-4 py-1.5 rounded-full text-[10px] md:text-xs font-medium`}
-      >
-        {icon} {badgeText}
+    <div className={`text-center mb-6 md:mb-10 lg:mb-16 ${className}`}>
+      {/* Decorative line with geometric elements */}
+      <div className="flex items-center justify-center mb-3 md:mb-8">
+        <div className="flex items-center space-x-2">
+          <div className="w-8 h-px bg-gradient-to-r from-transparent to-black"></div>
+          <div className="size-1 md:size-2 bg-black transform rotate-45"></div>
+          <div className="w-16 h-px bg-black"></div>
+          <div className="size-2 md:size-3 border border-black transform rotate-45"></div>
+          <div className="w-16 h-px bg-black"></div>
+          <div className="size-1 md:size-2 bg-black transform rotate-45"></div>
+          <div className="w-8 h-px bg-gradient-to-l from-transparent to-black"></div>
+        </div>
       </div>
-      {/* <h2 className="font-semibold text-primary dark:text-white text-xl lg:text-2xl !leading-none">
+
+      {/* Main title with gradient text and hover effect */}
+      <h2 className="text-xl md:text-4xl lg:text-5xl font-thin  mb-6 tracking-[0.15em] sm:tracking-[0.25em] bg-gradient-to-r from-gray-600 via-black to-gray-600 bg-clip-text text-transparent relative transition-all duration-500 hover:bg-gradient-to-r hover:from-black hover:via-gray-600 hover:to-black">
         {title}
+        {/* Underline accent */}
+        <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-20 h-px bg-gradient-to-r from-transparent via-black to-transparent"></div>
+        <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-black rounded-full"></div>
       </h2>
-      <p className="max-w-2xl mx-auto text-gray-600 dark:text-white">
-        {helperText}
-      </p> */}
+
+      {/* Subtitle */}
+      {subtitle && (
+        <p class="text-gray-600 text-base sm:text-lg font-light tracking-[0.1em] mt-6 sm:mt-8 px-4">
+          {subtitle}
+        </p>
+      )}
     </div>
   );
 };
