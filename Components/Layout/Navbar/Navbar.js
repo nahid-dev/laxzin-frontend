@@ -93,7 +93,7 @@ const Navbar = ({ catData, contactInfo }) => {
 
   return (
     <div
-      className={`w-full z-50 transition-all duration-300 ${
+      className={`w-full z-50 transition-all duration-300 border-b ${
         isHomePage
           ? isScrolled
             ? "sticky top-0 bg-white/95 backdrop-blur-md"

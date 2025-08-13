@@ -238,7 +238,7 @@ const ImageGallery = ({
 
   return (
     <div>
-      <div className="bg-white col-span-1 p-2 md:grid hidden grid-cols-6 gap-8 rounded-l-md shadow-md   sm:gap-0 sm:rounded-sm ">
+      <div className="bg-white col-span-1 p-2 md:grid hidden grid-cols-6 gap-8 border sm:gap-0 sm:rounded-sm !rounded-xl">
         <div className="mt-10">
           <div>
             {data?.product_variation_status == 1 ? (
