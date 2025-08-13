@@ -124,7 +124,7 @@ export default function Home() {
       <ContactUsSection />
 
       {/* FLASH DEAL */}
-      <div className=" px-2 xs:px-6  py-4 flex flex-col gap-4 hidden">
+      <div className=" px-2 xs:px-6  py-4 flex-col gap-4 hidden">
         {/* HEADER */}
         <SectionHeader
           title="Flash Deal"
@@ -248,7 +248,7 @@ export default function Home() {
       </div>
 
       {/* SKIN CARE SECTION */}
-      <div className="px-2 md:px-4 py-4 md:py-8 relative brand  max-w-7xl mx-auto w-full bg-white shadow rounded-xl hidden hidden">
+      <div className="px-2 md:px-4 py-4 md:py-8 relative brand  max-w-7xl mx-auto w-full bg-white shadow rounded-xl hidden">
         <SectionSubHeader
           title="Skin Type"
           helperText="Choose your skin type"
@@ -305,7 +305,7 @@ export default function Home() {
       </div>
 
       {/* NEW ARRIVAL */}
-      <div className="px-2 xs:px-6  py-4 flex flex-col gap-4 hidden">
+      <div className="px-2 xs:px-6  py-4 flex-col gap-4 hidden">
         {/* HEADER */}
         <SectionHeader
           title="New Arrivals"
@@ -428,7 +428,7 @@ export default function Home() {
       </div>
 
       {/* CATEGORY 1 */}
-      <div className="px-2 xs:px-6 py-4 md:py-8 flex flex-col gap-10 hidden">
+      <div className="px-2 xs:px-6 py-4 md:py-8  flex-col gap-10 hidden">
         {dummyData?.slice(0, 1)?.map((item, index) => (
           <div key={index}>
             {item?.products?.length > 0 ? (
@@ -511,7 +511,7 @@ export default function Home() {
       </div>
 
       {/* BEST SELLING SECTION */}
-      <div className="px-2 xs:px-6  py-4 lg:pt-0 flex flex-col gap-4 hidden">
+      <div className="px-2 xs:px-6  py-4 lg:pt-0 flex-col gap-4 hidden">
         {/* HEADER */}
         <SectionHeader
           title="Best Selling Products"
@@ -633,7 +633,7 @@ export default function Home() {
       </div>
 
       {/* CATEGORY 2 */}
-      <div className="px-2 xs:px-6 py-4 md:py-8 flex flex-col gap-10 hidden">
+      <div className="px-2 xs:px-6 py-4 md:py-8 flex-col gap-10 hidden">
         {dummyData?.slice(1, 2)?.map((item, index) => (
           <div key={index}>
             {item?.products?.length > 0 ? (
@@ -716,7 +716,7 @@ export default function Home() {
       </div>
 
       {/* CATEGORY SECTION */}
-      <div className="px-2 xs:px-6 py-4 md:py-0 flex flex-col gap-4 hidden">
+      <div className="px-2 xs:px-6 py-4 md:py-0  flex-col gap-4 hidden">
         <SectionHeader
           title="All Categories"
           helperText="Explore our full range of product categories"
@@ -837,7 +837,7 @@ export default function Home() {
       </div>
 
       {/* CATEGORY 3 AND OTHERS */}
-      <div className="px-2 xs:px-6 py-4 md:py-8 flex flex-col gap-10 hidden">
+      <div className="px-2 xs:px-6 py-4 md:py-8 flex-col gap-10 hidden">
         {dummyData?.slice(2)?.map((item, index) => (
           <div key={index}>
             {item?.products?.length > 0 ? (
@@ -917,17 +917,6 @@ export default function Home() {
             ) : null}
           </div>
         ))}
-      </div>
-      {/* CONTACT US SECTION */}
-      <div className="max-w-7xl mx-auto hidden">
-        <Image
-          src={`https://admin.parisbeautybd.com/storage/banner/1754735292.png`}
-          className="object-cover w-full h-full rounded-lg"
-          loading="lazy"
-          width={1280}
-          height={720}
-          alt="Contact Us Banner"
-        />
       </div>
     </main>
   );
