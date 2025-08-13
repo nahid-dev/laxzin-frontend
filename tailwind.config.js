@@ -1,5 +1,3 @@
-
-
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -29,7 +27,7 @@ module.exports = {
         secondary: "#FFE198",
       },
       fontFamily: {
-        body: ["Barlow", "sans-serif"],
+        body: ["Geist", "sans-serif"],
       },
     },
   },

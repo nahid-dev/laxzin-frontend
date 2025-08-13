@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 const PublishedCategoryCard = ({ item }) => {
   const [isOptimizedImage, setIsOptimizedImage] = useState(true);
   return (
-    <div className="my-2 relative md:h-[160px] md:w-[160px] sm:w-[90px] sm:h-[100px] w-[70px] h-[50px] mx-auto">
+    <div className="my-2 relative md:h-[100px] md:w-[120px] sm:w-[90px] sm:h-[100px] w-[70px] h-[50px] mx-auto">
       <Image
         className="h-full w-full object-contain"
         src={
