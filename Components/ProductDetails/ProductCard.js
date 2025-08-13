@@ -93,7 +93,7 @@ const ProductCard = ({
 
   return (
     <div className="group">
-      <div className="bg-white rounded-b-none flex flex-col overflow-hidden">
+      <div className="rounded-b-none flex flex-col overflow-hidden">
         <Link href={`/product/${item?.slug}`} className="relative group">
           {item?.image?.length > 0 ? (
             <div

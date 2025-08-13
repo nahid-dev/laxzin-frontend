@@ -18,8 +18,11 @@ import {
   FaPhoneAlt,
   FaYoutube,
 } from "react-icons/fa";
-import { BsInstagram } from "react-icons/bs";
 import { IoMdMail } from "react-icons/io";
+
+const COL_HEADER_STYLE = "text-lg font-light text-white";
+const ITEM_STYLE =
+  "inline text-sm font-light text-gray-400 hover:text-white w-fit cursor-pointer";
 
 const quickLInks = [
   { name: "About Us", link: "/about-us" },
@@ -38,7 +41,6 @@ const otherLinks = [
 const Footer = ({ contactInfo }) => {
   const { token, setaccountMenu } = useStatus();
   const [data, setData] = useState({});
-  // const [trackingModal, setTrackingModal] = useState(false);
 
   const router = useRouter();
 
@@ -49,10 +51,6 @@ const Footer = ({ contactInfo }) => {
     };
     getData();
   }, [1]);
-
-  // const handleOpen = () => {
-  //   setTrackingModal(true);
-  // };
 
   const handleRoute = () => {
     if (!token) {
@@ -95,7 +93,7 @@ const Footer = ({ contactInfo }) => {
                 />
               </div>
 
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-gray-400 text-sm font-light leading-relaxed">
                 Your trusted partner for premium beauty and skincare products in
                 Bangladesh. We bring you the finest quality cosmetics for your
                 daily beauty routine.
@@ -104,14 +102,10 @@ const Footer = ({ contactInfo }) => {
 
             {/* Quick Links */}
             <div className="space-y-4 md:pl-10">
-              <h3 className="text-lg font-semibold text-white">Quick Links</h3>
+              <h3 className={COL_HEADER_STYLE}>Quick Links</h3>
               <div className="flex flex-col gap-3">
                 {quickLInks.map((link, index) => (
-                  <Link
-                    key={index}
-                    href={link?.link}
-                    className="inline text-gray-300 hover:text-secondary w-fit"
-                  >
+                  <Link key={index} href={link?.link} className={ITEM_STYLE}>
                     {link?.name}
                   </Link>
                 ))}
@@ -120,37 +114,28 @@ const Footer = ({ contactInfo }) => {
 
             {/* My Account */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white">My Account</h3>
+              <h3 className={COL_HEADER_STYLE}>My Account</h3>
               <div className="flex flex-col gap-3">
                 <div
                   onClick={() => router.push("/auth")}
-                  className="inline text-gray-300 hover:text-secondary cursor-pointer w-fit"
+                  className={ITEM_STYLE}
                 >
                   <div className="">Login</div>
                 </div>
-                <div
-                  onClick={() => handleRouteOrder()}
-                  className="inline text-gray-300 hover:text-secondary cursor-pointer w-fit"
-                >
+                <div onClick={() => handleRouteOrder()} className={ITEM_STYLE}>
                   <div className="">Order History</div>
                 </div>
-                <div
-                  onClick={() => handleRoute()}
-                  className="inline text-gray-300 hover:text-secondary cursor-pointer w-fit"
-                >
+                <div onClick={() => handleRoute()} className={ITEM_STYLE}>
                   <div className="">My Wishlist</div>
                 </div>
                 {/* <div
                   onClick={() => handleOpen()}
-                  className="inline text-gray-300 hover:text-secondary cursor-pointer"
+                  className="inline text-gray-300 hover:text-white cursor-pointer"
                 >
                   <div className="">Track Order</div>
                 </div> */}
                 <div className="py-1 flex gap-3">
-                  <Link
-                    href={"/faq"}
-                    className="inline text-gray-300 hover:text-secondary cursor-pointer w-fit"
-                  >
+                  <Link href={"/faq"} className={ITEM_STYLE}>
                     Faq
                   </Link>
                 </div>
@@ -159,14 +144,10 @@ const Footer = ({ contactInfo }) => {
 
             {/* OTHER Links */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white">Other Links</h3>
+              <h3 className={COL_HEADER_STYLE}>Other Links</h3>
               <div className="flex flex-col gap-3">
                 {otherLinks.map((link, index) => (
-                  <Link
-                    key={index}
-                    href="#"
-                    className="inline text-gray-300 hover:text-secondary w-fit"
-                  >
+                  <Link key={index} href="#" className={ITEM_STYLE}>
                     {link?.name}
                   </Link>
                 ))}
@@ -175,21 +156,27 @@ const Footer = ({ contactInfo }) => {
 
             {/* Contact Info */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white">Contact Info</h3>
+              <h3 className={COL_HEADER_STYLE}>Contact Info</h3>
               <div className="flex flex-col gap-3">
                 <div className="flex items-center gap-3">
                   <FaPhoneAlt className="size-5 text-white" />
-                  <span className="text-gray-300">{data?.phone}</span>
+                  <span className="text-sm font-light text-gray-400">
+                    {data?.phone}
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <IoMdMail className="size-5 text-white" />
-                  <span className="text-gray-300">{data?.email}</span>
+                  <span className="text-sm font-light text-gray-400">
+                    {data?.email}
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <span>
                     <FaMapMarkerAlt className="size-5 text-white mt-1" />
                   </span>
-                  <span className="text-gray-300">{data?.address}</span>
+                  <span className="text-sm font-light text-gray-400">
+                    {data?.address}
+                  </span>
                 </div>
               </div>
             </div>
@@ -258,7 +245,7 @@ const Footer = ({ contactInfo }) => {
           {/* App Promotion Section */}
           <div className="py-4 border-y border-gray-600">
             <div className="flex flex-col xs:flex-row justify-center items-center gap-3 md:gap-10">
-              <div className="text-lg font-semibold text-white text-center md:text-left">
+              <div className="text-lg font-light tracking-wider text-white text-center md:text-left">
                 Let&apos;s Do Beauty & Grooming Together
               </div>
 

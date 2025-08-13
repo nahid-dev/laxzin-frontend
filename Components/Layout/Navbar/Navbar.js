@@ -16,6 +16,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import Button from "@/Components/Common/Button";
+import { usePathname } from "next/navigation";
 
 const Navbar = ({ catData, contactInfo }) => {
   const {
@@ -33,6 +34,8 @@ const Navbar = ({ catData, contactInfo }) => {
   } = useStatus();
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathName = usePathname();
+  const isHomePage = pathName === "/";
 
   const isDevelopment = process.env.NEXT_PUBLIC_MODE === "development";
 
@@ -91,9 +94,11 @@ const Navbar = ({ catData, contactInfo }) => {
   return (
     <div
       className={`w-full z-50 transition-all duration-300 ${
-        isScrolled
-          ? "sticky top-0 bg-white/95 backdrop-blur-md"
-          : "absolute top-0"
+        isHomePage
+          ? isScrolled
+            ? "sticky top-0 bg-white/95 backdrop-blur-md"
+            : "absolute top-0"
+          : "sticky top-0 bg-white/95 backdrop-blur-md"
       }`}
     >
       <header id="header" className={`py-2 px-2 w-full  z-10`}>
@@ -104,7 +109,7 @@ const Navbar = ({ catData, contactInfo }) => {
             onClick={() => router.push("/")}
             className="w-[140px] h-[60px] -ml-5"
           >
-            {isScrolled ? (
+            {isScrolled || !isHomePage ? (
               <Image
                 src={
                   isDevelopment
@@ -143,7 +148,7 @@ const Navbar = ({ catData, contactInfo }) => {
                   >
                     <p
                       className={`uppercase text-sm font-light tracking-[0.1em] ${
-                        isScrolled
+                        isScrolled || !isHomePage
                           ? "text-primary hover:text-gray-600"
                           : "text-white hover:text-gray-200"
                       }  relative group`}
@@ -193,23 +198,23 @@ const Navbar = ({ catData, contactInfo }) => {
               <FiSearch
                 size={25}
                 className={`${
-                  isScrolled
+                  isScrolled || !isHomePage
                     ? "text-gray-800 hover:text-gray-600"
                     : "text-white hover:text-gray-100"
-                } cursor-pointer `}
+                } cursor-pointer`}
               />
             </div>
             {/* USER PROFILE */}
             <div
               className={`flex items-center justify-center space-x-2 ${
-                isScrolled ? "text-gray-800" : "text-white"
+                isScrolled || !isHomePage ? "text-gray-800" : "text-white"
               }`}
             >
               {!token ? (
                 <Link
                   href={`/auth`}
                   className={`flex items-center gap-1 ${
-                    isScrolled
+                    isScrolled || !isHomePage
                       ? "text-gray-800 hover:text-gray-600"
                       : "text-white hover:text-gray-100"
                   } `}
@@ -243,7 +248,7 @@ const Navbar = ({ catData, contactInfo }) => {
                 <SlHandbag
                   size={25}
                   className={`${
-                    isScrolled
+                    isScrolled || !isHomePage
                       ? "text-gray-800 group-hover:text-gray-600"
                       : "text-white hover:text-gray-100"
                   } cursor-pointer `}
@@ -261,23 +266,52 @@ const Navbar = ({ catData, contactInfo }) => {
 
         {/* MOBILE NAVBAR */}
         <div className="md:hidden flex justify-between items-center pt-3 xsm:px-2 px-0">
-          <Link href={`/`} className="flex justify-start w-[150px] h-[60px]">
-            <Image
-              src={`${imageHostName}/storage/${contactInfo?.logo}`}
-              height={500}
-              width={500}
-              className="h-full w-full object-fill cursor-pointer"
-              priority
-              alt="logo"
-            />
+          <Link href={`/`} className="flex justify-start w-[120px] h-[40px]">
+            {isScrolled || !isHomePage ? (
+              <Image
+                src={
+                  isDevelopment
+                    ? "/assets/logo/laxzin-logo-black.png"
+                    : `${imageHostName}/storage/${contactInfo?.logo}`
+                }
+                height={800}
+                width={800}
+                className="h-full w-full object-cover cursor-pointer"
+                priority
+                alt="logo"
+              />
+            ) : (
+              <Image
+                src={
+                  isDevelopment
+                    ? "/assets/logo/laxzin-logo-white.png"
+                    : `${imageHostName}/storage/${contactInfo?.logo}`
+                }
+                height={800}
+                width={800}
+                className="h-full w-full object-cover cursor-pointer"
+                priority
+                alt="logo"
+              />
+            )}
           </Link>
 
           <div className="flex space-x-4 items-center">
             <div onClick={() => handleSearch()}>
-              <IoSearchOutline size={25} className={`text-black`} />
+              <IoSearchOutline
+                size={25}
+                className={`${
+                  isScrolled || !isHomePage ? "text-black" : "text-white"
+                }`}
+              />
             </div>
             <div onClick={() => setDrawerOpen(true)}>
-              <RxHamburgerMenu size={25} className="text-black" />
+              <RxHamburgerMenu
+                size={25}
+                className={`${
+                  isScrolled || !isHomePage ? "text-black" : "text-white"
+                }`}
+              />
             </div>
           </div>
           {/* {!token ? <Button size="sm">SHOP NOW</Button> : null} */}

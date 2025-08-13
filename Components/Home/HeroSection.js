@@ -12,7 +12,7 @@ import { BsChevronCompactLeft, BsChevronCompactRight, BsChevronLeft } from 'reac
 
 const HeroSection = ({loading, imageHostName, slider}) => {
     return (
-        <div className='relative group'>
+      <div className="relative group">
         {loading ? (
           <Loader />
         ) : (
@@ -33,7 +33,7 @@ const HeroSection = ({loading, imageHostName, slider}) => {
           >
             {slider?.map((slide, index) => (
               <SwiperSlide key={index}>
-                <div className="md:h-[calc(100vh-76px)] sm:h-[500px] xs:h-[350px] h-[200px] w-full">
+                <div className="md:h-[100vh] sm:h-[500px] xs:h-[350px] h-[200px] w-full">
                   <Suspense fallback={<Loader />}>
                     <LazyImage
                       width={2000}
@@ -48,15 +48,14 @@ const HeroSection = ({loading, imageHostName, slider}) => {
               </SwiperSlide>
             ))}
           </Swiper>
-            )}
-            {/* NAVIGATION BUTTONS */}
-            <button className='button-prev-slide-hero absolute left-5 top-1/2 text-primary hidden group-hover:block z-20'>
-                <BsChevronCompactLeft size={48}/>
-            </button>
-            <button className='button-next-slide-hero absolute right-5 top-1/2 text-primary hidden group-hover:block z-20'>
-                <BsChevronCompactRight size={48}/>
-            </button>
-            
+        )}
+        {/* NAVIGATION BUTTONS */}
+        <button className="button-prev-slide-hero absolute left-5 top-1/2 text-primary hidden group-hover:block z-20">
+          <BsChevronCompactLeft size={48} />
+        </button>
+        <button className="button-next-slide-hero absolute right-5 top-1/2 text-primary hidden group-hover:block z-20">
+          <BsChevronCompactRight size={48} />
+        </button>
       </div>
     );
 };

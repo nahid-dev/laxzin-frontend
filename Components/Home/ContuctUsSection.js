@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SectionHeader from "../SectionHeader";
 import Image from "next/image";
 import Button from "../Common/Button";
 import ContactInfo from "../ContactInfo";
+import request from "@/lib/request";
 
 const ContactUsSection = () => {
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    const getData = async () => {
+      let res = await request(`contact-info`);
+      setData(res?.data);
+    };
+    getData();
+  }, [1]);
   return (
     <section className="py-16 sm:py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-2 md:px-0">
@@ -27,9 +37,7 @@ const ContactUsSection = () => {
               <p className="text-lg sm:text-xl font-light tracking-[0.1em] mb-6 sm:mb-8">
                 We'd love to hear from you
               </p>
-              <Button>
-                START CONVERSATION
-              </Button>
+              <Button>START CONVERSATION</Button>
             </div>
           </div>
         </div>
@@ -53,7 +61,7 @@ const ContactUsSection = () => {
               </svg>
             }
             title="PHONE"
-            info="+91 98765 43210"
+            info={data?.phone}
           />
           <ContactInfo
             icon={
@@ -72,7 +80,7 @@ const ContactUsSection = () => {
               </svg>
             }
             title="EMAIL"
-            info="hello@laxzin.com"
+            info={data?.email}
           />
           <ContactInfo
             icon={
@@ -97,7 +105,7 @@ const ContactUsSection = () => {
               </svg>
             }
             title="ADDRESS"
-            info="Mumbai, Maharashtra"
+            info={data?.address}
           />
         </div>
       </div>
