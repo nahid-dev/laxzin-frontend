@@ -6,7 +6,6 @@ import ProductBenefits from "./ProductBenefits";
 import Button from "../Common/Button";
 
 const ProductContentSection = ({ data }) => {
-  console.log(data?.ingredient);
   return (
     <div>
       {/* Skin Concern Hero Section */}

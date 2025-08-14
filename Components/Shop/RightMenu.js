@@ -1,133 +1,51 @@
-import React from 'react'
-import ProdOne from "@/public/image/product/prod1.png";
-import ProdTwo from "@/public/image/product/prod2.png";
-import ProdThree from "@/public/image/product/prod3.png";
-import Link from 'next/link';
-import Image from 'next/image';
-import { LuEye } from "react-icons/lu";
-import { CiHeart } from "react-icons/ci";
-import { GoPlus } from "react-icons/go";
+import Loader from "../Loader";
+import ProductCard from "../ProductDetails/ProductCard";
 
-const RightMenu = () => {
+const RightMenu = ({ products, isLoading }) => {
   return (
-    
-    <div className="grid md:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-8">
-      <div className="bg-white">
-        <Link href={`/product/make-up`} className="relative group">
-          <div className="h-auto w-full">
-            <Image src={ProdOne} className="object-contain w-full" />
-          </div>
-          <div className="absolute bottom-0 hidden group-hover:block w-full cursor-pointer">
-            <div className="flex items-center justify-center">
-              <div className="h-10 w-10 border border-black flex justify-center items-center">
-                <LuEye size={22} className="text-black" />
-              </div>
-              <div className="h-10 w-10 border border-black flex justify-center items-center">
-                <CiHeart size={22} className="text-black" />
-              </div>
-            </div>
-
-            <div className="w-full flex items-center pt-7 ">
-              <button className="w-full px-6 py-3 flex justify-center uppercase text-black border border-black card hover:bg-black duration-300">
-                <div>
-                  <GoPlus size={20} className="text-black card-icon" />
-                </div>
-                <span className="card-span">add to cart</span>
-              </button>
-            </div>
-          </div>
-        </Link>
-        <div className="px-3">
-          <div className="xxl:text-xl xl:text-xl text-lg tracking-[6px] text-black pt-6">
-            3 IN 1 CONCEALER – CORRECTOR – HIGHLIGHTER
-          </div>
-          <div className="text-gray-400 font-light text-sm pb-24 pt-5">
-            Dermatologically Tested, Waterproof * Matte * Light Wearing, Cruelty
-            Free, Vegan, Made In Germany
-          </div>
-          <div className="text-center text-black font-semibold pb-8 tracking-wider">
-            $19.99
+    <div>
+      {isLoading ? (
+        <div className="h-[400px] md:h-[200px] sm:h-[170px] lg:h-[300px] xls:h-[140px] xms:h-[130px] xs:h-[120px] flex items-center justify-center">
+          <div className="flex flex-col items-center space-y-2">
+            <Loader />
+            <span className="text-sm tracking-wide text-gray-500">
+              Loading, please wait...
+            </span>
           </div>
         </div>
-      </div>
-      <div className="bg-white">
-        <div className="relative group">
-          <div className="h-auto w-full">
-            <Image src={ProdTwo} className="object-contain w-full" />
-          </div>
-          <div className="absolute bottom-0 hidden group-hover:block w-full cursor-pointer">
-            <div className="flex items-center justify-center">
-              <div className="h-10 w-10 border border-black flex justify-center items-center">
-                <LuEye size={22} className="text-black" />
-              </div>
-              <div className="h-10 w-10 border border-black flex justify-center items-center">
-                <CiHeart size={22} className="text-black" />
-              </div>
-            </div>
-
-            <div className="w-full flex items-center pt-7 ">
-              <button className="w-full px-6 py-3 flex justify-center uppercase text-black border border-black card hover:bg-black duration-300">
-                <div>
-                  <GoPlus size={20} className="text-black card-icon" />
-                </div>
-                <span className="card-span">add to cart</span>
-              </button>
-            </div>
-          </div>
+      ) : products?.length > 0 ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-8">
+          {products?.map((product, index) => (
+            <ProductCard item={product} key={index} />
+          ))}
         </div>
-        <div className="px-3">
-          <div className="xxl:text-xl xl:text-xl text-lg tracking-[6px] text-black pt-6">
-            3 IN 1 CONCEALER – CORRECTOR – HIGHLIGHTER
-          </div>
-          <div className="text-gray-400 font-light text-sm pb-24 pt-5">
-            Dermatologically Tested, Waterproof * Matte * Light Wearing, Cruelty
-            Free, Vegan, Made In Germany
-          </div>
-          <div className="text-center text-black font-semibold pb-8 tracking-wider">
-            $19.99
-          </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center p-8 space-y-4 text-center">
+          <svg
+            className="w-16 h-16 text-gray-400 animate-pulse"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 9v3m0 0v3m0-3h3m-3 0h-3"
+            />
+          </svg>
+          <span className="text-xl font-semibold text-gray-700">
+            No Products Found
+          </span>
+          <p className="text-sm text-gray-500">
+            We couldn't find any results matching your search. Try adjusting
+            your filters or search again.
+          </p>
         </div>
-      </div>
-      <div className="bg-white">
-        <div className="relative group">
-          <div>
-            <Image src={ProdThree} className="object-contain w-full" />
-          </div>
-          <div className="absolute bottom-0 hidden group-hover:block w-full cursor-pointer">
-            <div className="flex items-center justify-center">
-              <div className="h-10 w-10 border border-black flex justify-center items-center">
-                <LuEye size={22} className="text-black" />
-              </div>
-              <div className="h-10 w-10 border border-black flex justify-center items-center">
-                <CiHeart size={22} className="text-black" />
-              </div>
-            </div>
-
-            <div className="w-full flex items-center pt-7 ">
-              <button className="w-full px-6 py-3 flex justify-center uppercase text-black border border-black card hover:bg-black duration-300">
-                <div>
-                  <GoPlus size={20} className="text-black card-icon" />
-                </div>
-                <span className="card-span">add to cart</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="px-3">
-          <div className="xxl:text-xl xl:text-xl text-lg tracking-[6px] text-black pt-6">
-            3 IN 1 CONCEALER – CORRECTOR – HIGHLIGHTER
-          </div>
-          <div className="text-gray-400 font-light text-sm pb-24 pt-5">
-            Dermatologically Tested, Waterproof * Matte * Light Wearing, Cruelty
-            Free, Vegan, Made In Germany
-          </div>
-          <div className="text-center text-black font-semibold pb-8 tracking-wider">
-            $19.99
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
-}
+};
 
-export default RightMenu
+export default RightMenu;

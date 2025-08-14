@@ -226,11 +226,18 @@ const Navbar = ({ catData, contactInfo }) => {
                 </Link>
               ) : (
                 <p>
-                  <Link href="/profile" className="pr-3 text-white">
+                  <Link
+                    href="/profile"
+                    className={`${
+                      isScrolled || !isHomePage ? "text-black" : "text-white"
+                    } cursor-pointer`}
+                  >
                     My panel
                   </Link>{" "}
                   <span
-                    className="cursor-pointer text-white"
+                    className={`${
+                      isScrolled || !isHomePage ? "text-black" : "text-white"
+                    } pl-3 cursor-pointer`}
                     onClick={handleLogOut}
                   >
                     Logout
@@ -260,7 +267,11 @@ const Navbar = ({ catData, contactInfo }) => {
               </div>
             </div>
             {/* SHOP NOW BUTTON */}
-            {!token ? <Button className="md:ml-5">SHOP NOW</Button> : null}
+            {!token ? (
+              <Button onClick={() => router.push("/shop")} className="md:ml-5">
+                SHOP NOW
+              </Button>
+            ) : null}
           </div>
         </div>
 
@@ -314,7 +325,6 @@ const Navbar = ({ catData, contactInfo }) => {
               />
             </div>
           </div>
-          {/* {!token ? <Button size="sm">SHOP NOW</Button> : null} */}
         </div>
       </header>
     </div>

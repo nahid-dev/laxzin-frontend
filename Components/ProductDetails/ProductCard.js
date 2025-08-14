@@ -147,7 +147,7 @@ const ProductCard = ({
           <div className="text-sm text-primary h-[40px]  mb-2">
             <p
               className={`font-medium text-gray-900 my-2 leading-none ${
-                size === "small" ? "text-base" : "text-lg"
+                size === "small" ? "text-base" : "text-base xs:text-lg"
               } line-clamp-2`}
             >
               {item?.product_name}
@@ -170,7 +170,7 @@ const ProductCard = ({
 
           <div
             className={`font-semibold text-black space-x-2 mb-2 md:mb-3 ${
-              size === "small" ? "text-lg" : "text-xl"
+              size === "small" ? "text-lg" : "text-base xs:text-lg"
             }`}
           >
             ৳

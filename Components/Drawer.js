@@ -6,24 +6,18 @@ import { useEffect, useRef, useState } from "react";
 import request from "@/lib/request";
 import LeftMenu from "./Layout/LeftMenu";
 import Link from "next/link";
-
+import Button from "./Common/Button";
+import { useRouter } from "next/navigation";
 
 const Drawer = () => {
-  const {
-    drawerOpen,
-    setDrawerOpen,
-    
-  } = useStatus();
-
+  const { drawerOpen, setDrawerOpen } = useStatus();
   const wrapperRef = useRef(null);
-
   const [catData, setCatData] = useState([]);
+  const router = useRouter();
 
   const handleClick = () => {
     setDrawerOpen(false);
   };
-
-
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -37,19 +31,19 @@ const Drawer = () => {
     };
   }, [wrapperRef, drawerOpen]);
 
+  useEffect(() => {
+    let getData = async () => {
+      let res = await request(`navbar-categories`);
 
+      setCatData(res?.categories);
+    };
+    getData();
+  }, [1]);
 
-     useEffect(() => {
-       let getData = async () => {
-         let res = await request(`navbar-categories`);
-
-         setCatData(res?.categories);
-       };
-       getData();
-     }, [1]);
-
-    
-     
+  const handleShopClick = () => {
+    setDrawerOpen(false);
+    router.push("/shop");
+  };
 
   return (
     <div
@@ -102,6 +96,11 @@ const Drawer = () => {
               </div>
             ))}
           </ul>
+          <div>
+            <Button onClick={handleShopClick} className="w-full">
+              Shop Now
+            </Button>
+          </div>
         </ul>
       </div>
     </div>

@@ -20,8 +20,6 @@ const LeftMenu = ({ item }) => {
   //  console.log("last...index", item?.children?.length - 1);
 
   const handleClick = (slug) => {
-    console.log("slug",slug);
-    
     setSideCategory(false);
     // router.push(`/category/${slug}`);
   };
