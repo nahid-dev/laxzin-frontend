@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 
 import Slider from "react-slick";
@@ -15,6 +14,7 @@ import { useState } from "react";
 import ImageGalleryCard from "./ImageGalleryCard";
 import { Zoom } from "reactjs-image-zoom";
 import { imageHostName } from "@/lib/config";
+import { BsInfoCircleFill } from "react-icons/bs";
 
 const ImageGallery = ({
   data,
@@ -64,33 +64,33 @@ const ImageGallery = ({
     return "/assets/placeholder_600x.webp";
   };
 
-   const handleDownload = async () => {
-     try {
-       const imageUrl = getImageSrc();
-       ``;
-       const response = await fetch(imageUrl);
+  const handleDownload = async () => {
+    try {
+      const imageUrl = getImageSrc();
+      ``;
+      const response = await fetch(imageUrl);
 
-       if (!response.ok) {
-         throw new Error("Failed to fetch image.");
-       }
+      if (!response.ok) {
+        throw new Error("Failed to fetch image.");
+      }
 
-       // Create Blob and trigger download
-       const blob = await response.blob();
-       const blobUrl = URL.createObjectURL(blob);
+      // Create Blob and trigger download
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
 
-       const link = document.createElement("a");
-       link.href = blobUrl;
-       link.download = `${data?.product_name || "download"}.jpg`;
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = `${data?.product_name || "download"}.jpg`;
 
-       document.body.appendChild(link);
-       link.click();
-       document.body.removeChild(link);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-       URL.revokeObjectURL(blobUrl); // Free memory
-     } catch (error) {
-       console.error("Error downloading the image:", error);
-     }
-   };
+      URL.revokeObjectURL(blobUrl); // Free memory
+    } catch (error) {
+      console.error("Error downloading the image:", error);
+    }
+  };
 
   const CustomPrevArrow = (props) => {
     const { onClick } = props;
@@ -238,7 +238,7 @@ const ImageGallery = ({
 
   return (
     <div>
-      <div className="bg-white col-span-1 p-2 md:grid hidden grid-cols-6 gap-8 rounded-l-md shadow-md   sm:gap-0 sm:rounded-sm ">
+      <div className="bg-white col-span-1 p-2 md:grid hidden grid-cols-6 gap-8 border sm:gap-0 sm:rounded-sm !rounded-xl">
         <div className="mt-10">
           <div>
             {data?.product_variation_status == 1 ? (
@@ -419,33 +419,6 @@ const ImageGallery = ({
               cursor="zoom-in"
               style={{ margin: "0px" }}
             />
-            <button
-              className="absolute top-5 right-4 bg-white rounded-full h-8 px-2 flex justify-center items-center cursor-pointer group shadow"
-              onClick={handleDownload}
-            >
-              <svg
-                className="text-black"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M12 15V5M12 15C11.2998 15 9.99153 13.0057 9.5 12.5M12 15C12.7002 15 14.0085 13.0057 14.5 12.5"
-                  stroke="#1F2937"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M5 19H19.0001"
-                  stroke="#1F2937"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
           </div>
         </div>
       </div>
@@ -462,33 +435,6 @@ const ImageGallery = ({
             unoptimized={!isOptimized}
             onError={() => setIsOptimized(false)}
           />
-          <button
-            className="absolute top-5 right-4 bg-white rounded-full h-8 px-2 flex justify-center items-center cursor-pointer group shadow"
-            onClick={handleDownload}
-          >
-            <svg
-              className="text-black"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M12 15V5M12 15C11.2998 15 9.99153 13.0057 9.5 12.5M12 15C12.7002 15 14.0085 13.0057 14.5 12.5"
-                stroke="#1F2937"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-              <path
-                d="M5 19H19.0001"
-                stroke="#1F2937"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
         </div>
         <div className="mt-4">
           {data?.product_variation_status == 1 ? (
@@ -602,6 +548,25 @@ const ImageGallery = ({
               )}
             </div>
           )}
+        </div>
+      </div>
+      {/* DISCLAIMER */}
+      <div className="rounded-2xl border bg-amber-50 border-amber-200 p-2 xs:p-4 text-amber-800 shadow-sm mt-5 hidden xs:block">
+        <div className="flex items-start gap-3">
+          <BsInfoCircleFill
+            className="size-4 xs:size-5 mt-0.5 shrink-0"
+            aria-hidden
+          />
+          <div>
+            <p className="font-semibold text-sm xs:text-base">Declaimer:</p>
+            <p className="text-xs md:text-sm leading-6">
+              The actual color of the physical product may slightly vary due to
+              the deviation of lighting sources, photography or your device
+              display settings. Delivery charges may vary as per the location,
+              Product Size and Weight; we will notify before proceeding the
+              delivery.
+            </p>
+          </div>
         </div>
       </div>
     </div>

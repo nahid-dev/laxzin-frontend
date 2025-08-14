@@ -74,10 +74,10 @@ const Footer = ({ contactInfo }) => {
   return (
     <div>
       <footer className="bg-primary text-white">
-        <div className="mx-auto px-4 md:px-0 py-16 max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div className="mx-auto px-4 xl:px-0 py-12 max-w-7xl">
+          <div className="grid grid-cols-5 gap-8">
             {/* Company Info */}
-            <div className="space-y-4">
+            <div className="space-y-4 col-span-5 md:col-span-1">
               <div className="w-[140px] h-[60px]">
                 <Image
                   src={
@@ -98,10 +98,52 @@ const Footer = ({ contactInfo }) => {
                 Bangladesh. We bring you the finest quality cosmetics for your
                 daily beauty routine.
               </p>
+              <div className="flex items-center justify-start gap-5 py-5">
+                <Link href={`${data?.facebook}`} target="_blank">
+                  <Image
+                    src={"/assets/slider/facebook.webp"}
+                    width={30}
+                    height={30}
+                    alt="facebook"
+                  />
+                </Link>
+                <Link href={`${data?.instagram_link}`} target="_blank">
+                  <Image
+                    src={"/assets/slider/instagram.webp"}
+                    width={30}
+                    height={30}
+                    alt="facebook"
+                  />
+                </Link>
+                <Link href={`${data?.whatsapp_link}`} target="_blank">
+                  <Image
+                    src={"/assets/slider/whatsapp.webp"}
+                    width={30}
+                    height={30}
+                    alt="facebook"
+                  />
+                </Link>
+                <Link href={`${data?.youtube_link}`} target="_blank">
+                  <Image
+                    src={"/assets/slider/youtube.webp"}
+                    width={30}
+                    height={30}
+                    alt="facebook"
+                  />
+                </Link>
+                <Link href={`${data?.tiktok_link}`} target="_blank">
+                  <Image
+                    src={"/assets/slider/tik-tok.webp"}
+                    width={30}
+                    height={30}
+                    alt="facebook"
+                  />
+                </Link>
+              </div>
             </div>
 
             {/* Quick Links */}
-            <div className="space-y-4 md:pl-10">
+            <div className="space-y-4 md:pl-10 col-span-2 xs:col-span-1">
               <h3 className={COL_HEADER_STYLE}>Quick Links</h3>
               <div className="flex flex-col gap-3">
                 {quickLInks.map((link, index) => (
@@ -113,7 +155,7 @@ const Footer = ({ contactInfo }) => {
             </div>
 
             {/* My Account */}
-            <div className="space-y-4">
+            <div className="space-y-4 col-span-3 xs:col-span-1">
               <h3 className={COL_HEADER_STYLE}>My Account</h3>
               <div className="flex flex-col gap-3">
                 <div
@@ -143,7 +185,7 @@ const Footer = ({ contactInfo }) => {
             </div>
 
             {/* OTHER Links */}
-            <div className="space-y-4">
+            <div className="space-y-4 col-span-2 md:col-span-1">
               <h3 className={COL_HEADER_STYLE}>Other Links</h3>
               <div className="flex flex-col gap-3">
                 {otherLinks.map((link, index) => (
@@ -155,7 +197,7 @@ const Footer = ({ contactInfo }) => {
             </div>
 
             {/* Contact Info */}
-            <div className="space-y-4">
+            <div className="space-y-4 col-span-5 lg:col-span-1">
               <h3 className={COL_HEADER_STYLE}>Contact Info</h3>
               <div className="flex flex-col gap-3">
                 <div className="flex items-center gap-3">
@@ -179,76 +221,6 @@ const Footer = ({ contactInfo }) => {
                   </span>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* SOCIAL LINKS */}
-          <div className="flex items-center justify-start gap-5 py-5">
-            <Link href={`${data?.facebook}`} target="_blank">
-              <Image
-                src={"/assets/slider/facebook.webp"}
-                width={30}
-                height={30}
-                alt="facebook"
-              />
-            </Link>
-            <Link href={`${data?.instagram_link}`} target="_blank">
-              <Image
-                src={"/assets/slider/instagram.webp"}
-                width={30}
-                height={30}
-                alt="facebook"
-              />
-            </Link>
-            <Link href={`${data?.whatsapp_link}`} target="_blank">
-              <Image
-                src={"/assets/slider/whatsapp.webp"}
-                width={30}
-                height={30}
-                alt="facebook"
-              />
-            </Link>
-            <Link href={`${data?.youtube_link}`} target="_blank">
-              <Image
-                src={"/assets/slider/youtube.webp"}
-                width={30}
-                height={30}
-                alt="facebook"
-              />
-            </Link>
-            <Link href={`${data?.tiktok_link}`} target="_blank">
-              <Image
-                src={"/assets/slider/tik-tok.webp"}
-                width={30}
-                height={30}
-                alt="facebook"
-              />
-            </Link>
-            <Link href={`${data?.twitter_link}`} target="_blank">
-              <Image
-                src={"/assets/slider/twitter.webp"}
-                width={30}
-                height={30}
-                alt="facebook"
-              />
-            </Link>
-            <Link href={`${data?.pinterest_link}`} target="_blank">
-              <Image
-                src={"/assets/slider/pinterest.webp"}
-                width={30}
-                height={30}
-                alt="facebook"
-              />
-            </Link>
-          </div>
-
-          {/* App Promotion Section */}
-          <div className="py-4 border-y border-gray-600">
-            <div className="flex flex-col xs:flex-row justify-center items-center gap-3 md:gap-10">
-              <div className="text-lg font-light tracking-wider text-white text-center md:text-left">
-                Let&apos;s Do Beauty & Grooming Together
-              </div>
-
               <div className="flex items-center justify-center gap-3 md:gap-5 py-2">
                 <Link
                   href={`https://play.google.com/store/apps/details?id=com.laxzinapp`}
@@ -272,13 +244,16 @@ const Footer = ({ contactInfo }) => {
               </div>
             </div>
           </div>
+          <p className="text-gray-400 text-sm pb-5 md:pb-0 pt-2 mb:pt-0">
+            Copyright © 2025 Laxzin. All rights reserved.
+          </p>
 
           {/* Bottom Bar */}
-          <div className="border-t border-gray-800 pt-8 text-center">
+          {/* <div className="border-t border-gray-800 pt-8 text-center">
             <p className="text-gray-400 text-sm">
               Copyright © 2025 Laxzin. All rights reserved.
             </p>
-          </div>
+          </div> */}
         </div>
       </footer>
     </div>

@@ -1,132 +1,108 @@
-import CommonbgBanner from '@/Components/Common/CommonbgBanner';
-import DescriptionDetails from '@/Components/ProductDetails/DescriptionDetails';
-import DetailsSection from '@/Components/ProductDetails/DetailsSection';
-import ImageGallery from '@/Components/ProductDetails/ImageGallery';
-import React, { useEffect, useState } from 'react'
+import DescriptionDetails from "@/Components/ProductDetails/DescriptionDetails";
+import DetailsSection from "@/Components/ProductDetails/DetailsSection";
+import ImageGallery from "@/Components/ProductDetails/ImageGallery";
+import React, { useEffect, useState } from "react";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-import {
-  MdOutlineKeyboardArrowLeft,
-  MdOutlineKeyboardArrowRight,
-} from "react-icons/md";
-
-import ProductCard from '@/Components/ProductDetails/ProductCard';
-import request from '@/lib/request';
-import Head from 'next/head';
-import { hostname,imageHostName } from '@/lib/config';
-import { useRouter } from 'next/router';
+import request from "@/lib/request";
+import Head from "next/head";
+import { imageHostName } from "@/lib/config";
+import { useRouter } from "next/router";
+import ProductContentSection from "@/Components/ProductDetails/ProductContentSection";
+import MoreProductSection from "@/Components/ProductDetails/MoreProductSection";
 
 // import { ProductJsonLd } from "next-seo";
 
-
 const ProductDetails = () => {
+  const [similarProd, setSimilarProd] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [variationId, setVariationId] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [clickFlag, setClickFlag] = useState(false);
 
-   const [similarProd, setSimilarProd] = useState([]);
-    const [selectedItem, setSelectedItem] = useState(null);
-      const [variationId, setVariationId] = useState(null);
-      const [selectedIndex, setSelectedIndex] = useState(0);
-       const [clickFlag, setClickFlag] = useState(false);
+  const [totalQty, setTotalQty] = useState(0);
 
- 
-       const [totalQty, setTotalQty] = useState(0);
+  const [variationQty, setVariationQty] = useState(0);
 
-       const [variationQty,setVariationQty] = useState(0);
+  const [data, setData] = useState({});
 
-       const [data,setData] = useState({});
+  const router = useRouter();
+  const [selectedNormalIndex, setSelectedNormalIndex] = useState(0);
 
-       const router = useRouter();
-       const [selectedNormalIndex, setSelectedNormalIndex] = useState(0);
+  useEffect(() => {
+    if (router?.query?.slug) {
+      const getData = async () => {
+        let res = await request(`get-product-details/${router?.query?.slug}`);
 
-       useEffect(() => {
-         if (router?.query?.slug) {
-           const getData = async () => {
-             let res = await request(
-               `get-product-details/${router?.query?.slug}`
-             );
+        setData(res?.data);
+      };
+      getData();
+    }
+  }, [router?.query?.slug]);
 
-             setData(res?.data);
-           };
-           getData();
-         }
-       }, [router?.query?.slug]);
+  const handleVariationImageClick = (id, index) => {
+    setVariationId(id);
 
- 
-    const handleVariationImageClick = (id, index) => {
-      setVariationId(id);
+    setSelectedIndex(index);
+    setClickFlag(true);
 
-      setSelectedIndex(index);
-      setClickFlag(true);
+    setVariationQty(data?.product_variants[index]?.qty);
 
-      setVariationQty(data?.product_variants[index]?.qty);
+    setSelectedNormalIndex(null);
+  };
 
-      setSelectedNormalIndex(null);
-    };
+  const handleImageClick = (index) => {
+    setSelectedIndex(0);
+    setClickFlag(false);
+    setSelectedNormalIndex(index);
+  };
 
-    const handleImageClick = (index) => {
-      setSelectedIndex(0);
-      setClickFlag(false);
-      setSelectedNormalIndex(index);
-    };
+  useEffect(() => {
+    if (data) {
+      const getData = async () => {
+        const res = await request(`similar-products/${data?.id}`);
 
+        setSimilarProd(res?.similar_products);
+      };
+      getData();
+    }
+  }, [data]);
 
+  useEffect(() => {
+    if (data?.product_variation_status == 1) {
+      let dd = data?.product_variants?.reduce((a, b) => a + b?.qty, 0);
+      setTotalQty(dd);
+    } else {
+      setTotalQty(data?.qty);
+    }
+  }, [data]);
 
- useEffect(() => {
-   if (data) {
-     const getData = async () => {
-       const res = await request(`similar-products/${data?.id}`);
-   
-       setSimilarProd(res?.similar_products);
-       
-     };
-     getData();
-   }
- }, [data]);
+  const jsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    name: data?.product_name,
 
-
-
- useEffect(() => {
-   if (data?.product_variation_status == 1) {
-     let dd = data?.product_variants?.reduce((a, b) => a + b?.qty, 0);
-     setTotalQty(dd);
-   } else {
-     setTotalQty(data?.qty);
-   }
- }, [data]);
-
- 
-
-// console.log("data", data);
-
-const jsonLd = {
-  "@context": "https://schema.org/",
-  "@type": "Product",
-  name: data?.product_name,
- 
-  description: `Buy ${data?.product_name} with barcode ${data?.google_barcode}. Find the best deals.`,
-  sku: data?.google_barcode,
-  gtin13: data?.google_barcode,
-  mpn: data?.google_barcode, // barcode or manufacturer part number
-  brand: {
-    "@type": "Brand",
-    name: data?.product?.categoryType,
-  },
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "BDT",
-    price: data?.sale_price,
-    availability: `${totalQty == 0 ? "out of stock" : "in stock"}`,
-  },
-};
-
-
+    description: `Buy ${data?.product_name} with barcode ${data?.google_barcode}. Find the best deals.`,
+    sku: data?.google_barcode,
+    gtin13: data?.google_barcode,
+    mpn: data?.google_barcode, // barcode or manufacturer part number
+    brand: {
+      "@type": "Brand",
+      name: data?.product?.categoryType,
+    },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "BDT",
+      price: data?.sale_price,
+      availability: `${totalQty == 0 ? "out of stock" : "in stock"}`,
+    },
+  };
 
   return (
-    <>
+    <div className="overflow-hidden border-t">
       <Head>
         <title>{`${data?.product_name}`}</title>
 
@@ -198,179 +174,49 @@ const jsonLd = {
         />
       </Head>
 
-      <div className="bg-[#F3F3F3]">
-        {/* <CommonbgBanner name={`shop`} /> */}
-        <div className="max-w-[95rem] lg:max-w-[80rem] md:max-w-[80rem] sm:max-w-[36rem] xs:max-w-[32rem] xsm:max-w-[25rem] xxsm:max-w-[21rem] xxxsm:max-w-[18rem] mx-auto pt-10">
-          <div className="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-0 pb-10">
-            <div>
-              <ImageGallery
-                data={data}
-                variationId={variationId}
-                selectedIndex={selectedIndex}
-                handleImageClick={handleImageClick}
-                handleVariationImageClick={handleVariationImageClick}
-                setSelectedIndex={setSelectedIndex}
-                clickFlag={clickFlag}
-                setClickFlag={setClickFlag}
-                selectedNormalIndex={selectedNormalIndex}
-              />
-            </div>
-
-            <div>
-              <DetailsSection
-                data={data}
-                selectedItem={selectedItem}
-                setSelectedItem={setSelectedItem}
-                variationId={variationId}
-                setVariationId={setVariationId}
-                selectedIndex={selectedIndex}
-                clickFlag={clickFlag}
-                handleVariationImageClick={handleVariationImageClick}
-                variationQty={variationQty}
-              />
-            </div>
-            <div>
-              <DescriptionDetails data={data} />
-            </div>
+      <div className="max-w-7xl mx-auto pt-10 px-2 lg:px-0">
+        <div className="grid md:grid-cols-2 grid-cols-1 pb-10 gap-5 md:gap-10">
+          <div>
+            <ImageGallery
+              data={data}
+              variationId={variationId}
+              selectedIndex={selectedIndex}
+              handleImageClick={handleImageClick}
+              handleVariationImageClick={handleVariationImageClick}
+              setSelectedIndex={setSelectedIndex}
+              clickFlag={clickFlag}
+              setClickFlag={setClickFlag}
+              selectedNormalIndex={selectedNormalIndex}
+            />
           </div>
-          
-            <div className="uppercase xs:text-2xl text-base text-center pb-8 tracking-widest text-black">
-              related products
-            </div>
 
-            <div className="relative">
-              <Swiper
-                slidesPerView={4}
-                spaceBetween={20}
-                autoplay={{
-                  delay: 2200,
-                  disableOnInteraction: true,
-                }}
-                pagination={false}
-                navigation={{
-                  nextEl: ".button-next-slide",
-                  prevEl: ".button-prev-slide",
-                }}
-                modules={[Autoplay, Navigation, Pagination]}
-                breakpoints={{
-                  320: {
-                    slidesPerView: 1,
-                    spaceBetween: 9,
-                  },
-                  375: {
-                    slidesPerView: 1,
-                    spaceBetween: 9,
-                  },
-
-                  425: {
-                    slidesPerView: 1,
-                    spaceBetween: 9,
-                  },
-
-                  576: {
-                    slidesPerView: 1,
-                    spaceBetween: 10,
-                  },
-
-                  768: {
-                    slidesPerView: 2,
-                    spaceBetween: 10,
-                  },
-
-                  1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 18,
-                  },
-
-                  1280: {
-                    slidesPerView: 3,
-                    spaceBetween: 18,
-                  },
-                  1440: {
-                    slidesPerView: 4,
-                    spaceBetween: 18,
-                  },
-                  1820: {
-                    slidesPerView: 4,
-                    spaceBetween: 18,
-                  },
-                  2000: {
-                    slidesPerView: 4,
-                    spaceBetween: 18,
-                  },
-                }}
-              >
-                {similarProd?.map((item, index) => (
-                  <SwiperSlide key={index}>
-                    <ProductCard item={item} />
-                  </SwiperSlide>
-                ))}
-                <div className="md:flex hidden">
-                  <button className="button-prev-slide w-[60px] h-[60px]  rounded-full shadow-xl drop-shadow-lg  transition duration-200 bg-slate-50  text-black grid place-items-center absolute top-[47%] z-10 left-[-80px]  cursor-pointer">
-                    <MdOutlineKeyboardArrowLeft
-                      size={24}
-                      className="text-black"
-                    />
-                  </button>
-
-                  <button className="button-next-slide w-[60px] h-[60px] rounded-full shadow-xl drop-shadow-lg  transition duration-200 bg-slate-50 text-black grid place-items-center absolute top-[47%] z-10 right-[-80px]  cursor-pointer">
-                    <MdOutlineKeyboardArrowRight
-                      size={24}
-                      className="text-black"
-                    />
-                  </button>
-                </div>
-
-                <div className="md:hidden ">
-                  <button className="button-prev-slide   text-black  absolute top-[47%] z-10 left-[-45px]  cursor-pointer">
-                    <MdOutlineKeyboardArrowLeft
-                      size={24}
-                      className="text-black "
-                    />
-                  </button>
-
-                  <button className="button-next-slide  text-black  absolute top-[47%] z-10 right-[-45px]  cursor-pointer">
-                    <MdOutlineKeyboardArrowRight
-                      size={24}
-                      className="text-black"
-                    />
-                  </button>
-                </div>
-              </Swiper>
-            </div>
-         
+          <div>
+            <DetailsSection
+              data={data}
+              selectedItem={selectedItem}
+              setSelectedItem={setSelectedItem}
+              variationId={variationId}
+              setVariationId={setVariationId}
+              selectedIndex={selectedIndex}
+              clickFlag={clickFlag}
+              handleVariationImageClick={handleVariationImageClick}
+              variationQty={variationQty}
+            />
+          </div>
+          <div className="hidden">
+            <DescriptionDetails data={data} />
+          </div>
         </div>
       </div>
-    </>
+      {/* PRODUCT CONTENT SECTION */}
+      <ProductContentSection data={data} />
+      {/* RELATED PRODUCT SECTION */}
+      <div>
+        {/* THIS BRAND PRODUCT */}
+        <MoreProductSection similarProd={similarProd} />
+      </div>
+    </div>
   );
-}
+};
 
-export default ProductDetails
-
-// export async function getServerSideProps(context) {
-//   try {
-//     let res = await request(
-//       `get-product-details/${context?.query?.slug}`,
-//       context?.req?.cookies?.token
-//     );
-
-//     if (res?.success) {
-//       return {
-//         props: {
-//           data: res?.data || null,
-//         },
-//       };
-//     } else {
-//       return {
-//         notFound: true,
-//       };
-//     }
-//   } catch (error) {
-//     console.error("Error fetching product data:", error);
-//     return {
-//       notFound: true,
-//     };
-//   }
-// }
-
-// https://laxzin.com
+export default ProductDetails;

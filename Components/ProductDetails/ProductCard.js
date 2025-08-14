@@ -208,8 +208,10 @@ const ProductCard = ({
       {/* CARD BUTTON */}
       <div className="w-full">
         <button
-          className={`bg-primary text-white text-center w-full uppercase text-xs md:text-sm tracking-[0.1em] hover:bg-gray-700 ${
-            size === "small" ? "py-2 px-4 text-xs" : "py-3 px-6 text-sm"
+          className={`bg-primary text-white text-center w-full uppercase md:text-sm tracking-[0.1em] hover:bg-gray-700 ${
+            size === "small"
+              ? "py-2 px-4 text-xs"
+              : "py-2 xs:py-3 px-3 xs:px-6 text-sm"
           }`}
           onClick={() => handleCart()}
         >

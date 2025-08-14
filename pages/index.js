@@ -84,7 +84,7 @@ export default function Home() {
       {/* FEATURE SECTION */}
       <FeatureSection featureProducts={featureProducts} loading={loading} />
       {/* Category Banners */}
-      <section className="grid grid-cols-1 lg:grid-cols-2">
+      <section className="grid grid-cols-1 sm:grid-cols-2">
         <CategoryBanner
           title="HAIR CARE"
           subtitle="Nourish. Strengthen. Shine."
@@ -97,8 +97,6 @@ export default function Home() {
           image="/glowing-skin-serum-bw.png"
           bgColor="bg-gray-900"
         />
-      </section>
-      <section className="grid grid-cols-1 lg:grid-cols-2">
         <CategoryBanner
           title="MAKEUP"
           subtitle="Enhance. Define. Express."

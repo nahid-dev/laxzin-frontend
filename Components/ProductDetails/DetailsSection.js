@@ -1,20 +1,18 @@
 import { useStatus } from "@/context/contextStatus";
-import hostname, { imageHostName } from "@/lib/config";
-import postRequest from "@/lib/postRequest";
-import request from "@/lib/request";
+import { imageHostName } from "@/lib/config";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { setCookie } from "nookies";
 import { useEffect, useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { BsBagCheck } from "react-icons/bs";
-import { FaHeart } from "react-icons/fa";
-import { FiHeart } from "react-icons/fi";
-import { LiaSyncAltSolid } from "react-icons/lia";
+import { BsBagCheck, BsInfoCircleFill } from "react-icons/bs";
 
-import { IoCopyOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
+import ProductBenefits from "./ProductBenefits";
+import Button from "../Common/Button";
+import { BiLogoPlayStore } from "react-icons/bi";
+import DeliveryInfoSection from "./DeliveryInfoSection";
 
 const Details = ({
   data,
@@ -31,9 +29,7 @@ const Details = ({
     typeof window !== "undefined" && window.location.origin
       ? window.location.origin
       : "";
-
   const router = useRouter();
-
   const [count, setCount] = useState(1);
 
   const {
@@ -45,12 +41,11 @@ const Details = ({
     setId,
     setRequestStockModal,
   } = useStatus();
-
   const [selectVariation, setSelectVariation] = useState(null);
-
   const [totalQty, setTotalQty] = useState(null);
-
   const [refreshWish, setrefreshWish] = useState(false);
+
+  const isDevelopment = process.env.NEXT_PUBLIC_MODE === "development";
 
   const handleCart = (variation) => {
     if (
@@ -339,10 +334,6 @@ const Details = ({
     }
   };
 
-
-
-  
-
   const handleRequestStock = (slug, id) => {
     setProdId(slug);
     setId(id);
@@ -381,60 +372,83 @@ const Details = ({
     window.open(`https://api.whatsapp.com/send?text=${encodedUrl}`, "_blank");
   };
 
+  const handleCopyName = async () => {
+    try {
+      await navigator.clipboard.writeText(data?.product_name);
+      toast.success("product name copied to clipboard");
+    } catch (error) {
+      console.error("Failed to copy text: ", error);
+    }
+  };
 
-    const handleCopyName = async () => {
-      try {
-        await navigator.clipboard.writeText(data?.product_name);
-        toast.success("product name copied to clipboard");
-      } catch (error) {
-        console.error("Failed to copy text: ", error);
-      }
-    };
-
-    const handleCopyVariationName = async (variantName) => {
-      try {
-        await navigator.clipboard.writeText(variantName);
-        toast.success("variation name copied to clipboard");
-      } catch (error) {
-        console.error("Failed to copy text: ", error);
-      }
-    };
-
-  // console.log("data...", data);
+  const handleCopyVariationName = async (variantName) => {
+    try {
+      await navigator.clipboard.writeText(variantName);
+      toast.success("variation name copied to clipboard");
+    } catch (error) {
+      console.error("Failed to copy text: ", error);
+    }
+  };
 
   return (
-    <div className="col-span-1 border rounded-r-md shadow-md p-3 text-black">
-      <div className="flex items-center justify-between gap-5 xs:gap-2 xms:gap-2 xls:gap-2 sm:gap-3 border-b border-gray-300 py-1">
-        <div className="flex items-start  gap-2">
-          <button onClick={handleCopyName}>
-            <IoCopyOutline size={20} className="text-black" />
-          </button>
-          <p className="text-[20px] font-bold xs:text-[14px] xms:text-[14px] xls:text-[14px] sm:text-[16px]">
+    <div className="col-span-1 text-black">
+      {/* PRODUCT NAME */}
+      <div className="flex items-center justify-between gap-5 xs:gap-2 xms:gap-2 xls:gap-2 sm:gap-3 py-1">
+        <div className="flex items-center  gap-2">
+          <p className="text-2xl lg:text-3xl font-light tracking-wide text-black mb-2">
             {data?.product_name}
           </p>
         </div>
       </div>
-      <div className=" border-b border-gray-300 py-3 xsm:flex block justify-between">
-        <div className="text-[20px] font-normal flex flow-row ">
-          <span className="text-primary py-5">Brand:</span>
-          <Link href={`/brand/${data?.brands?.slug}`} className="h-full group">
+      {/* MADE & BRAND */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <div className="text-sm text-gray-600">Brand:</div>
+          <div
+            // href={`/brand/${data?.brands?.slug}`}
+            className="w-[70px] group"
+          >
             <Image
-              className="object-fill rounded pl-8"
-              src={`${imageHostName}/storage/brands/${data?.brands?.image}`}
-              width={100}
-              height={30}
+              className="object-fill content-center"
+              src={
+                isDevelopment
+                  ? "/assets/logo/laxzin-logo-black.png"
+                  : `${imageHostName}/storage/${contactInfo?.logo}`
+              }
+              width={420}
+              height={420}
               alt={`${data?.brands?.name}`}
             />
-          </Link>
+          </div>
         </div>
-
-        <p className="hidden">{data?.google_barcode}</p>
-        <div className="text-[16px]  font-normal py-5">
+        <span className="text-sm text-gray-600">
           Made In {data?.made_in_country?.name}
-        </div>
+        </span>
       </div>
-      <div className="flex  items-center justify-between gap-2 py-4 border-b border-gray-300">
-        <div className="text-lg  font-bold">
+      {/* RATING */}
+      <div className="flex items-center space-x-1 mb-4">
+        {[...Array(5)].map((_, i) => (
+          <span key={i} className="text-yellow-400 text-sm">
+            ★
+          </span>
+        ))}
+        <span className="text-sm text-gray-500 ml-2">(150 reviews)</span>
+      </div>
+
+      {/* PRICING */}
+      <div className="flex items-center space-x-4">
+        <span className="text-3xl font-light text-black">
+          {data?.product_variation_status == 0 ? (
+            <span>৳ {data?.sale_price * count}</span>
+          ) : (
+            <span>
+              ৳{" "}
+              {data?.product_variants?.length > 0 &&
+                data?.product_variants[selectedIndex]?.sale_price * count}
+            </span>
+          )}
+        </span>
+        <span className="text-xl text-gray-500 line-through">
           {data?.product_variation_status == 0 ? (
             <>
               {data?.regular_price == data?.sale_price ? null : (
@@ -458,52 +472,12 @@ const Details = ({
               )}
             </>
           )}
-        </div>
-
-        <div className="flex  items-center gap-3  mt-4">
-          <div className=" flex  items-center justify-center ">
-            <button
-              onClick={() => setCount(count > 1 ? count - 1 : 1)}
-              className="bg-white rounded-sm text-[18px] text-black w-[40px] h-[40px] font-extrabold border border-black"
-            >
-              -
-            </button>
-            <input
-              value={count}
-              className=" outline-none w-[60px] xxsm:w-[40px] xxxsm:w-[30px] text-black h-[40px] text-center bg-gray-200"
-              readOnly
-            />
-            <button
-              onClick={() =>
-                data?.product_variation_status == 1
-                  ? variationId !== null
-                    ? count < data?.product_variants[selectedIndex]?.qty
-                      ? setCount((c) => c + 1)
-                      : toast.error("You cant add more than product!")
-                    : toast.error("Must select variation !")
-                  : count < data?.qty
-                  ? setCount((c) => c + 1)
-                  : toast.error("You cant add more than product!")
-              }
-              className="bg-white rounded-sm text-[18px] text-black w-[40px] h-[40px] font-extrabold border border-black"
-            >
-              +
-            </button>
-          </div>
-        </div>
-
-        <div className="text-[20px]  xxsms:text-xs font-bold">
-          {data?.product_variation_status == 0 ? (
-            <span className="pl-2">৳ {data?.sale_price * count}</span>
-          ) : (
-            <span className="pl-2">
-              ৳{" "}
-              {data?.product_variants?.length > 0 &&
-                data?.product_variants[selectedIndex]?.sale_price * count}
-            </span>
-          )}
-        </div>
+        </span>
+        <span className="bg-red-100 text-red-600 px-2 py-1 rounded text-sm font-medium">
+          25% OFF
+        </span>
       </div>
+      {/* STOCK - QUANTITY */}
       <div className=" block">
         {!clickFlag ? (
           <>
@@ -512,9 +486,7 @@ const Details = ({
                 Out of stock
               </div>
             ) : (
-              <div className=" text-red-500 xls:text-xs xms:text-xs xs:text-xs py-1">
-                (In stock)
-              </div>
+              <div className="text-green-600 text-sm font-medium">In stock</div>
             )}
           </>
         ) : variationQty > 0 ? (
@@ -527,6 +499,7 @@ const Details = ({
           </div>
         )}
       </div>
+      {/* PRODUCT SIZE SECTION */}
       <div>
         {data?.product_variants?.length > 0 && (
           <>
@@ -535,18 +508,10 @@ const Details = ({
                 {data?.product_variants?.map((item, index) => (
                   <>
                     {clickFlag == false ? (
-                      <div className="flex items-center gap-2">
-                        <div
-                          onClick={() =>
-                            handleCopyVariationName(item?.product_variant_name)
-                          }
-                          className="cursor-pointer"
-                        >
-                          <IoCopyOutline size={17} className="text-black" />
-                        </div>
+                      <div className="flex items-center gap-2 text-sm xs:text-base">
                         <button
                           className={`bg-gray-300 text-black
-                    px-2 py-2 w-full rounded-md cursor-pointer flex items-center justify-center gap-2`}
+                    px-2 py-2 w-full rounded cursor-pointer flex items-center justify-center gap-2`}
                           onClick={() =>
                             handleVariationImageClick(item?.id, index)
                           }
@@ -558,20 +523,12 @@ const Details = ({
                       </div>
                     ) : (
                       <div className="flex items-center gap-2">
-                        <div
-                          onClick={() =>
-                            handleCopyVariationName(item?.product_variant_name)
-                          }
-                          className="cursor-pointer"
-                        >
-                          <IoCopyOutline size={17} className="text-black" />
-                        </div>
                         <button
                           className={`${
                             item?.id == variationId
                               ? "bg-black text-white"
                               : "bg-gray-300 text-black"
-                          } px-2 py-2 rounded-md cursor-pointer w-full`}
+                          } px-2 py-2 rounded cursor-pointer w-full`}
                           onClick={() =>
                             handleVariationImageClick(item?.id, index)
                           }
@@ -589,103 +546,192 @@ const Details = ({
           </>
         )}
       </div>
-      <Link
-        href="https://play.google.com/store/apps/details?id=com.laxzinapp"
-        target="_blank"
-        className="bg-black flex items-center justify-center col-span-1 py-3 rounded-md cursor-pointer  mt-3"
-      >
-        <div className="text-white font-bold text-[14px] xs:text-[12px]">
-          {data?.product_variation_status == 0 ? (
-            <p>
-              {data?.sale_price !== data?.app_price ? (
-                <span>
-                  {" "}
-                  Save {Number(data?.sale_price - data?.app_price).toFixed(
-                    2
-                  )}{" "}
-                  tk On App. Price : {data?.app_price} tk. Get App
-                </span>
-              ) : (
-                <span>Get App</span>
-              )}
-            </p>
-          ) : (
-            <p>
-              {data?.product_variants?.length > 0 &&
-              data?.product_variants?.[selectedIndex] ? (
-                data.product_variants[selectedIndex].app_price ===
-                data.product_variants[selectedIndex].sale_price ? (
-                  <span>Get App</span>
-                ) : (
-                  <span>
-                    Save{" "}
-                    {Number(
-                      data.product_variants[selectedIndex].sale_price -
-                        data.product_variants[selectedIndex].app_price
-                    ).toFixed(2)}{" "}
-                    tk On App. Price :{" "}
-                    {data.product_variants[selectedIndex].app_price} tk. Get App
-                  </span>
-                )
-              ) : null}
-            </p>
-          )}
+      {/* PRODUCT BENEFIT SECTION */}
+      <ProductBenefits />
+      {/* Quantity Selector */}
+      <div className="flex items-center space-x-4 mt-5">
+        <span className="text-gray-700">Qty:</span>
+        <div className="flex items-center border border-gray-300 ">
+          <button
+            onClick={() => setCount(count > 1 ? count - 1 : 1)}
+            className="px-3 py-2 hover:bg-gray-100 transition-colors"
+          >
+            -
+          </button>
+          <span className="px-4 py-2 border-x border-gray-300">{count}</span>
+          <button
+            onClick={() =>
+              data?.product_variation_status == 1
+                ? variationId !== null
+                  ? count < data?.product_variants[selectedIndex]?.qty
+                    ? setCount((c) => c + 1)
+                    : toast.error("You cant add more than product!")
+                  : toast.error("Must select variation !")
+                : count < data?.qty
+                ? setCount((c) => c + 1)
+                : toast.error("You cant add more than product!")
+            }
+            className="px-3 py-2 hover:bg-gray-100 transition-colors"
+          >
+            +
+          </button>
         </div>
-      </Link>
-      <div className="border-b border-gray-300 py-1">
+      </div>
+      {/* ACTION BUTTONS */}
+      <div className="mt-5">
         {totalQty == 0 ? null : (
-          <div className="grid grid-cols-2 py-1 gap-3">
+          <div className="flex justify-between w-full">
             {data?.product_variation_status == 1 &&
             selectedItem == null &&
             selectVariation?.length > 0 ? (
-              <>
-                <div
+              <div className="flex justify-between w-full gap-4">
+                <Button
                   onClick={() => handleDisabled()}
-                  className="bg-gray-900 flex items-center justify-center col-span-1 py-3 rounded-md cursor-pointer "
+                  className="bg-black flex items-center justify-center col-span-1 py-3 cursor-pointer w-full"
                 >
                   <AiOutlineShoppingCart className="text-white text-[20px] mr-4" />
-                  <div className="text-white font-bold text-[14px] xs:text-[12px]">
+                  <div className="text-white text-[14px] xs:text-sm md:text-base">
                     Add To Cart
                   </div>
-                </div>
-                <div
+                </Button>
+                <Button
                   onClick={() => handleDisabled()}
-                  className="flex items-center justify-center col-span-1 py-3 rounded-md cursor-pointer hover:bg-primary"
+                  className="flex items-center justify-center col-span-1 py-3 cursor-pointer hover:bg-primary w-full"
                 >
                   <BsBagCheck className="text-white text-[20px] mr-4" />
-                  <div className="text-white font-bold text-[14px] xs:text-[12px]">
+                  <div className="text-white  text-[14px] xs:text-sm md:text-base">
                     Buy Now
                   </div>
-                </div>
-              </>
+                </Button>
+                <Button className="bg-gray-200 py-3 px-4 border transition-colors w-full xs:w-auto group flex-shrink">
+                  <Link
+                    href="https://play.google.com/store/apps/details?id=com.laxzinapp"
+                    target="_blank"
+                    className="flex items-center gap-3 text-black group-hover:text-white"
+                  >
+                    {/* <div className="text-white font-bold text-[14px] xs:text-[12px]">
+                      {data?.product_variation_status == 0 ? (
+                        <p>
+                          {data?.sale_price !== data?.app_price ? (
+                            <span>
+                              {" "}
+                              Save{" "}
+                              {Number(
+                                data?.sale_price - data?.app_price
+                              ).toFixed(2)}{" "}
+                              tk On App. Price : {data?.app_price} tk. Get App
+                            </span>
+                          ) : (
+                            <span>Get App</span>
+                          )}
+                        </p>
+                      ) : (
+                        <p>
+                          {data?.product_variants?.length > 0 &&
+                          data?.product_variants?.[selectedIndex] ? (
+                            data.product_variants[selectedIndex].app_price ===
+                            data.product_variants[selectedIndex].sale_price ? (
+                              <span>Get App</span>
+                            ) : (
+                              <span>
+                                Save{" "}
+                                {Number(
+                                  data.product_variants[selectedIndex]
+                                    .sale_price -
+                                    data.product_variants[selectedIndex]
+                                      .app_price
+                                ).toFixed(2)}{" "}
+                                tk On App. Price :{" "}
+                                {data.product_variants[selectedIndex].app_price}{" "}
+                                tk. Get App
+                              </span>
+                            )
+                          ) : null}
+                        </p>
+                      )}
+                    </div> */}
+                    <BiLogoPlayStore size={22} /> <p>Get App</p>
+                  </Link>
+                </Button>
+              </div>
             ) : (
-              <>
-                <div
+              <div className="flex flex-col xs:flex-row justify-between w-full gap-4">
+                <Button
                   onClick={() => handleCart("variation")}
-                  className="bg-gray-900 flex items-center justify-center col-span-1 py-3 rounded-md cursor-pointer "
+                  className="bg-black flex items-center justify-center col-span-1 py-3 cursor-pointer  w-full gap-3"
                 >
-                  <AiOutlineShoppingCart className="text-white text-[20px] mr-4" />
-                  <div className="text-white font-bold text-[14px] xs:text-[12px]">
+                  <AiOutlineShoppingCart className="text-white text-[20px]" />
+                  <div className="text-white text-[14px] xs:text-sm md:text-base">
                     Add To Cart
                   </div>
-                </div>
-                <div
+                </Button>
+                <Button
                   onClick={() => handleOrder("variation")}
-                  className=" flex items-center justify-center col-span-1 py-3 rounded-md cursor-pointer bg-primary"
+                  className=" flex items-center justify-center w-full gap-3"
                 >
-                  <BsBagCheck className="text-white text-[20px] mr-4" />
-                  <div className="text-white font-bold text-[14px] xs:text-[12px]">
+                  <BsBagCheck className="text-white text-[20px]" />
+                  <div className="text-white text-[14px] xs:text-sm md:text-base">
                     Buy Now
                   </div>
-                </div>
-              </>
+                </Button>
+                <Button className="bg-gray-200 py-3 px-4 border transition-colors w-full group">
+                  <Link
+                    href="https://play.google.com/store/apps/details?id=com.laxzinapp"
+                    target="_blank"
+                    className="flex items-center gap-3 text-black group-hover:text-white justify-center"
+                  >
+                    {/* <div className="text-white font-bold text-[14px] xs:text-[12px]">
+                      {data?.product_variation_status == 0 ? (
+                        <p>
+                          {data?.sale_price !== data?.app_price ? (
+                            <span>
+                              {" "}
+                              Save{" "}
+                              {Number(
+                                data?.sale_price - data?.app_price
+                              ).toFixed(2)}{" "}
+                              tk On App. Price : {data?.app_price} tk. Get App
+                            </span>
+                          ) : (
+                            <span>Get App</span>
+                          )}
+                        </p>
+                      ) : (
+                        <p>
+                          {data?.product_variants?.length > 0 &&
+                          data?.product_variants?.[selectedIndex] ? (
+                            data.product_variants[selectedIndex].app_price ===
+                            data.product_variants[selectedIndex].sale_price ? (
+                              <span>Get App</span>
+                            ) : (
+                              <span>
+                                Save{" "}
+                                {Number(
+                                  data.product_variants[selectedIndex]
+                                    .sale_price -
+                                    data.product_variants[selectedIndex]
+                                      .app_price
+                                ).toFixed(2)}{" "}
+                                tk On App. Price :{" "}
+                                {data.product_variants[selectedIndex].app_price}{" "}
+                                tk. Get App
+                              </span>
+                            )
+                          ) : null}
+                        </p>
+                      )}
+                    </div> */}
+                    <BiLogoPlayStore size={26} /> <p>Get App</p>
+                  </Link>
+                </Button>
+              </div>
             )}
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-2 py-2">
+        {/* <div className="grid grid-cols-2 gap-2 py-2">
           <div className="flex items-center px-2 py-2 gap-10 xxxsm:gap-2 xsm:gap-3 xs:gap-4 sm:gap-5">
-            <Image
+            <Image 
               src={"/assets/category/cash_on_delivery.webp"}
               width={40}
               height={40}
@@ -704,8 +750,31 @@ const Details = ({
             />
             <div className="xs:text-[14px] text-[11px]">View Policy</div>
           </div>
+        </div> */}
+      </div>
+      {/* DELIVERY POLICY */}
+      <DeliveryInfoSection />
+      {/* DISCLAIMER */}
+      {/* DISCLAIMER */}
+      <div className="rounded-2xl border bg-amber-50 border-amber-200 p-2 xs:p-4 text-amber-800 shadow-sm mt-5 block xs:hidden">
+        <div className="flex items-start gap-3">
+          <BsInfoCircleFill
+            className="size-4 xs:size-5 mt-0.5 shrink-0"
+            aria-hidden
+          />
+          <div>
+            <p className="font-semibold text-sm xs:text-base">Declaimer:</p>
+            <p className="text-xs md:text-sm leading-6">
+              The actual color of the physical product may slightly vary due to
+              the deviation of lighting sources, photography or your device
+              display settings. Delivery charges may vary as per the location,
+              Product Size and Weight; we will notify before proceeding the
+              delivery.
+            </p>
+          </div>
         </div>
       </div>
+      {/* SHARE OPTIONS */}
       <div className="py-3 flex  items-center gap-4">
         <div className="text-[12px]">Share to:</div>
         <div className="flex items-center">
