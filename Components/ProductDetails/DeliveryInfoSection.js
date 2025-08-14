@@ -23,8 +23,8 @@ const productInfo = [
 
 export default function DeliveryInfoSection() {
   return (
-    <div className="bg-gray-50 p-4 mt-6 divide-y">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6">
+    <div className="bg-gray-50 p-4 mt-6 divide-y rounded-lg">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 mb-3">
         {productInfo.slice(0, 4).map((item, idx) => {
           const Icon = item.icon;
           return (
@@ -42,7 +42,7 @@ export default function DeliveryInfoSection() {
           );
         })}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-6 pt-3">
         {productInfo.slice(4).map((item, idx) => {
           const Icon = item.icon;
           return (

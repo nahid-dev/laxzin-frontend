@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 
 import Slider from "react-slick";
@@ -15,6 +14,7 @@ import { useState } from "react";
 import ImageGalleryCard from "./ImageGalleryCard";
 import { Zoom } from "reactjs-image-zoom";
 import { imageHostName } from "@/lib/config";
+import { BsInfoCircleFill } from "react-icons/bs";
 
 const ImageGallery = ({
   data,
@@ -64,33 +64,33 @@ const ImageGallery = ({
     return "/assets/placeholder_600x.webp";
   };
 
-   const handleDownload = async () => {
-     try {
-       const imageUrl = getImageSrc();
-       ``;
-       const response = await fetch(imageUrl);
+  const handleDownload = async () => {
+    try {
+      const imageUrl = getImageSrc();
+      ``;
+      const response = await fetch(imageUrl);
 
-       if (!response.ok) {
-         throw new Error("Failed to fetch image.");
-       }
+      if (!response.ok) {
+        throw new Error("Failed to fetch image.");
+      }
 
-       // Create Blob and trigger download
-       const blob = await response.blob();
-       const blobUrl = URL.createObjectURL(blob);
+      // Create Blob and trigger download
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
 
-       const link = document.createElement("a");
-       link.href = blobUrl;
-       link.download = `${data?.product_name || "download"}.jpg`;
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = `${data?.product_name || "download"}.jpg`;
 
-       document.body.appendChild(link);
-       link.click();
-       document.body.removeChild(link);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-       URL.revokeObjectURL(blobUrl); // Free memory
-     } catch (error) {
-       console.error("Error downloading the image:", error);
-     }
-   };
+      URL.revokeObjectURL(blobUrl); // Free memory
+    } catch (error) {
+      console.error("Error downloading the image:", error);
+    }
+  };
 
   const CustomPrevArrow = (props) => {
     const { onClick } = props;
@@ -602,6 +602,25 @@ const ImageGallery = ({
               )}
             </div>
           )}
+        </div>
+      </div>
+      {/* DISCLAIMER */}
+      <div className="rounded-2xl border bg-amber-50 border-amber-200 p-2 xs:p-4 text-amber-800 shadow-sm mt-5">
+        <div className="flex items-start gap-3">
+          <BsInfoCircleFill
+            className="size-4 xs:size-5 mt-0.5 shrink-0"
+            aria-hidden
+          />
+          <div>
+            <p className="font-semibold text-sm xs:text-base">Declaimer:</p>
+            <p className="text-xs md:text-sm leading-6">
+              The actual color of the physical product may slightly vary due to
+              the deviation of lighting sources, photography or your device
+              display settings. Delivery charges may vary as per the location,
+              Product Size and Weight; we will notify before proceeding the
+              delivery.
+            </p>
+          </div>
         </div>
       </div>
     </div>

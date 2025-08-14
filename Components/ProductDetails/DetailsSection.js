@@ -622,11 +622,11 @@ const Details = ({
                     Buy Now
                   </div>
                 </Button>
-                <Button className="bg-gray-200 text-gray-700 py-3 px-4 border hover:bg-gray-300 transition-colors font-medium text-sm w-full">
+                <Button className="bg-gray-200 py-3 px-4 border transition-colors w-full group">
                   <Link
                     href="https://play.google.com/store/apps/details?id=com.laxzinapp"
                     target="_blank"
-                    className="flex items-center gap-3"
+                    className="flex items-center gap-3 text-black group-hover:text-white"
                   >
                     {/* <div className="text-white font-bold text-[14px] xs:text-[12px]">
           {data?.product_variation_status == 0 ? (
@@ -665,8 +665,7 @@ const Details = ({
             </p>
           )}
         </div> */}
-                    <BiLogoPlayStore size={22} className="text-black" />{" "}
-                    <p className="text-black">Get App</p>
+                    <BiLogoPlayStore size={22} /> <p>Get App</p>
                   </Link>
                 </Button>
               </div>
@@ -690,11 +689,11 @@ const Details = ({
                     Buy Now
                   </div>
                 </Button>
-                <Button className="bg-gray-200 text-gray-700 py-3 px-4 border hover:bg-gray-300 transition-colors font-medium text-sm w-full">
+                <Button className="bg-gray-200 py-3 px-4 border transition-colors w-full group">
                   <Link
                     href="https://play.google.com/store/apps/details?id=com.laxzinapp"
                     target="_blank"
-                    className="flex items-center gap-3"
+                    className="flex items-center gap-3 text-black group-hover:text-white"
                   >
                     {/* <div className="text-white font-bold text-[14px] xs:text-[12px]">
           {data?.product_variation_status == 0 ? (
@@ -733,8 +732,7 @@ const Details = ({
             </p>
           )}
         </div> */}
-                    <BiLogoPlayStore size={22} className="text-black" />{" "}
-                    <p className="text-black">Get App</p>
+                    <BiLogoPlayStore size={26} /> <p>Get App</p>
                   </Link>
                 </Button>
               </div>
@@ -767,7 +765,7 @@ const Details = ({
       </div>
       {/* DELIVERY POLICY */}
       <DeliveryInfoSection />
-
+      {/* SHARE OPTIONS */}
       <div className="py-3 flex  items-center gap-4">
         <div className="text-[12px]">Share to:</div>
         <div className="flex items-center">

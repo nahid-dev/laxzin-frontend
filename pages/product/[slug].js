@@ -20,9 +20,11 @@ import request from '@/lib/request';
 import Head from 'next/head';
 import { hostname,imageHostName } from '@/lib/config';
 import { useRouter } from 'next/router';
+import ProductContentSection from "@/Components/ProductDetails/ProductContentSection";
+import MoreProductSection from "@/Components/ProductDetails/MoreProductSection";
+import LikeProduct from "@/Components/ProductDetails/LikeProduct";
 
 // import { ProductJsonLd } from "next-seo";
-
 
 const ProductDetails = () => {
   const [similarProd, setSimilarProd] = useState([]);
@@ -110,7 +112,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <>
+    <div className="overflow-hidden">
       <Head>
         <title>{`${data?.product_name}`}</title>
 
@@ -211,105 +213,21 @@ const ProductDetails = () => {
               variationQty={variationQty}
             />
           </div>
-          <div>
+          <div className="hidden">
             <DescriptionDetails data={data} />
           </div>
         </div>
-
-        <div className="uppercase xs:text-2xl text-base text-center pb-8 tracking-widest text-black">
-          related products
-        </div>
-
-        <div className="relative">
-          <Swiper
-            slidesPerView={4}
-            spaceBetween={20}
-            autoplay={{
-              delay: 2200,
-              disableOnInteraction: true,
-            }}
-            pagination={false}
-            navigation={{
-              nextEl: ".button-next-slide",
-              prevEl: ".button-prev-slide",
-            }}
-            modules={[Autoplay, Navigation, Pagination]}
-            breakpoints={{
-              320: {
-                slidesPerView: 1,
-                spaceBetween: 9,
-              },
-              375: {
-                slidesPerView: 1,
-                spaceBetween: 9,
-              },
-
-              425: {
-                slidesPerView: 1,
-                spaceBetween: 9,
-              },
-
-              576: {
-                slidesPerView: 1,
-                spaceBetween: 10,
-              },
-
-              768: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-              },
-
-              1024: {
-                slidesPerView: 3,
-                spaceBetween: 18,
-              },
-
-              1280: {
-                slidesPerView: 3,
-                spaceBetween: 18,
-              },
-              1440: {
-                slidesPerView: 4,
-                spaceBetween: 18,
-              },
-              1820: {
-                slidesPerView: 4,
-                spaceBetween: 18,
-              },
-              2000: {
-                slidesPerView: 4,
-                spaceBetween: 18,
-              },
-            }}
-          >
-            {similarProd?.map((item, index) => (
-              <SwiperSlide key={index}>
-                <ProductCard item={item} />
-              </SwiperSlide>
-            ))}
-            <div className="md:flex hidden">
-              <button className="button-prev-slide w-[60px] h-[60px]  rounded-full shadow-xl drop-shadow-lg  transition duration-200 bg-slate-50  text-black grid place-items-center absolute top-[47%] z-10 left-[-80px]  cursor-pointer">
-                <MdOutlineKeyboardArrowLeft size={24} className="text-black" />
-              </button>
-
-              <button className="button-next-slide w-[60px] h-[60px] rounded-full shadow-xl drop-shadow-lg  transition duration-200 bg-slate-50 text-black grid place-items-center absolute top-[47%] z-10 right-[-80px]  cursor-pointer">
-                <MdOutlineKeyboardArrowRight size={24} className="text-black" />
-              </button>
-            </div>
-
-            <div className="md:hidden ">
-              <button className="button-prev-slide   text-black  absolute top-[47%] z-10 left-[-45px]  cursor-pointer">
-                <MdOutlineKeyboardArrowLeft size={24} className="text-black " />
-              </button>
-
-              <button className="button-next-slide  text-black  absolute top-[47%] z-10 right-[-45px]  cursor-pointer">
-                <MdOutlineKeyboardArrowRight size={24} className="text-black" />
-              </button>
-            </div>
-          </Swiper>
-        </div>
       </div>
-    </>
+      {/* PRODUCT CONTENT SECTION */}
+      <ProductContentSection />
+      {/* RELATED PRODUCT SECTION */}
+      <div>
+        {/* THIS BRAND PRODUCT */}
+        <MoreProductSection similarProd={similarProd} />
+        {/* MAY LIKE PRODUCTS */}
+        <LikeProduct similarProd={similarProd} />
+      </div>
+    </div>
   );
 };
 
