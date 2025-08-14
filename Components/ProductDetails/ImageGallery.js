@@ -419,33 +419,6 @@ const ImageGallery = ({
               cursor="zoom-in"
               style={{ margin: "0px" }}
             />
-            <button
-              className="absolute top-5 right-4 bg-white rounded-full h-8 px-2 flex justify-center items-center cursor-pointer group shadow"
-              onClick={handleDownload}
-            >
-              <svg
-                className="text-black"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M12 15V5M12 15C11.2998 15 9.99153 13.0057 9.5 12.5M12 15C12.7002 15 14.0085 13.0057 14.5 12.5"
-                  stroke="#1F2937"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M5 19H19.0001"
-                  stroke="#1F2937"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
           </div>
         </div>
       </div>
@@ -462,33 +435,6 @@ const ImageGallery = ({
             unoptimized={!isOptimized}
             onError={() => setIsOptimized(false)}
           />
-          <button
-            className="absolute top-5 right-4 bg-white rounded-full h-8 px-2 flex justify-center items-center cursor-pointer group shadow"
-            onClick={handleDownload}
-          >
-            <svg
-              className="text-black"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M12 15V5M12 15C11.2998 15 9.99153 13.0057 9.5 12.5M12 15C12.7002 15 14.0085 13.0057 14.5 12.5"
-                stroke="#1F2937"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-              <path
-                d="M5 19H19.0001"
-                stroke="#1F2937"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
         </div>
         <div className="mt-4">
           {data?.product_variation_status == 1 ? (
@@ -605,7 +551,7 @@ const ImageGallery = ({
         </div>
       </div>
       {/* DISCLAIMER */}
-      <div className="rounded-2xl border bg-amber-50 border-amber-200 p-2 xs:p-4 text-amber-800 shadow-sm mt-5">
+      <div className="rounded-2xl border bg-amber-50 border-amber-200 p-2 xs:p-4 text-amber-800 shadow-sm mt-5 hidden xs:block">
         <div className="flex items-start gap-3">
           <BsInfoCircleFill
             className="size-4 xs:size-5 mt-0.5 shrink-0"

@@ -5,7 +5,8 @@ import { RiCheckboxCircleFill } from "react-icons/ri";
 import ProductBenefits from "./ProductBenefits";
 import Button from "../Common/Button";
 
-const ProductContentSection = () => {
+const ProductContentSection = ({ data }) => {
+  console.log(data?.ingredient);
   return (
     <div>
       {/* Skin Concern Hero Section */}
@@ -120,37 +121,21 @@ const ProductContentSection = () => {
       {/* Ingredients Section */}
       <div className="py-16">
         <div className="max-w-7xl mx-auto px-4 lg:px-0">
-          <h2 className="text-2xl lg:text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-2xl lg:text-3xl font-bold text-center text-gray-900 mb-8">
             INGREDIENTS
           </h2>
-          <div className="grid grid-cols-2 xs:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {[
-              "Water",
-              "Sodium Lauryl",
-              "Sodium Chloride",
-              "Citric Acid",
-              "Fragrance",
-              "Phenoxyethanol",
-              "Potassium Hydroxide",
-              "Propanediol",
-              "Caprylyl Glycol",
-              "Glycerin",
-              "Potassium Sorbate",
-              "Lactic Acid",
-              "Sodium Benzoate",
-              "Tocopherol",
-              "Ascorbic Acid",
-              "Retinyl Palmitate",
-              "Sodium Hyaluronate",
-              "Niacinamide",
-            ].map((ingredient, index) => (
-              <div
-                key={index}
-                className="text-center p-2 bg-gray-50 rounded-full border"
-              >
-                <span className="text-sm text-gray-700">{ingredient}</span>
-              </div>
-            ))}
+          <div className="flex gap-4 items-center flex-wrap justify-start xs:justify-center mb-8">
+            {data?.ingredient
+              ?.replace(/<[^>]+>/g, "")
+              ?.split(/,|\n/)
+              ?.map((item, idx) => (
+                <span
+                  key={idx}
+                  className="font-medium text-black border rounded-full text-sm bg-gray-50 px-5 py-1"
+                >
+                  {item.trim()}
+                </span>
+              ))}
           </div>
           <div className="justify-center flex">
             <ProductBenefits />
@@ -158,7 +143,7 @@ const ProductContentSection = () => {
         </div>
       </div>
       {/* How to Use Section */}
-      <div className="py-16 bg-white">
+      <div className="pb-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 lg:px-0">
           <h2 className="text-2xl lg:text-3xl font-bold text-center text-gray-900 mb-12">
             HOW TO USE
@@ -323,10 +308,12 @@ const ProductContentSection = () => {
             </div>
           </div>
           <div className="text-center mt-8">
-            <Button >
-              Order Now
-                      </Button>
-                      <p className="mx-auto max-w-3xl text-gray-600 mt-5">Keep your skin clean, fresh, and bright with Cosrx Salicylic Acid Daily Gentle Cleanser. Experience the power of natural ingredients for radiant, healthy skin.</p>
+            <Button>Order Now</Button>
+            <p className="mx-auto max-w-3xl text-gray-600 mt-5">
+              Keep your skin clean, fresh, and bright with Cosrx Salicylic Acid
+              Daily Gentle Cleanser. Experience the power of natural ingredients
+              for radiant, healthy skin.
+            </p>
           </div>
         </div>
       </div>

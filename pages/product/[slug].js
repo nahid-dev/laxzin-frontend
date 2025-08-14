@@ -1,28 +1,18 @@
-import CommonbgBanner from '@/Components/Common/CommonbgBanner';
-import DescriptionDetails from '@/Components/ProductDetails/DescriptionDetails';
-import DetailsSection from '@/Components/ProductDetails/DetailsSection';
-import ImageGallery from '@/Components/ProductDetails/ImageGallery';
-import React, { useEffect, useState } from 'react'
+import DescriptionDetails from "@/Components/ProductDetails/DescriptionDetails";
+import DetailsSection from "@/Components/ProductDetails/DetailsSection";
+import ImageGallery from "@/Components/ProductDetails/ImageGallery";
+import React, { useEffect, useState } from "react";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-import {
-  MdOutlineKeyboardArrowLeft,
-  MdOutlineKeyboardArrowRight,
-} from "react-icons/md";
-
-import ProductCard from '@/Components/ProductDetails/ProductCard';
-import request from '@/lib/request';
-import Head from 'next/head';
-import { hostname,imageHostName } from '@/lib/config';
-import { useRouter } from 'next/router';
+import request from "@/lib/request";
+import Head from "next/head";
+import { imageHostName } from "@/lib/config";
+import { useRouter } from "next/router";
 import ProductContentSection from "@/Components/ProductDetails/ProductContentSection";
 import MoreProductSection from "@/Components/ProductDetails/MoreProductSection";
-import LikeProduct from "@/Components/ProductDetails/LikeProduct";
 
 // import { ProductJsonLd } from "next-seo";
 
@@ -112,7 +102,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden border-t">
       <Head>
         <title>{`${data?.product_name}`}</title>
 
@@ -219,13 +209,11 @@ const ProductDetails = () => {
         </div>
       </div>
       {/* PRODUCT CONTENT SECTION */}
-      <ProductContentSection />
+      <ProductContentSection data={data} />
       {/* RELATED PRODUCT SECTION */}
       <div>
         {/* THIS BRAND PRODUCT */}
         <MoreProductSection similarProd={similarProd} />
-        {/* MAY LIKE PRODUCTS */}
-        <LikeProduct similarProd={similarProd} />
       </div>
     </div>
   );

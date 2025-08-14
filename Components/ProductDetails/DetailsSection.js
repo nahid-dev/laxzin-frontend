@@ -6,9 +6,8 @@ import { useRouter } from "next/router";
 import { setCookie } from "nookies";
 import { useEffect, useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { BsBagCheck } from "react-icons/bs";
+import { BsBagCheck, BsInfoCircleFill } from "react-icons/bs";
 
-import { IoCopyOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import ProductBenefits from "./ProductBenefits";
 import Button from "../Common/Button";
@@ -393,11 +392,9 @@ const Details = ({
 
   return (
     <div className="col-span-1 text-black">
+      {/* PRODUCT NAME */}
       <div className="flex items-center justify-between gap-5 xs:gap-2 xms:gap-2 xls:gap-2 sm:gap-3 py-1">
         <div className="flex items-center  gap-2">
-          <button onClick={handleCopyName}>
-            <IoCopyOutline size={16} className="text-black" />
-          </button>
           <p className="text-2xl lg:text-3xl font-light tracking-wide text-black mb-2">
             {data?.product_name}
           </p>
@@ -502,7 +499,7 @@ const Details = ({
           </div>
         )}
       </div>
-      {/* UNKNOWN */}
+      {/* PRODUCT SIZE SECTION */}
       <div>
         {data?.product_variants?.length > 0 && (
           <>
@@ -511,18 +508,10 @@ const Details = ({
                 {data?.product_variants?.map((item, index) => (
                   <>
                     {clickFlag == false ? (
-                      <div className="flex items-center gap-2">
-                        <div
-                          onClick={() =>
-                            handleCopyVariationName(item?.product_variant_name)
-                          }
-                          className="cursor-pointer"
-                        >
-                          <IoCopyOutline size={17} className="text-black" />
-                        </div>
+                      <div className="flex items-center gap-2 text-sm xs:text-base">
                         <button
                           className={`bg-gray-300 text-black
-                    px-2 py-2 w-full rounded-md cursor-pointer flex items-center justify-center gap-2`}
+                    px-2 py-2 w-full rounded cursor-pointer flex items-center justify-center gap-2`}
                           onClick={() =>
                             handleVariationImageClick(item?.id, index)
                           }
@@ -534,20 +523,12 @@ const Details = ({
                       </div>
                     ) : (
                       <div className="flex items-center gap-2">
-                        <div
-                          onClick={() =>
-                            handleCopyVariationName(item?.product_variant_name)
-                          }
-                          className="cursor-pointer"
-                        >
-                          <IoCopyOutline size={17} className="text-black" />
-                        </div>
                         <button
                           className={`${
                             item?.id == variationId
                               ? "bg-black text-white"
                               : "bg-gray-300 text-black"
-                          } px-2 py-2 rounded-md cursor-pointer w-full`}
+                          } px-2 py-2 rounded cursor-pointer w-full`}
                           onClick={() =>
                             handleVariationImageClick(item?.id, index)
                           }
@@ -568,7 +549,7 @@ const Details = ({
       {/* PRODUCT BENEFIT SECTION */}
       <ProductBenefits />
       {/* Quantity Selector */}
-      <div className="flex items-center space-x-4 mt-3">
+      <div className="flex items-center space-x-4 mt-5">
         <span className="text-gray-700">Qty:</span>
         <div className="flex items-center border border-gray-300 ">
           <button
@@ -622,69 +603,73 @@ const Details = ({
                     Buy Now
                   </div>
                 </Button>
-                <Button className="bg-gray-200 py-3 px-4 border transition-colors w-full group">
+                <Button className="bg-gray-200 py-3 px-4 border transition-colors w-full xs:w-auto group flex-shrink">
                   <Link
                     href="https://play.google.com/store/apps/details?id=com.laxzinapp"
                     target="_blank"
                     className="flex items-center gap-3 text-black group-hover:text-white"
                   >
                     {/* <div className="text-white font-bold text-[14px] xs:text-[12px]">
-          {data?.product_variation_status == 0 ? (
-            <p>
-              {data?.sale_price !== data?.app_price ? (
-                <span>
-                  {" "}
-                  Save {Number(data?.sale_price - data?.app_price).toFixed(
-                    2
-                  )}{" "}
-                  tk On App. Price : {data?.app_price} tk. Get App
-                </span>
-              ) : (
-                <span>Get App</span>
-              )}
-            </p>
-          ) : (
-            <p>
-              {data?.product_variants?.length > 0 &&
-              data?.product_variants?.[selectedIndex] ? (
-                data.product_variants[selectedIndex].app_price ===
-                data.product_variants[selectedIndex].sale_price ? (
-                  <span>Get App</span>
-                ) : (
-                  <span>
-                    Save{" "}
-                    {Number(
-                      data.product_variants[selectedIndex].sale_price -
-                        data.product_variants[selectedIndex].app_price
-                    ).toFixed(2)}{" "}
-                    tk On App. Price :{" "}
-                    {data.product_variants[selectedIndex].app_price} tk. Get App
-                  </span>
-                )
-              ) : null}
-            </p>
-          )}
-        </div> */}
+                      {data?.product_variation_status == 0 ? (
+                        <p>
+                          {data?.sale_price !== data?.app_price ? (
+                            <span>
+                              {" "}
+                              Save{" "}
+                              {Number(
+                                data?.sale_price - data?.app_price
+                              ).toFixed(2)}{" "}
+                              tk On App. Price : {data?.app_price} tk. Get App
+                            </span>
+                          ) : (
+                            <span>Get App</span>
+                          )}
+                        </p>
+                      ) : (
+                        <p>
+                          {data?.product_variants?.length > 0 &&
+                          data?.product_variants?.[selectedIndex] ? (
+                            data.product_variants[selectedIndex].app_price ===
+                            data.product_variants[selectedIndex].sale_price ? (
+                              <span>Get App</span>
+                            ) : (
+                              <span>
+                                Save{" "}
+                                {Number(
+                                  data.product_variants[selectedIndex]
+                                    .sale_price -
+                                    data.product_variants[selectedIndex]
+                                      .app_price
+                                ).toFixed(2)}{" "}
+                                tk On App. Price :{" "}
+                                {data.product_variants[selectedIndex].app_price}{" "}
+                                tk. Get App
+                              </span>
+                            )
+                          ) : null}
+                        </p>
+                      )}
+                    </div> */}
                     <BiLogoPlayStore size={22} /> <p>Get App</p>
                   </Link>
                 </Button>
               </div>
             ) : (
-              <div className="flex justify-between w-full gap-4">
+              <div className="flex flex-col xs:flex-row justify-between w-full gap-4">
                 <Button
                   onClick={() => handleCart("variation")}
-                  className="bg-black flex items-center justify-center col-span-1 py-3 cursor-pointer  w-full"
+                  className="bg-black flex items-center justify-center col-span-1 py-3 cursor-pointer  w-full gap-3"
                 >
-                  <AiOutlineShoppingCart className="text-white text-[20px] mr-4" />
+                  <AiOutlineShoppingCart className="text-white text-[20px]" />
                   <div className="text-white text-[14px] xs:text-sm md:text-base">
                     Add To Cart
                   </div>
                 </Button>
                 <Button
                   onClick={() => handleOrder("variation")}
-                  className=" flex items-center justify-center w-full"
+                  className=" flex items-center justify-center w-full gap-3"
                 >
-                  <BsBagCheck className="text-white text-[20px] mr-4" />
+                  <BsBagCheck className="text-white text-[20px]" />
                   <div className="text-white text-[14px] xs:text-sm md:text-base">
                     Buy Now
                   </div>
@@ -693,45 +678,49 @@ const Details = ({
                   <Link
                     href="https://play.google.com/store/apps/details?id=com.laxzinapp"
                     target="_blank"
-                    className="flex items-center gap-3 text-black group-hover:text-white"
+                    className="flex items-center gap-3 text-black group-hover:text-white justify-center"
                   >
                     {/* <div className="text-white font-bold text-[14px] xs:text-[12px]">
-          {data?.product_variation_status == 0 ? (
-            <p>
-              {data?.sale_price !== data?.app_price ? (
-                <span>
-                  {" "}
-                  Save {Number(data?.sale_price - data?.app_price).toFixed(
-                    2
-                  )}{" "}
-                  tk On App. Price : {data?.app_price} tk. Get App
-                </span>
-              ) : (
-                <span>Get App</span>
-              )}
-            </p>
-          ) : (
-            <p>
-              {data?.product_variants?.length > 0 &&
-              data?.product_variants?.[selectedIndex] ? (
-                data.product_variants[selectedIndex].app_price ===
-                data.product_variants[selectedIndex].sale_price ? (
-                  <span>Get App</span>
-                ) : (
-                  <span>
-                    Save{" "}
-                    {Number(
-                      data.product_variants[selectedIndex].sale_price -
-                        data.product_variants[selectedIndex].app_price
-                    ).toFixed(2)}{" "}
-                    tk On App. Price :{" "}
-                    {data.product_variants[selectedIndex].app_price} tk. Get App
-                  </span>
-                )
-              ) : null}
-            </p>
-          )}
-        </div> */}
+                      {data?.product_variation_status == 0 ? (
+                        <p>
+                          {data?.sale_price !== data?.app_price ? (
+                            <span>
+                              {" "}
+                              Save{" "}
+                              {Number(
+                                data?.sale_price - data?.app_price
+                              ).toFixed(2)}{" "}
+                              tk On App. Price : {data?.app_price} tk. Get App
+                            </span>
+                          ) : (
+                            <span>Get App</span>
+                          )}
+                        </p>
+                      ) : (
+                        <p>
+                          {data?.product_variants?.length > 0 &&
+                          data?.product_variants?.[selectedIndex] ? (
+                            data.product_variants[selectedIndex].app_price ===
+                            data.product_variants[selectedIndex].sale_price ? (
+                              <span>Get App</span>
+                            ) : (
+                              <span>
+                                Save{" "}
+                                {Number(
+                                  data.product_variants[selectedIndex]
+                                    .sale_price -
+                                    data.product_variants[selectedIndex]
+                                      .app_price
+                                ).toFixed(2)}{" "}
+                                tk On App. Price :{" "}
+                                {data.product_variants[selectedIndex].app_price}{" "}
+                                tk. Get App
+                              </span>
+                            )
+                          ) : null}
+                        </p>
+                      )}
+                    </div> */}
                     <BiLogoPlayStore size={26} /> <p>Get App</p>
                   </Link>
                 </Button>
@@ -765,6 +754,26 @@ const Details = ({
       </div>
       {/* DELIVERY POLICY */}
       <DeliveryInfoSection />
+      {/* DISCLAIMER */}
+      {/* DISCLAIMER */}
+      <div className="rounded-2xl border bg-amber-50 border-amber-200 p-2 xs:p-4 text-amber-800 shadow-sm mt-5 block xs:hidden">
+        <div className="flex items-start gap-3">
+          <BsInfoCircleFill
+            className="size-4 xs:size-5 mt-0.5 shrink-0"
+            aria-hidden
+          />
+          <div>
+            <p className="font-semibold text-sm xs:text-base">Declaimer:</p>
+            <p className="text-xs md:text-sm leading-6">
+              The actual color of the physical product may slightly vary due to
+              the deviation of lighting sources, photography or your device
+              display settings. Delivery charges may vary as per the location,
+              Product Size and Weight; we will notify before proceeding the
+              delivery.
+            </p>
+          </div>
+        </div>
+      </div>
       {/* SHARE OPTIONS */}
       <div className="py-3 flex  items-center gap-4">
         <div className="text-[12px]">Share to:</div>

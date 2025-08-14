@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function ProductBenefits() {
   return (
-    <div className="flex items-center justify-center md:justify-stretch gap-10 mt-8 flex-wrap">
+    <div className="flex items-center justify-center md:justify-start gap-10 mt-5 flex-wrap [&>*:nth-child(n)]:p-2 [&>*:nth-child(n)]:border [&>*:nth-child(n)]:rounded-md">
       <Image
         className="object-fill p-2 rounded-lg w-28 h-28"
         src="/assets/img-1.webp"
