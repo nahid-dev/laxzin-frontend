@@ -10,14 +10,11 @@ import { useInView } from "react-intersection-observer";
 
 const ProductList = () => {
   const router = useRouter();
-
   const [products, setProducts] = useState([]);
-
   const { ref, inView } = useInView();
-
   const [totalData, setTotalData] = useState("");
-
   const [page, setPage] = useState(1);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     if (router?.query?.slug) {
@@ -33,6 +30,14 @@ const ProductList = () => {
     }
   }, [router?.query?.slug]);
 
+  useEffect(() => {
+    if (inView) {
+      loadMoreUsers();
+    }
+  }, [inView]);
+
+  const handleInputChange = (val) => setSearchValue(val);
+
   const loadMoreUsers = async () => {
     const res = await request(
       `category-wise-product/${router.query.slug}?page=${page + 1}`
@@ -42,15 +47,14 @@ const ProductList = () => {
     setPage(page + 1);
   };
 
-  useEffect(() => {
-    if (inView) {
-      loadMoreUsers();
-    }
-  }, [inView]);
-
   return (
-    <div className="bg-[#F3F3F3]">
-      <CommonbgBanner name={`${router?.query?.slug}`} />
+    <div>
+      <CommonbgBanner
+        name={`${router?.query?.slug}`}
+        enableSearch={true}
+        searchValue={searchValue}
+        onInputChange={handleInputChange}
+      />
       <div className="max-w-7xl px-2 lg:px-0 mx-auto py-8">
         <div className="mt-3 pb-4">
           {products?.length > 0 ? (
