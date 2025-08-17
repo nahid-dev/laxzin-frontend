@@ -10,10 +10,11 @@ export default function Button({ children, variant = "primary", size = "md", cla
   }
 
   const sizes = {
+    xs: "px-3 py-2 text-xs",
     sm: "px-4 py-2 text-sm",
     md: "px-8 py-3 text-base",
     lg: "px-12 py-4 text-lg",
-  }
+  };
 
   return (
     <button className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`} onClick={onClick} {...props}>

@@ -6,7 +6,6 @@ import ProductBenefits from "./ProductBenefits";
 import Button from "../Common/Button";
 
 const ProductContentSection = ({ data }) => {
-  console.log(data?.ingredient);
   return (
     <div>
       {/* Skin Concern Hero Section */}
@@ -308,7 +307,11 @@ const ProductContentSection = ({ data }) => {
             </div>
           </div>
           <div className="text-center mt-8">
-            <Button>Order Now</Button>
+            <Button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            >
+              Order Now
+            </Button>
             <p className="mx-auto max-w-3xl text-gray-600 mt-5">
               Keep your skin clean, fresh, and bright with Cosrx Salicylic Acid
               Daily Gentle Cleanser. Experience the power of natural ingredients

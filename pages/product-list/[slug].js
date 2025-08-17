@@ -10,38 +10,33 @@ import { useInView } from "react-intersection-observer";
 
 const ProductList = () => {
   const router = useRouter();
+  const [products, setProducts] = useState([]);
+  const { ref, inView } = useInView();
+  const [totalData, setTotalData] = useState("");
+  const [page, setPage] = useState(1);
+  const [searchValue, setSearchValue] = useState("");
 
-const [products, setProducts] = useState([]);
+  useEffect(() => {
+    if (router?.query?.slug) {
+      const getData = async () => {
+        let res = await request(
+          `category-wise-product/${router.query.slug}?page=${page}`
+        );
 
-const { ref, inView } = useInView();
+        setProducts(res.data?.data);
+        setTotalData(res?.data?.total);
+      };
+      getData();
+    }
+  }, [router?.query?.slug]);
 
+  useEffect(() => {
+    if (inView) {
+      loadMoreUsers();
+    }
+  }, [inView]);
 
-
-const [totalData, setTotalData] = useState("");
-
-const [page, setPage] = useState(1);
-
-
-
-
-
-useEffect(() => {
-  if (router?.query?.slug) {
-    const getData = async () => {
-      let res = await request(
-        `category-wise-product/${router.query.slug}?page=${page}`
-      );
-
-
-      setProducts(res.data?.data);
-      setTotalData(res?.data?.total);
-    };
-    getData();
-  }
-}, [router?.query?.slug]);
-
-
-
+  const handleInputChange = (val) => setSearchValue(val);
 
   const loadMoreUsers = async () => {
     const res = await request(
@@ -52,22 +47,19 @@ useEffect(() => {
     setPage(page + 1);
   };
 
-  useEffect(() => {
-    if (inView) {
-      loadMoreUsers();
-    }
-  }, [inView]);
-
- 
-
   return (
-    <div className="bg-[#F3F3F3]">
-      <CommonbgBanner name={`${router?.query?.slug}`} />
-      <div className="lg:max-w-7xl md:max-w-[50rem] sm:max-w-[36rem] max-w-[15rem] mx-auto">
+    <div>
+      <CommonbgBanner
+        name={`${router?.query?.slug}`}
+        enableSearch={true}
+        searchValue={searchValue}
+        onInputChange={handleInputChange}
+      />
+      <div className="max-w-7xl px-2 lg:px-0 mx-auto py-8">
         <div className="mt-3 pb-4">
           {products?.length > 0 ? (
             <div>
-              <div className="grid  lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10 xls:gap-3 xms:gap-3 xs:gap-3">
+              <div className="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4 sm:gap-6 md:gap-8">
                 {products?.map((item, index) => (
                   <div key={index}>
                     <ProductCard item={item} />
@@ -96,37 +88,3 @@ useEffect(() => {
 };
 
 export default ProductList;
-
-// export async function getServerSideProps(context) {
-
-//   try {
-//     let page = 1;
-
-//     let res = await request(
-//       `category-wise-product/${context.query.slug}?page=${page}`
-//     );
-   
-//     if (res?.data?.length == 0) {
-//       return {
-//         notFound: true,
-//       };
-//     } else {
-
-//        return {
-//          props: {
-//            Data: res?.data?.data || null,
-//            TotalData: res?.data?.total || null,
-//          },
-//        };
-
-//     }
-
-   
-//   } catch (error) {
-//     console.error("Error fetching category-wise-product product data:", error);
-//     return {
-//       notFound: true,
-//     };
-//   }
-  
-// }

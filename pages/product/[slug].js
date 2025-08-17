@@ -203,18 +203,14 @@ const ProductDetails = () => {
               variationQty={variationQty}
             />
           </div>
-          <div className="hidden">
-            <DescriptionDetails data={data} />
-          </div>
         </div>
       </div>
+
       {/* PRODUCT CONTENT SECTION */}
       <ProductContentSection data={data} />
+
       {/* RELATED PRODUCT SECTION */}
-      <div>
-        {/* THIS BRAND PRODUCT */}
-        <MoreProductSection similarProd={similarProd} />
-      </div>
+      <MoreProductSection similarProd={similarProd} />
     </div>
   );
 };
