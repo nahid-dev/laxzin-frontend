@@ -1,62 +1,28 @@
-name: Deploy to VPS (password)
+name: Connect VPS (smoke test)
 
 on:
+  workflow_dispatch: {}   # run it manually from the Actions tab
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]  # optional: run on push too
 
 jobs:
-  deploy:
+  connect:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
+      - name: Checkout (not strictly needed here)
         uses: actions/checkout@v4
 
-      # Debug so we can see the files that will be uploaded
-      - name: List built files
-        run: |
-          pwd
-          ls -la
-          ls -la laxzin-frontend || true
-          ls -la laxzin-frontend/.next || true
-
-      - name: Ensure target dir exists on VPS
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASS }}
-          script: mkdir -p /projects/laxzin/laxzin-frontend
-
-      # IMPORTANT: prefix sources with the subfolder
-      - name: Upload app to VPS
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASS }}
-          source: |
-            laxzin-frontend/.next/**
-            laxzin-frontend/package.json
-            laxzin-frontend/package-lock.json
-            laxzin-frontend/next.config.js
-            laxzin-frontend/public/**
-          target: /projects/laxzin/laxzin-frontend
-          overwrite: true
-
-      - name: Install production deps & restart
+      - name: Ensure target dir exists & write marker
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASS }}
           script: |
+            set -e
+            mkdir -p /projects/laxzin/laxzin-frontend
             cd /projects/laxzin/laxzin-frontend
-            if ! command -v pm2 >/dev/null 2>&1; then npm i -g pm2; fi
-            npm ci --omit=dev
-            if pm2 status laxzin-frontend >/dev/null 2>&1; then
-              pm2 restart laxzin-frontend
-            else
-              pm2 start npm --name "laxzin-frontend" -- start
-              pm2 save
-            fi
+            echo "CI connected at $(date -u)" > CI_CONNECTED.txt
+            echo "whoami: $(whoami)"
+            echo "pwd: $(pwd)"
+            ls -la
