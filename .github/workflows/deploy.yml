@@ -1,4 +1,4 @@
-name: Connect VPS (smoke test)
+name: Deploy Next.js to VPS
 
 on:
   workflow_dispatch: {}   # run it manually from the Actions tab
@@ -6,13 +6,13 @@ on:
     branches: [ "master" ]  # optional: run on push too
 
 jobs:
-  connect:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout (not strictly needed here)
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Ensure target dir exists & write marker
+      - name: Deploy to VPS and rebuild
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -20,9 +20,21 @@ jobs:
           password: ${{ secrets.VPS_PASS }}
           script: |
             set -e
-            mkdir -p /projects/laxzin/laxzin-frontend
+            # Navigate to project directory
             cd /projects/laxzin/laxzin-frontend
-            echo "CI connected at $(date -u)" > CI_CONNECTED.txt
-            echo "whoami: $(whoami)"
-            echo "pwd: $(pwd)"
-            ls -la
+            
+            # Get latest code from repository
+            git fetch origin master
+            git reset --hard origin/master
+            
+            # Install dependencies and build
+            npm install
+            npm run build
+            
+            # Restart PM2 process
+            pm2 stop laxzin-frontend || true
+            pm2 start npm --name "laxzin-frontend" -- start
+            
+            # Verify deployment
+            echo "Deployment completed at $(date -u)"
+            pm2 list
