@@ -3,7 +3,7 @@ name: CI/CD Pipeline for Laxzin Frontend
 on:
   workflow_dispatch: {}   # Run manually from the Actions tab
   push:
-    branches: [ "main" ]  # Run on push to main branch
+    branches: [ "master" ]  # Run on push to main branch
 
 jobs:
   build-and-deploy:
