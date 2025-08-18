@@ -53,10 +53,10 @@ const CommonbgBanner = ({
                 value={searchValue}
                 onChange={handleInputChange}
                 placeholder={placeholder}
-                className="bg-transparent px-4 py-2 border border-gray-600 rounded-full rounded-r-none focus:ring-0 focus:outline-none w-full"
+                className="bg-transparent px-4 py-2 border border-e-0 border-gray-600 rounded-full rounded-r-none focus:ring-0 focus:outline-none w-full"
               />
             </div>
-            <Button className="py-[9px] focus:ring-0 focus:outline-none rounded-e-full">
+            <Button className="py-[8px] focus:ring-0 focus:outline-none rounded-e-full border border-s-0 border-gray-600 px-1.5 sm:px-6">
               Search
             </Button>
           </div>

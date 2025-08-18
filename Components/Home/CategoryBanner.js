@@ -1,8 +1,23 @@
-export default function CategoryBanner({ title, subtitle, image, bgColor = "bg-black" }) {
+import Link from "next/link";
+
+export default function CategoryBanner({
+  title,
+  subtitle,
+  image,
+  bgColor = "bg-black",
+  href = "#",
+}) {
   return (
-    <div className={`relative ${bgColor} text-white flex items-center justify-center min-h-[50vh] sm:min-h-screen`}>
+    <Link
+      href={href}
+      className={`relative ${bgColor} text-white flex items-center justify-center min-h-[50vh] sm:min-h-screen cursor-pointer hover:bg-black transition-all duration-300`}
+    >
       <div className="absolute inset-0">
-        <img src={image || "/placeholder.svg"} alt={title} className="w-full h-full object-cover opacity-40" />
+        <img
+          src={image || "/placeholder.svg"}
+          alt={title}
+          className="w-full h-full object-cover opacity-40"
+        />
       </div>
       <div className="relative z-10 text-center px-4">
         <div className="flex items-center justify-center mb-8 sm:mb-10">
@@ -24,8 +39,10 @@ export default function CategoryBanner({ title, subtitle, image, bgColor = "bg-b
           <div className="absolute -bottom-3 sm:-bottom-5 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full"></div>
           <div className="absolute -bottom-2 sm:-bottom-4 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"></div>
         </h3>
-        <p className="text-lg sm:text-xl opacity-90 font-light tracking-[0.15em]">{subtitle}</p>
+        <p className="text-lg sm:text-xl opacity-90 font-light tracking-[0.15em]">
+          {subtitle}
+        </p>
       </div>
-    </div>
-  )
+    </Link>
+  );
 }

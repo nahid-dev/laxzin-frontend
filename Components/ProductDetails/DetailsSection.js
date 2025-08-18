@@ -755,7 +755,7 @@ const Details = ({
         </div> */}
       </div>
       {/* DELIVERY POLICY */}
-      <DeliveryInfoSection />
+      <DeliveryInfoSection data={data?.sku} />
       {/* DISCLAIMER */}
       <div className="rounded-2xl border bg-amber-50 border-amber-200 p-2 xs:p-4 text-amber-800 shadow-sm mt-5 block xs:hidden">
         <div className="flex items-start gap-3">

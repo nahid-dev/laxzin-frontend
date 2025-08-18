@@ -36,6 +36,8 @@ import LimitedEdition from "@/Components/Home/LimitedEdition";
 import TrendingNowSection from "@/Components/Home/TrendingNowSection";
 import OurStorySection from "@/Components/Home/OurStorySection";
 import ContactUsSection from "@/Components/Home/ContuctUsSection";
+import ProductVideoSection from "@/Components/Home/ProductVideoSection";
+import CommunitySection from "@/Components/Home/CommunitySection";
 
 export default function Home() {
   const [step, setStep] = useState("featured");
@@ -81,6 +83,7 @@ export default function Home() {
       />
       {/* TRUST BADGE SECTION */}
       <TrustBadgeSection />
+
       {/* FEATURE SECTION */}
       <FeatureSection featureProducts={featureProducts} loading={loading} />
       {/* Category Banners */}
@@ -89,37 +92,45 @@ export default function Home() {
           title="HAIR CARE"
           subtitle="Nourish. Strengthen. Shine."
           image="/natural-hair-care-woman-bw.png"
-          bgColor="bg-black"
+          bgColor="bg-gray-900"
+          href="/product-list/hair-care"
         />
         <CategoryBanner
           title="SKIN CARE"
           subtitle="Hydrate. Protect. Glow."
           image="/glowing-skin-serum-bw.png"
           bgColor="bg-gray-900"
+          href="/product-list/skin-care"
         />
         <CategoryBanner
           title="MAKEUP"
           subtitle="Enhance. Define. Express."
           image="/natural-makeup-bw.png"
           bgColor="bg-gray-800"
+          href="/product-list/makeup"
         />
         <CategoryBanner
           title="BODY CARE"
           subtitle="Pamper. Soften. Rejuvenate."
           image="/body-care.jpg"
           bgColor="bg-gray-900"
+          href="/product-list/body-care"
         />
       </section>
       {/* BEST SELLING */}
       <BestSellersSection bestSellers={bestSellers} loading={loading} />
       {/* LIMITED EDITION */}
       <LimitedEdition limitedEdition={popularProducts} />
+      {/* PRODUCT VIDEO SECTION */}
+      <ProductVideoSection />
       {/* TRENDING PRODUCTS */}
       <TrendingNowSection trendingProducts={featureProducts} />
       {/* OUR STORY SECTION */}
       <OurStorySection />
       {/* CONTACT US SECTION */}
       <ContactUsSection />
+      {/* COMMUNITY SECTION */}
+      <CommunitySection />
     </main>
   );
 }

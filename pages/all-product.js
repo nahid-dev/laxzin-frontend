@@ -10,29 +10,19 @@ import { useInView } from "react-intersection-observer";
 
 const Allproduct = () => {
   const [prod, setProd] = useState([]);
-
-
   const [page, setPage] = useState(1);
-
   const { ref, inView } = useInView();
+  const [totalData, setTotalData] = useState(0);
 
-  const [totalData,setTotalData] = useState(0);
-
-  
-  
-useEffect(() => {
- 
+  useEffect(() => {
     const getData = async () => {
-      let res = await request(
-        `get-all-product`
-      );
+      let res = await request(`get-all-product`);
 
       setProd(res?.new_arrival?.data);
       setTotalData(res?.new_arrival?.total);
     };
     getData();
-  
-}, [1]);
+  }, [1]);
 
   const loadMoreUsers = async () => {
     const res = await request(
@@ -88,25 +78,3 @@ useEffect(() => {
 };
 
 export default Allproduct;
-
-// export async function getServerSideProps(context) {
-
-//   try {
-//     let page = 1;
-
-//     let res = await request(`get-all-product`);
-
-//     return {
-//       props: {
-//         Data: res?.new_arrival?.data || null,
-//         total: res?.new_arrival?.total || null,
-//       },
-//     };
-//   } catch (error) {
-//     console.error("Error fetching product data:", error);
-//     return {
-//       notFound: true,
-//     };
-//   }
-  
-// }
