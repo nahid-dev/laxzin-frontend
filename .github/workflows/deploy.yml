@@ -2,7 +2,7 @@ name: Deploy to VPS (password)
 
 on:
   push:
-    branches: [ "master" ]   # change if you deploy a different branch
+    branches: [ "master" ]
 
 jobs:
   deploy:
@@ -12,18 +12,23 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      # Debug so we can see the files that will be uploaded
+      - name: List built files
+        run: |
+          pwd
+          ls -la
+          ls -la laxzin-frontend || true
+          ls -la laxzin-frontend/.next || true
+
+      - name: Ensure target dir exists on VPS
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          node-version: '20.19.0'
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASS }}
+          script: mkdir -p /projects/laxzin/laxzin-frontend
 
-      - name: Install deps
-        run: npm ci
-
-      - name: Build
-        run: npm run build
-
-      # Upload only what you need to run (adjust paths as needed)
+      # IMPORTANT: prefix sources with the subfolder
       - name: Upload app to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -31,14 +36,12 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASS }}
           source: |
-            .next/**
-            package.json
-            package-lock.json
-            next.config.js
-            public/**
-            .env.local
+            laxzin-frontend/.next/**
+            laxzin-frontend/package.json
+            laxzin-frontend/package-lock.json
+            laxzin-frontend/next.config.js
+            laxzin-frontend/public/**
           target: /projects/laxzin/laxzin-frontend
-          strip_components: 0
           overwrite: true
 
       - name: Install production deps & restart
@@ -49,11 +52,8 @@ jobs:
           password: ${{ secrets.VPS_PASS }}
           script: |
             cd /projects/laxzin/laxzin-frontend
-            # ensure pm2 is available
             if ! command -v pm2 >/dev/null 2>&1; then npm i -g pm2; fi
-            # install only prod deps (nothing to build on server, we uploaded .next)
             npm ci --omit=dev
-            # start or restart
             if pm2 status laxzin-frontend >/dev/null 2>&1; then
               pm2 restart laxzin-frontend
             else
