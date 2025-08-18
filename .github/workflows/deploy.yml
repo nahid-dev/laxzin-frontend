@@ -2,7 +2,7 @@ name: Deploy to VPS (password)
 
 on:
   push:
-    branches: [ "main" ]   # change if you deploy a different branch
+    branches: [ "master" ]   # change if you deploy a different branch
 
 jobs:
   deploy:
