@@ -14,8 +14,10 @@ import {
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import TrustBadge from "./TrustBadge";
+import { useStatus } from "@/context/contextStatus";
 
 export default function TrustBadgeSection() {
+  const { contactInfo } = useStatus();
   const trustBadges = [
     {
       icon: (
@@ -34,7 +36,7 @@ export default function TrustBadgeSection() {
         </svg>
       ),
       title: "Free Delivery",
-      subtitle: "From ৳1999",
+      subtitle: `From ৳${contactInfo?.free_delivery_amount ?? "1999"}`,
     },
     {
       icon: (
@@ -135,13 +137,13 @@ export default function TrustBadgeSection() {
 
   return (
     <section className="py-12 sm:py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8">
-            {trustBadges.map((badge, index) => (
-              <TrustBadge key={index} {...badge} />
-            ))}
-          </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8">
+          {trustBadges.map((badge, index) => (
+            <TrustBadge key={index} {...badge} />
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
   );
 }

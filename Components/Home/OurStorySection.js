@@ -2,10 +2,11 @@ import React from "react";
 import SectionHeader from "../SectionHeader";
 import Image from "next/image";
 import Button from "../Common/Button";
+import Link from "next/link";
 
 const OurStorySection = () => {
   return (
-    <section className="py-16 sm:py-20 bg-white">
+    <section className="py-8 md:py-12 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-2 md:px-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div className="order-2 lg:order-1">
@@ -21,7 +22,9 @@ const OurStorySection = () => {
               committed to sustainable beauty that honors both you and the
               planet.
             </p>
-            <Button>LEARN MORE</Button>
+            <Link href="/about-us">
+              <Button>ABOUT US</Button>
+            </Link>
           </div>
           <div className="order-1 lg:order-2">
             <Image

@@ -12,17 +12,14 @@ import Navbar from "./Navbar/Navbar";
 import SideProfileMenu from "./SideProfileMenu";
 
 const Layout = ({ children }) => {
-  const { cartItems, setCartItems } = useStatus();
+  const { cartItems, setCartItems, setContactInfo, contactInfo } = useStatus();
 
   const [catData, setCatData] = useState([]);
-
-  const [contactInfo, setContactInfo] = useState(null);
 
   useEffect(() => {
     let getData = async () => {
       const [catRes, contactRes] = await Promise.all([
         request(`navbar-categories`),
-
         request(`contact-info`),
       ]);
 
