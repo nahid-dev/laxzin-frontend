@@ -1,37 +1,31 @@
-
 import { parseCookies } from "nookies";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const ContextStatus = createContext();
 
 const ContextStatusProvider = ContextStatus.Provider;
 
 function StatusProvider({ children }) {
-
-   const cookie = parseCookies();
-   let items = cookie?.hasOwnProperty("lexzinCart")
-     ? [...JSON.parse(cookie?.lexzinCart)]
-     : [];
-
-   const [cartItems, setCartItems] = useState([]);
-  const [isPopupShow,setIsPopupShow] = useState(false);
+  const cookie = parseCookies();
+  const [cartItems, setCartItems] = useState([]);
+  const [isPopupShow, setIsPopupShow] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
- const [type, setType] = useState(cookie?.type ? cookie?.type : null);
- const [promoValue, setPromoValue] = useState(
-   cookie?.promovalue ? cookie?.promovalue : null
- );
- const [couponId, setCouponId] = useState(
-   cookie?.couponid ? cookie?.couponid : ""
- );
+  const [type, setType] = useState(cookie?.type ? cookie?.type : null);
+  const [promoValue, setPromoValue] = useState(
+    cookie?.promovalue ? cookie?.promovalue : null
+  );
+  const [couponId, setCouponId] = useState(
+    cookie?.couponid ? cookie?.couponid : ""
+  );
 
- const [orderObj, setOrderObj] = useState(cookie.orderObj);
+  const [orderObj, setOrderObj] = useState(cookie.orderObj);
 
- const [renderMe, setIsRenderMe] = useState(false);
+  const [renderMe, setIsRenderMe] = useState(false);
 
- const [drawerOpen,setDrawerOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
- const [searchModal,setSearchModal] = useState(false);
+  const [searchModal, setSearchModal] = useState(false);
 
   const [resetToken, setResetToken] = useState(
     cookie?.resetToken ? cookie?.resetToken : ""
@@ -44,12 +38,24 @@ function StatusProvider({ children }) {
   const [phone, setPhone] = useState(
     cookie?.customerPhone ? cookie?.customerPhone : ""
   );
-const [userId, setUserId] = useState(cookie?.userId ? cookie?.userId : null);
+  const [userId, setUserId] = useState(cookie?.userId ? cookie?.userId : null);
   const [profileMenu, setProfileMenu] = useState(false);
- 
-  const [sideCategory,setSideCategory] = useState(false);
+
+  const [sideCategory, setSideCategory] = useState(false);
 
   const [tabIndex, setTabIndex] = useState(1);
+  const [contactInfo, setContactInfo] = useState(null);
+
+  // Update cartItems from cookie only on client
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const cookie = parseCookies();
+      const items = cookie?.hasOwnProperty("lexzinCart")
+        ? [...JSON.parse(cookie?.lexzinCart)]
+        : [];
+      setCartItems(items);
+    }
+  }, []);
 
   return (
     <ContextStatusProvider
@@ -94,6 +100,8 @@ const [userId, setUserId] = useState(cookie?.userId ? cookie?.userId : null);
         setResetToken,
         tabIndex,
         setTabIndex,
+        contactInfo,
+        setContactInfo,
       }}
     >
       {children}

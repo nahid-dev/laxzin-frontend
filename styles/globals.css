@@ -72,15 +72,6 @@ img {
   display: inline !important;
 }
 
-/* .catDiv:hover { 
-   box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
-} */
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
 
 @keyframes marquee {
   0% {
@@ -120,23 +111,6 @@ img {
 .header li {
   list-style-type: none;
 }
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #1f1f1f;
-  /* font-size: revert !important ; */
-}
-
-/* input{
-  background-color: #fff !important;
-} */
-/* .css-16jkw2k >.ps-menu-button{
-  padding-left: 50px !important;
-} */
 .css-z5rm24 {
   padding-left: 30px !important;
 }

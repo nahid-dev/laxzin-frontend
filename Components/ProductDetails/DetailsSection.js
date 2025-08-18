@@ -473,9 +473,11 @@ const Details = ({
             </>
           )}
         </span>
-        <span className="bg-red-100 text-red-600 px-2 py-1 rounded text-sm font-medium">
-          25% OFF
-        </span>
+        {data?.discount > 0 ? (
+          <span className="bg-red-100 text-red-600 px-2 py-1 rounded text-sm font-medium">
+            {data?.discount}% OFF
+          </span>
+        ) : null}
       </div>
       {/* STOCK - QUANTITY */}
       <div className=" block">
@@ -753,8 +755,7 @@ const Details = ({
         </div> */}
       </div>
       {/* DELIVERY POLICY */}
-      <DeliveryInfoSection />
-      {/* DISCLAIMER */}
+      <DeliveryInfoSection data={data?.sku} />
       {/* DISCLAIMER */}
       <div className="rounded-2xl border bg-amber-50 border-amber-200 p-2 xs:p-4 text-amber-800 shadow-sm mt-5 block xs:hidden">
         <div className="flex items-start gap-3">
@@ -764,13 +765,9 @@ const Details = ({
           />
           <div>
             <p className="font-semibold text-sm xs:text-base">Declaimer:</p>
-            <p className="text-xs md:text-sm leading-6">
-              The actual color of the physical product may slightly vary due to
-              the deviation of lighting sources, photography or your device
-              display settings. Delivery charges may vary as per the location,
-              Product Size and Weight; we will notify before proceeding the
-              delivery.
-            </p>
+            <div className="text-xs md:text-sm leading-6">
+              <div dangerouslySetInnerHTML={{ __html: data?.disclaimer }} />
+            </div>
           </div>
         </div>
       </div>

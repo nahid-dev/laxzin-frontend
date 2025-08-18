@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { LuEye } from "react-icons/lu";
-import { CiHeart } from "react-icons/ci";
-import { GoPlus } from "react-icons/go";
 import Image from "next/image";
 import Link from "next/link";
 import { imageHostName } from "@/lib/config";
@@ -92,7 +89,7 @@ const ProductCard = ({
   };
 
   return (
-    <div className="group">
+    <div className="group border p-3 border-gray-200 rounded-lg">
       <div className="rounded-b-none flex flex-col overflow-hidden">
         <Link href={`/product/${item?.slug}`} className="relative group">
           {item?.image?.length > 0 ? (
@@ -106,24 +103,24 @@ const ProductCard = ({
                   </span>
                 </div>
               )}
-              {showTrend && (
+              {showTrend && item?.discount > 0 && (
                 <div className="absolute top-2 right-2 z-10">
-                  <span className="bg-green-500 text-white px-2 py-1 text-xs rounded-full font-medium">
-                    {/* {item?.trend} */} ↗ 29%
+                  <span className="bg-green-400 text-white px-2 py-1 text-xs rounded-full font-medium">
+                    {item?.discount}
+                    {item?.discount_type === "percent" ? "%" : ""}
                   </span>
                 </div>
               )}
               <Image
                 width={480}
                 height={480}
-                // src={
-                //   isOptimizedImage
-                //     ? `${imageHostName}/storage/product/${encodeURIComponent(
-                //         item?.image[0]
-                //       )}`
-                //     : "/image/placeholder.png"
-                // }
-                src="/image/product/vitamin-c-serum.png"
+                src={
+                  isOptimizedImage
+                    ? `${imageHostName}/storage/product/${encodeURIComponent(
+                        item?.image[0]
+                      )}`
+                    : "/image/placeholder.png"
+                }
                 className="object-cover h-full center-center w-full group-hover:scale-105 transition-all duration-200 ease-in-out"
                 unoptimized={!isOptimizedImage}
                 priority={false}
@@ -144,10 +141,10 @@ const ProductCard = ({
         </Link>
         {/* CARD CONTENT */}
         <div className="flex-1 mt-1">
-          <div className="text-sm text-primary h-[40px]  mb-2">
+          <div className="text-primary h-[40px]">
             <p
               className={`font-medium text-gray-900 my-2 leading-none ${
-                size === "small" ? "text-base" : "text-lg"
+                size === "small" ? "text-base" : "text-base"
               } line-clamp-2`}
             >
               {item?.product_name}
@@ -158,19 +155,10 @@ const ProductCard = ({
             <p className="text-sm text-gray-500 mb-2">{item?.category}</p>
           )}
 
-          {/* {item?.laxzin_featured_status == 1 ? (
-          <div className="flex justify-center mb-3 h-[30px]">
-            <button className="uppercase text-xs py-1 bg-primary rounded-full px-2">
-              featured
-            </button>
-          </div>
-        ) : (
-          <div className="h-[30px] mb-3"></div>
-        )} */}
-
+          {/* Price section */}
           <div
             className={`font-semibold text-black space-x-2 mb-2 md:mb-3 ${
-              size === "small" ? "text-lg" : "text-xl"
+              size === "small" ? "text-lg" : "text-base xs:text-lg"
             }`}
           >
             ৳
@@ -208,7 +196,7 @@ const ProductCard = ({
       {/* CARD BUTTON */}
       <div className="w-full">
         <button
-          className={`bg-primary text-white text-center w-full uppercase md:text-sm tracking-[0.1em] hover:bg-gray-700 ${
+          className={`bg-primary text-white text-center w-full uppercase md:text-sm tracking-[0.1em] hover:bg-gray-700 rounded-md ${
             size === "small"
               ? "py-2 px-4 text-xs"
               : "py-2 xs:py-3 px-3 xs:px-6 text-sm"

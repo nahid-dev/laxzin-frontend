@@ -559,13 +559,9 @@ const ImageGallery = ({
           />
           <div>
             <p className="font-semibold text-sm xs:text-base">Declaimer:</p>
-            <p className="text-xs md:text-sm leading-6">
-              The actual color of the physical product may slightly vary due to
-              the deviation of lighting sources, photography or your device
-              display settings. Delivery charges may vary as per the location,
-              Product Size and Weight; we will notify before proceeding the
-              delivery.
-            </p>
+            <div className="text-xs md:text-sm leading-6">
+              <div dangerouslySetInnerHTML={{ __html: data?.disclaimer }} />
+            </div>
           </div>
         </div>
       </div>

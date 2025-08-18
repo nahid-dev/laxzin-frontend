@@ -11,16 +11,14 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 pb-10  flex items-center justify-center ">
-      <div className=" bg-white xs:w-[450px] w-[350px] mx-auto rounded-md font-jost">
+      <div className=" bg-white xs:w-[450px] w-[350px] mx-auto rounded-xl font-jost">
         {tabIndex == 0 ? (
           <div className="py-4 text-2xl text-center tracking-wide  font-bold capitalize  text-black mb-3 pl-3 relative">
             User registration
-            
           </div>
         ) : (
           <div className="py-4 text-2xl text-center tracking-wide font-bold capitalize text-black mb-3 pl-3 relative">
             Login
-            
           </div>
         )}
 

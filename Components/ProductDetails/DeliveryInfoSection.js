@@ -1,3 +1,4 @@
+import { useStatus } from "@/context/contextStatus";
 import { BiUndo } from "react-icons/bi";
 import {
   FaBarcode,
@@ -7,21 +8,28 @@ import {
   FaTruck,
 } from "react-icons/fa";
 
-const productInfo = [
-  { icon: FaShieldAlt, title: "100% Authentic Product" },
-  { icon: BiUndo, title: "Easy Returns Policy" },
-  { icon: FaTruck, title: "Free Delivery on 2000" },
-  { icon: FaHeart, title: "Cruelty-Free" },
-  { icon: FaTruck, title: "Delivery info", subtitle: "Delivery in 3 - 4 days" },
-  {
-    icon: FaBolt,
-    title: "Fast selling",
-    subtitle: "People are loving it! Sold 20 pcs in last 24 hrs",
-  },
-  { icon: FaBarcode, title: "SKU code", subtitle: "1553" },
-];
-
-export default function DeliveryInfoSection() {
+export default function DeliveryInfoSection({ data }) {
+  const { contactInfo } = useStatus();
+  const productInfo = [
+    { icon: FaShieldAlt, title: "100% Authentic Product" },
+    { icon: BiUndo, title: "Easy Returns Policy" },
+    {
+      icon: FaTruck,
+      title: `Free Delivery on ${contactInfo?.free_delivery_amount ?? "1999"}`,
+    },
+    { icon: FaHeart, title: "Cruelty-Free" },
+    {
+      icon: FaTruck,
+      title: "Delivery info",
+      subtitle: "Delivery in 3 - 4 days",
+    },
+    {
+      icon: FaBolt,
+      title: "Fast selling",
+      subtitle: "People are loving it! Sold 20 pcs in last 24 hrs",
+    },
+    { icon: FaBarcode, title: "SKU code", subtitle: `${data}` },
+  ];
   return (
     <div className="bg-gray-50 p-4 mt-6 divide-y rounded-lg">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 mb-3">
