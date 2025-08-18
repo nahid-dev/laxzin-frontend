@@ -1,40 +1,49 @@
-name: Deploy Next.js to VPS
+name: CI/CD Pipeline for Laxzin Frontend
 
 on:
-  workflow_dispatch: {}   # run it manually from the Actions tab
+  workflow_dispatch: {}   # Run manually from the Actions tab
   push:
-    branches: [ "master" ]  # optional: run on push too
+    branches: [ "main" ]  # Run on push to main branch
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      # Checkout the repository code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to VPS and rebuild
+      # Set up Node.js environment (adjust version to match your project)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # Use the Node.js version your project requires
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./  # Adjust if your project is in a subdirectory
+
+      # Build the frontend application
+      - name: Build application
+        run: npm run build
+        working-directory: ./  # Adjust if your project is in a subdirectory
+
+      # Deploy to VPS using rsync over SSH
+      - name: Deploy to VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASS }}
+          port: 22  # Default SSH port, adjust if needed
           script: |
             set -e
-            # Navigate to project directory
-            cd /projects/laxzin/laxzin-frontend
-            
-            # Get latest code from repository
-            git fetch origin master
-            git reset --hard origin/master
-            
-            # Install dependencies and build
-            npm install
-            npm run build
-            
-            # Restart PM2 process
-            pm2 stop laxzin-frontend || true
-            pm2 start npm --name "laxzin-frontend" -- start
-            
-            # Verify deployment
-            echo "Deployment completed at $(date -u)"
-            pm2 list
+            # Create target directory if it doesn't exist
+            mkdir -p /projects/laxzin/laxzin-frontend
+            # Note: rsync is more efficient for deployment; assuming it's installed
+            # The build folder is copied to the VPS
+            rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./dist/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/projects/laxzin/laxzin-frontend/
+            # Optional: Restart any services (e.g., Nginx)
+            # sudo systemctl restart nginx
+            echo "Deployment completed at $(date -u)" > /projects/laxzin/laxzin-frontend/DEPLOYED.txt
