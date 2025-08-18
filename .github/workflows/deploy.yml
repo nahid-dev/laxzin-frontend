@@ -37,7 +37,7 @@ jobs:
             next.config.js
             public/**
             .env.local
-          target: /root/projects/laxzin/laxzin-frontend
+          target: /projects/laxzin/laxzin-frontend
           strip_components: 0
           overwrite: true
 
@@ -48,7 +48,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASS }}
           script: |
-            cd /root/projects/laxzin/laxzin-frontend
+            cd /projects/laxzin/laxzin-frontend
             # ensure pm2 is available
             if ! command -v pm2 >/dev/null 2>&1; then npm i -g pm2; fi
             # install only prod deps (nothing to build on server, we uploaded .next)
