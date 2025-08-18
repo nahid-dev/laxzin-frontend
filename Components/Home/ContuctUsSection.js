@@ -22,22 +22,29 @@ const ContactUsSection = () => {
 
         {/* Contact Banner */}
         <div className="relative h-64 sm:h-96 rounded-lg overflow-hidden mb-8 sm:mb-12">
-          <Image
+          {/* <Image
             src="/image/placeholder.png"
             alt="Contact Us Banner"
             height={180}
             width={1080}
             className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+          /> */}
+          <div className="absolute inset-0 bg-black flex items-center justify-center">
             <div className="text-center text-white px-4">
-              <h3 className="text-2xl sm:text-4xl font-light tracking-[0.2em] mb-3 sm:mb-4">
+              <h2 className="text-2xl sm:text-4xl font-light tracking-[0.2em] mb-3 sm:mb-4">
                 GET IN TOUCH
-              </h3>
-              <p className="text-lg sm:text-xl font-light tracking-[0.1em] mb-6 sm:mb-8">
+              </h2>
+              <p className="text-lg sm:text-xl font-light tracking-[0.1em] mb-6 sm:mb-8 !text-white">
                 We'd love to hear from you
               </p>
-              <Button>START CONVERSATION</Button>
+              <a href={`tel:${data?.phone}`} className="inline-block">
+                <Button
+                  variant="secondary"
+                  className="hover:bg-gray-200 hover:!text-gray-800"
+                >
+                  START CONVERSATION
+                </Button>
+              </a>
             </div>
           </div>
         </div>

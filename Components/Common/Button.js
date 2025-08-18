@@ -1,13 +1,23 @@
 
-export default function Button({ children, variant = "primary", size = "md", className = "", onClick, ...props }) {
+export default function Button({
+  as: Component = "button",
+  children,
+  variant = "primary",
+  size = "md",
+  className = "",
+  onClick,
+  ...props
+}) {
   const baseClasses =
-    "font-light tracking-wider transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+    "font-light tracking-wider transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400";
 
   const variants = {
     primary: "bg-black text-white hover:bg-gray-800",
-    secondary: "bg-white text-black border border-black hover:bg-black hover:text-white",
-    outline: "bg-transparent text-black border border-black hover:bg-black hover:text-white",
-  }
+    secondary:
+      "bg-white text-black border border-black hover:bg-black hover:text-white",
+    outline:
+      "bg-transparent text-black border border-black hover:bg-black hover:text-white",
+  };
 
   const sizes = {
     xs: "px-3 py-2 text-xs",
@@ -17,8 +27,12 @@ export default function Button({ children, variant = "primary", size = "md", cla
   };
 
   return (
-    <button className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`} onClick={onClick} {...props}>
+    <button
+      className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`}
+      onClick={onClick}
+      {...props}
+    >
       {children}
     </button>
-  )
+  );
 }

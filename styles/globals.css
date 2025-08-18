@@ -111,23 +111,6 @@ img {
 .header li {
   list-style-type: none;
 }
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #1f1f1f;
-  /* font-size: revert !important ; */
-}
-
-/* input{
-  background-color: #fff !important;
-} */
-/* .css-16jkw2k >.ps-menu-button{
-  padding-left: 50px !important;
-} */
 .css-z5rm24 {
   padding-left: 30px !important;
 }

@@ -25,7 +25,7 @@ const OurStorySection = () => {
           </div>
           <div className="order-1 lg:order-2">
             <Image
-              src="/image/placeholder.png"
+              src="/image/natural-ingredients-lab.png"
               height={720}
               width={720}
               alt="Our Story"

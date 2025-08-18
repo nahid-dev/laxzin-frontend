@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { LuEye } from "react-icons/lu";
-import { CiHeart } from "react-icons/ci";
-import { GoPlus } from "react-icons/go";
 import Image from "next/image";
 import Link from "next/link";
 import { imageHostName } from "@/lib/config";
@@ -116,14 +113,13 @@ const ProductCard = ({
               <Image
                 width={480}
                 height={480}
-                // src={
-                //   isOptimizedImage
-                //     ? `${imageHostName}/storage/product/${encodeURIComponent(
-                //         item?.image[0]
-                //       )}`
-                //     : "/image/placeholder.png"
-                // }
-                src="/image/product/vitamin-c-serum.png"
+                src={
+                  isOptimizedImage
+                    ? `${imageHostName}/storage/product/${encodeURIComponent(
+                        item?.image[0]
+                      )}`
+                    : "/image/placeholder.png"
+                }
                 className="object-cover h-full center-center w-full group-hover:scale-105 transition-all duration-200 ease-in-out"
                 unoptimized={!isOptimizedImage}
                 priority={false}
@@ -157,16 +153,6 @@ const ProductCard = ({
           {item?.category && (
             <p className="text-sm text-gray-500 mb-2">{item?.category}</p>
           )}
-
-          {/* {item?.laxzin_featured_status == 1 ? (
-          <div className="flex justify-center mb-3 h-[30px]">
-            <button className="uppercase text-xs py-1 bg-primary rounded-full px-2">
-              featured
-            </button>
-          </div>
-        ) : (
-          <div className="h-[30px] mb-3"></div>
-        )} */}
 
           <div
             className={`font-semibold text-black space-x-2 mb-2 md:mb-3 ${
