@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import SingleProduct from "@/components/productSection/SingleProduct";
 import request from "@/lib/request";
 import { useInView } from "react-intersection-observer";
 import Head from "next/head";
-import FilterSidebar from "@/components/FilterSidebar";
 import useSWR from "swr";
 
 const fetcher = (url) => request(url);
@@ -133,32 +131,20 @@ const ProductList = () => {
 
       <div className="min-h-[600px] bg-white pt-[170px] sm:pt-[130px] xls:pt-[120px] xms:pt-[120px] xs:pt-[120px] text-black">
         <div className="max-w-[85rem] mx-auto">
-          <div className="flex items-center justify-between px-2 py-2">
+          <div className="flex justify-between items-center px-2 py-2">
             <p className="text-[18px] font-semibold uppercase">
               {router?.query?.slug}
             </p>
-            <p className="font-sans text-sm ">{totalData} items</p>
+            <p className="font-sans text-sm">{totalData} items</p>
           </div>
 
           <div className="grid grid-cols-12 gap-4 md:grid-cols-1 sm:grid-cols-1">
             <div className="hidden col-span-3 md:hidden lg:block xl:block">
-              <FilterSidebar
-                brands={brandData?.brands}
-                categories={categoryData?.product_categories}
-                loading={brandLoading || categoryLoading}
-                minPrice={0}
-                maxPrice={8000}
-                onChange={handleFilterChange}
-              />
+             
             </div>
             <div className="col-span-9 md:col-span-12 sm:col-span-12 lg:col-span-9 xl:col-span-9 xls:col-span-12 xs:col-span-12">
               {products?.length > 0 ? (
-                <div className="pb-6">
-                  <div className="grid grid-cols-5 gap-3 xs:grid-cols-2 xms:grid-cols-3 xls:grid-cols-3 sm:grid-cols-3 md:grid-cols-3">
-                    {products?.map((item, index) => (
-                      <SingleProduct key={index} item={item} />
-                    ))}
-                  </div>
+                <div className="pb-6">                 
 
                   {products.length < totalData ? (
                     <div
@@ -166,7 +152,7 @@ const ProductList = () => {
                       className="flex justify-center mt-2 text-black"
                     >
                       <svg
-                        className="fill-current text-tahiti-500 animate-spin h-7 w-7"
+                        className="w-7 h-7 animate-spin fill-current text-tahiti-500"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 28 28"
                       >
@@ -178,14 +164,14 @@ const ProductList = () => {
               ) : isLoading ? (
                 <div className="h-[400px] md:h-[200px] sm:h-[170px] lg:h-[300px] xls:h-[140px] xms:h-[130px] xs:h-[120px] flex items-center justify-center">
                   <div className="flex flex-col items-center space-y-2">
-                    <div className="w-8 h-8 border-4 border-pink-500 border-dashed rounded-full animate-spin"></div>
+                    <div className="w-8 h-8 rounded-full border-4 border-pink-500 border-dashed animate-spin"></div>
                     <span className="text-sm tracking-wide text-gray-500">
                       Loading, please wait...
                     </span>
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center p-8 space-y-4 text-center">
+                <div className="flex flex-col justify-center items-center p-8 space-y-4 text-center">
                   <svg
                     className="w-16 h-16 text-gray-400 animate-pulse"
                     xmlns="http://www.w3.org/2000/svg"
