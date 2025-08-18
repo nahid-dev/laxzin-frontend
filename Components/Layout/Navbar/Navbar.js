@@ -1,7 +1,5 @@
 import Link from "next/link";
-
 import { SlHandbag } from "react-icons/sl";
-
 import { useStatus } from "@/context/contextStatus";
 import { RxHamburgerMenu } from "react-icons/rx";
 import TopNavbar from "./TopNavbar";
@@ -52,15 +50,6 @@ const Navbar = ({ catData, contactInfo }) => {
     setIsCartOpen(!isCartOpen);
   };
 
-  // const search = (val) => {
-  //   if (val !== "") {
-  //     const encodedVal = encodeURIComponent(val);
-  //     router.push(`/search/${encodedVal}`);
-  //   } else {
-  //     router.push(`/`);
-  //   }
-  // };
-
   const handleSearch = () => {
     setSearchModal((prev) => !prev);
   };
@@ -96,14 +85,14 @@ const Navbar = ({ catData, contactInfo }) => {
       className={`w-full z-50 transition-all duration-300 ${
         isHomePage
           ? isScrolled
-            ? "sticky top-0 bg-white/95 backdrop-blur-md"
+            ? "sticky top-0 backdrop-blur-md bg-white/95"
             : "absolute top-0"
-          : "sticky top-0 bg-white/95 backdrop-blur-md"
+          : "sticky top-0 backdrop-blur-md bg-white/95"
       }`}
     >
-      <header id="header" className={`py-2 px-2 w-full  z-10`}>
+      <header id="header" className={`z-10 px-2 py-2 w-full`}>
         {/* DESKTOP NAVBAR */}
-        <div className="hidden md:flex justify-between items-center max-w-7xl mx-auto">
+        <div className="hidden justify-between items-center mx-auto max-w-7xl md:flex">
           {/* BRAND LOGO */}
           <div
             onClick={() => router.push("/")}
@@ -118,7 +107,7 @@ const Navbar = ({ catData, contactInfo }) => {
                 }
                 height={800}
                 width={800}
-                className="h-full w-full object-cover cursor-pointer"
+                className="object-cover w-full h-full cursor-pointer"
                 priority
                 alt="logo"
               />
@@ -131,7 +120,7 @@ const Navbar = ({ catData, contactInfo }) => {
                 }
                 height={800}
                 width={800}
-                className="h-full w-full object-cover cursor-pointer"
+                className="object-cover w-full h-full cursor-pointer"
                 priority
                 alt="logo"
               />
@@ -144,7 +133,7 @@ const Navbar = ({ catData, contactInfo }) => {
                 <li key={index}>
                   <Link
                     href={`/product-list/${item?.slug}`}
-                    className="group relative flex space-x-2 items-center cursor-pointer list-none"
+                    className="flex relative items-center space-x-2 list-none cursor-pointer group"
                   >
                     <p
                       className={`uppercase text-sm font-light tracking-[0.1em] ${
@@ -163,7 +152,7 @@ const Navbar = ({ catData, contactInfo }) => {
 
                     {item?.nav_sub_categories?.length > 0 ? (
                       <div className="absolute z-10 w-[250px] top-full left-[30px] hidden group-hover:block bg-gray-50 py-2">
-                        <div className="p-2 flex">
+                        <div className="flex p-2">
                           <ul className="w-full">
                             {item?.nav_sub_categories?.map(
                               (subCat, SubIndex) => (
@@ -192,7 +181,7 @@ const Navbar = ({ catData, contactInfo }) => {
             </ul>
           </div>
 
-          <div className="flex items-center gap-8">
+          <div className="flex gap-8 items-center">
             {/* SEARCH SECTION */}
             <div onClick={() => handleSearch()}>
               <FiSearch
@@ -276,7 +265,7 @@ const Navbar = ({ catData, contactInfo }) => {
         </div>
 
         {/* MOBILE NAVBAR */}
-        <div className="md:hidden flex justify-between items-center pt-3 xsm:px-2 px-0">
+        <div className="flex justify-between items-center px-0 pt-3 md:hidden xsm:px-2">
           <Link href={`/`} className="flex justify-start w-[120px] h-[40px]">
             {isScrolled || !isHomePage ? (
               <Image
@@ -287,7 +276,7 @@ const Navbar = ({ catData, contactInfo }) => {
                 }
                 height={800}
                 width={800}
-                className="h-full w-full object-cover cursor-pointer"
+                className="object-cover w-full h-full cursor-pointer"
                 priority
                 alt="logo"
               />
@@ -300,14 +289,14 @@ const Navbar = ({ catData, contactInfo }) => {
                 }
                 height={800}
                 width={800}
-                className="h-full w-full object-cover cursor-pointer"
+                className="object-cover w-full h-full cursor-pointer"
                 priority
                 alt="logo"
               />
             )}
           </Link>
 
-          <div className="flex space-x-4 items-center">
+          <div className="flex items-center space-x-4">
             <div onClick={() => handleSearch()}>
               <IoSearchOutline
                 size={25}
