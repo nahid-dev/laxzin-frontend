@@ -81,9 +81,6 @@ export default function Home() {
         imageHostName={imageHostName}
         slider={slider}
       />
-      {/* TRUST BADGE SECTION */}
-      <TrustBadgeSection />
-
       {/* FEATURE SECTION */}
       <FeatureSection featureProducts={featureProducts} loading={loading} />
       {/* Category Banners */}
@@ -129,6 +126,8 @@ export default function Home() {
       <OurStorySection />
       {/* CONTACT US SECTION */}
       <ContactUsSection />
+      {/* TRUST BADGE SECTION */}
+      <TrustBadgeSection />
       {/* COMMUNITY SECTION */}
       <CommunitySection />
     </main>
