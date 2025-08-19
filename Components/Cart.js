@@ -269,7 +269,7 @@ const Cart = ({ cartItems, setCartItems }) => {
                 className="flex justify-center"
                 onClick={() => handleRoute()}
               >
-                <button className="flex items-center space-x-2 bg-black justify-center px-20 py-4 rounded-full">
+                <button className="flex items-center space-x-2 bg-black justify-center px-20 py-4 rounded-lg">
                   <div>
                     <svg
                       className="h-4 w-4 fill-current text-white"
