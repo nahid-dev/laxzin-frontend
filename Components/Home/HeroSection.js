@@ -12,14 +12,6 @@ import LazyImage from '../LazyImage';
 import { BsChevronCompactLeft, BsChevronCompactRight, BsChevronLeft } from 'react-icons/bs';
 
 const HeroSection = ({ loading, imageHostName, slider }) => {
-  const pagination = {
-    clickable: true,
-    el: ".hero-pagination",
-    renderBullet: function (index, className) {
-      return `<span class="${className} hero-dot"></span>`;
-    },
-  };
-
   return (
     <div className="relative group">
       {loading ? (
@@ -32,17 +24,16 @@ const HeroSection = ({ loading, imageHostName, slider }) => {
             delay: 3000,
             disableOnInteraction: true,
           }}
-          pagination={pagination}
           navigation={{
             nextEl: ".button-next-slide-hero",
             prevEl: ".button-prev-slide-hero",
           }}
           loop={true}
-          modules={[Autoplay, Navigation, Pagination, EffectFade]}
+          modules={[Autoplay, Navigation, EffectFade]}
         >
           {slider?.map((slide, index) => (
             <SwiperSlide key={index}>
-              <div className="md:h-[100vh] sm:h-[500px] xs:h-[350px] h-[200px] w-full">
+              <div className="md:h-[80vh] sm:h-[500px] xs:h-[350px] h-[200px] w-full">
                 <Suspense fallback={<Loader />}>
                   <LazyImage
                     width={2000}
@@ -56,7 +47,6 @@ const HeroSection = ({ loading, imageHostName, slider }) => {
               </div>
             </SwiperSlide>
           ))}
-          <div className="hero-pagination swiper-pagination bg-black/50 px-4 py-1 rounded-full absolute bottom-5 !left-[45%] w-fit"></div>
         </Swiper>
       )}
       {/* NAVIGATION BUTTONS */}

@@ -17,14 +17,14 @@ const LimitedEdition = ({ limitedEdition }) => {
   };
 
   return (
-    <section className="py-8 md:py-12 lg:py-24 bg-gray-50">
+    <section className="py-8 md:py-12 lg:py-16 bg-gray-50">
       <SectionHeader
-        title="LIMITED EDITION"
+        title="SEASONAL PRODUCTS"
         subtitle="Exclusive products available for a limited time"
       />
       <div className="max-w-7xl mx-auto px-2 xl:px-0">
         <div className="grid grid-cols-2 gap-5 md:gap-10">
-          <div className="relative">
+          <div className="relative col-span-2 sm:col-span-1">
             <button
               className={`button-prev-slide text-black bg-gray-100 p-2 rounded-full border absolute -left-5 top-[40%] z-10 transition-opacity ${
                 showPrev ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -57,7 +57,7 @@ const LimitedEdition = ({ limitedEdition }) => {
               ))}
             </Swiper>
           </div>
-          <div className="order-1 lg:order-2 col-span-1">
+          <div className="order-1 lg:order-2 col-span-2 sm:col-span-1">
             <Image
               src="/image/natural-ingredients-lab.png"
               height={720}

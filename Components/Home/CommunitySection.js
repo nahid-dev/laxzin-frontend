@@ -20,11 +20,11 @@ export default function CommunitySection() {
     }
   };
   return (
-    <section className=" bg-gray-50 pb-16">
+    <section className=" bg-white py-8 sm:py-10 md:py-16">
       <div className="max-w-7xl mx-auto px-2 lg:px-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Join Our Community Card */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border">
             <div className="flex items-center mb-6">
               <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mr-4">
                 <svg
@@ -115,15 +115,13 @@ export default function CommunitySection() {
             </button>
           </div>
         </div>
-          </div>
-          <CommonModal
-              openResponsive={openModal}
-              setOpenResponsive={setOpenModal}
-          >
-              <div>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, odio.
-              </div>
-          </CommonModal>
+      </div>
+      <CommonModal openResponsive={openModal} setOpenResponsive={setOpenModal}>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus,
+          odio.
+        </div>
+      </CommonModal>
     </section>
   );
 }
