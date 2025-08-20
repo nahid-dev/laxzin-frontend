@@ -6,10 +6,10 @@ import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 
 
-import { Autoplay, Navigation, Pagination, EffectFade } from "swiper/modules";
+import { Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import LazyImage from '../LazyImage';
-import { BsChevronCompactLeft, BsChevronCompactRight, BsChevronLeft } from 'react-icons/bs';
+import LazyImage from "../LazyImage";
+import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 
 const HeroSection = ({ loading, imageHostName, slider }) => {
   return (

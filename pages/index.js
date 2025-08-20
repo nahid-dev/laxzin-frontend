@@ -1,33 +1,14 @@
-import {
-  MdChevronRight,
-  MdOutlineKeyboardArrowLeft,
-  MdOutlineKeyboardArrowRight,
-} from "react-icons/md";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-import ProductCard from "@/Components/ProductDetails/ProductCard";
 import { imageHostName } from "@/lib/config";
 import request from "@/lib/request";
 
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-
-import PublishedCategoryCard from "@/Components/PublishedCategoryCard";
-import { IoSparkles } from "react-icons/io5";
-import { FaBolt, FaLeaf, FaStar, FaTags, FaThLarge } from "react-icons/fa";
-import SectionHeader from "@/Components/SectionHeader";
-import SlideSectionHeader from "@/Components/SlideSectionHeader";
 import TrustBadgeSection from "@/Components/TrustBadgeSection";
-import { dummyData, skinCareData } from "@/options";
 
-import CountdownBox from "@/Components/CountdownBox";
-import SectionSubHeader from "@/Components/SectionSubHeader";
 import HeroSection from "@/Components/Home/HeroSection";
 import FeatureSection from "@/Components/Home/FeatureSection";
 import CategoryBanner from "@/Components/Home/CategoryBanner";
@@ -38,6 +19,7 @@ import OurStorySection from "@/Components/Home/OurStorySection";
 import ContactUsSection from "@/Components/Home/ContuctUsSection";
 import ProductVideoSection from "@/Components/Home/ProductVideoSection";
 import CommunitySection from "@/Components/Home/CommunitySection";
+// import SkinTypeSection from "@/Components/Home/SkinTypeSection";
 
 export default function Home() {
   const [step, setStep] = useState("featured");
@@ -81,6 +63,8 @@ export default function Home() {
         imageHostName={imageHostName}
         slider={slider}
       />
+      {/* SKIN TYPE SECTION */}
+      <SkinTypeSection />
       {/* FEATURE SECTION */}
       <FeatureSection featureProducts={featureProducts} loading={loading} />
       {/* Category Banners */}
