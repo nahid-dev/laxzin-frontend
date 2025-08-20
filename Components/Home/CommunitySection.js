@@ -5,7 +5,6 @@ import CommonModal from "../Common/Modal";
 
 export default function CommunitySection() {
   const [email, setEmail] = useState("");
-  const [openModal, setOpenModal] = useState(false);
 
   const handleSubscribe = async () => {
     const res = await postRequest(`subscribe`, {
@@ -107,21 +106,12 @@ export default function CommunitySection() {
               your authentic beauty journey.
             </p>
 
-            <button
-              onClick={() => setOpenModal(true)}
-              className="w-full bg-white text-black py-3 rounded-lg font-light tracking-wide hover:bg-gray-100 transition-colors duration-300"
-            >
+            <button className="w-full bg-white text-black py-3 rounded-lg font-light tracking-wide hover:bg-gray-100 transition-colors duration-300">
               Become A Brand Partner
             </button>
           </div>
         </div>
       </div>
-      <CommonModal openResponsive={openModal} setOpenResponsive={setOpenModal}>
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus,
-          odio.
-        </div>
-      </CommonModal>
     </section>
   );
 }

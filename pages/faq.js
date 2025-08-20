@@ -25,7 +25,7 @@ const Faq = () => {
             <div
               className="text-base text-black"
               dangerouslySetInnerHTML={{ __html: data?.details }}
-            ></div>
+            />
           </div>
         </div>
       </section>

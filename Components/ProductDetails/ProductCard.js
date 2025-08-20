@@ -89,7 +89,7 @@ const ProductCard = ({
   };
 
   return (
-    <div className="group border p-3 border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300 my-5">
+    <div className="group border p-3 border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300">
       <div className="rounded-b-none flex flex-col overflow-hidden">
         <Link href={`/product/${item?.slug}`} className="relative group">
           {item?.image?.length > 0 ? (

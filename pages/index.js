@@ -19,7 +19,7 @@ import OurStorySection from "@/Components/Home/OurStorySection";
 import ContactUsSection from "@/Components/Home/ContuctUsSection";
 import ProductVideoSection from "@/Components/Home/ProductVideoSection";
 import CommunitySection from "@/Components/Home/CommunitySection";
-// import SkinTypeSection from "@/Components/Home/SkinTypeSection";
+import SkinTypeSection from "@/Components/Home/SkinTypeSection";
 
 export default function Home() {
   const [step, setStep] = useState("featured");
@@ -50,10 +50,6 @@ export default function Home() {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  const handleClick = (value) => {
-    setStep(value);
-  };
 
   return (
     <main className="min-h-[700px]">

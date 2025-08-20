@@ -51,7 +51,7 @@ const LimitedEdition = ({ limitedEdition }) => {
               }}
             >
               {limitedEdition?.map((item, index) => (
-                <SwiperSlide key={index}>
+                <SwiperSlide key={index} className="mb-3">
                   <ProductCard item={item} />
                 </SwiperSlide>
               ))}

@@ -5,7 +5,7 @@ import useTypewriterPlaceholder from "@/hooks/useTypewriterPlaceholder";
 const CommonbgBanner = ({
   name,
   helperText,
-  enableSearch,
+  enableSearch = false,
   searchValue = "",
   onInputChange,
 }) => {
