@@ -5,46 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
-const skinTypes = [
-  {
-    id: "normal",
-    title: "Normal Skin",
-    image: "/image/woman-balanced-skin.png",
-    description: "Balanced, clear, and not overly sensitive",
-  },
-  {
-    id: "dry",
-    title: "Dry Skin",
-    image: "/image/woman-balanced-skin.png",
-    description: "Tight, flaky, and needs extra moisture",
-  },
-  {
-    id: "oily",
-    title: "Oily Skin",
-    image: "/image/woman-balanced-skin.png",
-    description: "Shiny, enlarged pores, prone to breakouts",
-  },
-  {
-    id: "sensitive",
-    title: "Sensitive Skin",
-    image: "/image/woman-balanced-skin.png",
-    description: "Easily irritated, reactive to products",
-  },
-  {
-    id: "combination",
-    title: "Combination Skin",
-    image: "/image/woman-balanced-skin.png",
-    description: "Oily T-zone, dry or normal cheeks",
-  },
-  {
-    id: "all",
-    title: "All Skin Type",
-    image: "/image/woman-balanced-skin.png",
-    description: "Universal products for every skin type",
-  },
-];
-
-export default function SkinTypeSection() {
+export default function SkinTypeSection({ secTitle, secDesc, data }) {
   const [showPrev, setShowPrev] = useState(false);
   const swiperRef = useRef(null);
   const handleSlideChange = (swiper) => {
@@ -54,10 +15,7 @@ export default function SkinTypeSection() {
   return (
     <section className="pt-8 sm:pt-10 md:pt-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          title="SKIN TYPE"
-          subtitle="Find products perfect for your unique skin needs"
-        />
+        <SectionHeader title={secTitle} subtitle={secDesc} />
 
         <div className="relative">
           <button
@@ -98,7 +56,7 @@ export default function SkinTypeSection() {
               },
             }}
           >
-            {skinTypes.map((type, i) => (
+            {data.map((type, i) => (
               <SwiperSlide key={i}>
                 <div
                   key={type.id}

@@ -20,6 +20,7 @@ import ContactUsSection from "@/Components/Home/ContuctUsSection";
 import ProductVideoSection from "@/Components/Home/ProductVideoSection";
 import CommunitySection from "@/Components/Home/CommunitySection";
 import SkinTypeSection from "@/Components/Home/SkinTypeSection";
+import { skinTypes } from "@/options";
 
 export default function Home() {
   const [step, setStep] = useState("featured");
@@ -60,7 +61,11 @@ export default function Home() {
         slider={slider}
       />
       {/* SKIN TYPE SECTION */}
-      <SkinTypeSection />
+      <SkinTypeSection
+        secTitle={"Skin Type"}
+        secDesc={"Find products perfect for your unique skin needs"}
+        data={skinTypes}
+      />
       {/* FEATURE SECTION */}
       <FeatureSection featureProducts={featureProducts} loading={loading} />
       {/* Category Banners */}
@@ -104,6 +109,12 @@ export default function Home() {
       <TrendingNowSection trendingProducts={featureProducts} />
       {/* OUR STORY SECTION */}
       <OurStorySection />
+      {/* YOUR CONCERN SECTION */}
+      <SkinTypeSection
+        secTitle={"Your Concern"}
+        secDesc={"Find products perfect for your concern skin type"}
+        data={skinTypes}
+      />
       {/* CONTACT US SECTION */}
       <ContactUsSection />
       {/* TRUST BADGE SECTION */}
