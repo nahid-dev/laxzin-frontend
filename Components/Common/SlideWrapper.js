@@ -55,7 +55,7 @@ const SlideWrapper = ({slideData}) => {
         }}
       >
         {slideData?.map((item, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={index} className="mb-3">
             <ProductCard item={item} />
           </SwiperSlide>
         ))}

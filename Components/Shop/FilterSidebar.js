@@ -92,7 +92,7 @@ export default function FilterSidebar({
 
   return (
     <div className="sticky top-[12vh] hidden md:block">
-      <div className="bg-gray-50 p-6 rounded-lg sticky top-4">
+      <div className="bg-gray-50 p-6 rounded-lg">
         {/* Categories */}
         {enableCategoryFilter ? (
           <div className="mb-8">
