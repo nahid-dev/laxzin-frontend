@@ -646,7 +646,7 @@ export default function BrandPartnerPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-black text-white px-12 py-4 text-lg font-medium hover:bg-gray-800 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-black rounded-md text-white px-12 py-4 text-lg font-medium hover:bg-gray-800 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting
                     ? "Submitting Application..."
