@@ -171,7 +171,7 @@ export default function BrandPartnerPage() {
           {({ isSubmitting, values, setFieldValue }) => (
             <Form className="space-y-12">
               {/* Personal Information */}
-              <div className="bg-gray-50 p-8 rounded-lg">
+              <div className="bg-gray-50 p-5 sm:p-8 rounded-lg">
                 <h3 className="text-2xl font-light mb-6 tracking-wide">
                   Personal Information
                 </h3>
@@ -247,7 +247,7 @@ export default function BrandPartnerPage() {
               </div>
 
               {/* Social Media Information */}
-              <div className="bg-gray-50 p-8 rounded-lg">
+              <div className="bg-gray-50 p-5 sm:p-8 rounded-lg">
                 <h3 className="text-2xl font-light mb-6 tracking-wide">
                   Social Media Information
                 </h3>
@@ -382,7 +382,7 @@ export default function BrandPartnerPage() {
               </div>
 
               {/* Content Information */}
-              <div className="bg-gray-50 p-8 rounded-lg">
+              <div className="bg-gray-50 p-5 sm:p-8 rounded-lg">
                 <h3 className="text-2xl font-light mb-6 tracking-wide">
                   Content Information
                 </h3>
@@ -470,7 +470,7 @@ export default function BrandPartnerPage() {
               </div>
 
               {/* Brand Alignment */}
-              <div className="bg-gray-50 p-8 rounded-lg">
+              <div className="bg-gray-50 p-5 sm:p-8 rounded-lg">
                 <h3 className="text-2xl font-light mb-6 tracking-wide">
                   Brand Alignment
                 </h3>
@@ -515,7 +515,7 @@ export default function BrandPartnerPage() {
               </div>
 
               {/* Collaboration Preferences */}
-              <div className="bg-gray-50 p-8 rounded-lg">
+              <div className="bg-gray-50 p-5 sm:p-8 rounded-lg">
                 <h3 className="text-2xl font-light mb-6 tracking-wide">
                   Collaboration Preferences
                 </h3>
@@ -594,7 +594,7 @@ export default function BrandPartnerPage() {
               </div>
 
               {/* Additional Information */}
-              <div className="bg-gray-50 p-8 rounded-lg">
+              <div className="bg-gray-50 p-5 sm:p-8 rounded-lg">
                 <h3 className="text-2xl font-light mb-6 tracking-wide">
                   Additional Information
                 </h3>
