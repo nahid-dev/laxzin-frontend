@@ -2,6 +2,7 @@ import postRequest from "@/lib/postRequest";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import CommonModal from "../Common/Modal";
+import Link from "next/link";
 
 export default function CommunitySection() {
   const [email, setEmail] = useState("");
@@ -106,9 +107,12 @@ export default function CommunitySection() {
               your authentic beauty journey.
             </p>
 
-            <button className="w-full bg-white text-black py-3 rounded-lg font-light tracking-wide hover:bg-gray-100 transition-colors duration-300">
+            <Link
+              href="/brand-partner"
+              className="w-full block text-center bg-white text-black py-3 rounded-lg font-light tracking-wide hover:bg-gray-100 transition-colors duration-300"
+            >
               Become A Brand Partner
-            </button>
+            </Link>
           </div>
         </div>
       </div>

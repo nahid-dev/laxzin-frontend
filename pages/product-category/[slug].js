@@ -9,28 +9,26 @@ import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 const CategoryProduct = () => {
+  const [prod, setProd] = useState([]);
 
-  
-const [prod, setProd] = useState([]);
+  const [page, setPage] = useState(1);
 
-const [page, setPage] = useState(1);
+  const { ref, inView } = useInView();
 
-const { ref, inView } = useInView();
+  const [total, setTotal] = useState(0);
 
-const [total, setTotal] = useState(0);
+  const router = useRouter();
 
-const router = useRouter();
+  useEffect(() => {
+    const getData = async () => {
+      let res = await request(`category-wise-product/${router?.query?.slug}`);
 
-useEffect(() => {
-  const getData = async () => {
-    let res = await request(`category-wise-product/${router?.query?.slug}`);
+      setProd(res.data?.data);
+      setTotal(res?.data?.total);
+    };
+    getData();
+  }, [1]);
 
-    setProd(res.data?.data);
-    setTotal(res?.data?.total);
-  };
-  getData();
-}, [1]);
- 
   const loadMoreUsers = async () => {
     const res = await request(
       `category-wise-product/${router.query.slug}?page=${page + 1}`
@@ -45,7 +43,6 @@ useEffect(() => {
       loadMoreUsers();
     }
   }, [inView]);
-
 
   return (
     <div className="bg-[#F3F3F3]">
@@ -86,12 +83,10 @@ export default CategoryProduct;
 
 // export async function getServerSideProps(context) {
 
-
 //   try {
 //     let page = 1;
 
 //     let res = await request(`category-wise-product/${context?.query?.slug}`);
-
 
 //      if (res?.data?.length == 0) {
 //        return {
@@ -104,15 +99,14 @@ export default CategoryProduct;
 //            total: res?.data?.total || null,
 //          },
 //        };
-       
+
 //      }
 
-   
 //   } catch (error) {
 //     console.error("Error fetching category-wise-product product data:", error);
 //     return {
 //       notFound: true,
 //     };
 //   }
-  
+
 // }
