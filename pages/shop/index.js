@@ -91,7 +91,7 @@ const Shop = () => {
       <CommonbgBanner
         name="shop"
         helperText="Discover our premium collection of natural beauty products crafted for your daily routine"
-        enableSearch={true}
+        enableSearch={false}
         searchValue={searchValue}
         onInputChange={handleInputChange}
       />

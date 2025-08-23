@@ -69,7 +69,7 @@ const ProductList = () => {
     <div>
       <CommonbgBanner
         name={`${router?.query?.slug}`}
-        enableSearch={true}
+        enableSearch={false}
         searchValue={searchValue}
         onInputChange={handleInputChange}
       />

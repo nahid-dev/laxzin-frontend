@@ -101,7 +101,7 @@ export default function Home() {
       </section>
       {/* BEST SELLING */}
       <BestSellersSection bestSellers={bestSellers} loading={loading} />
-      {/* LIMITED EDITION */}
+      {/* SEASONAL PRODUCTS */}
       <LimitedEdition limitedEdition={popularProducts} />
       {/* PRODUCT VIDEO SECTION */}
       <ProductVideoSection />
