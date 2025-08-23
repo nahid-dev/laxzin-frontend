@@ -1,14 +1,17 @@
-import SectionHeader from "@/Components/SectionHeader";
 import { useStatus } from "@/context/contextStatus";
 import Link from "next/link";
 import { parseCookies } from "nookies";
 import React, { useEffect, useState } from "react";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { GoHome } from "react-icons/go";
+import { FaRegClock, FaTruckFast } from "react-icons/fa6";
+import { FaRegCalendarCheck } from "react-icons/fa";
+import { GoPackage } from "react-icons/go";
 
 const PaymentSuccessful = () => {
   const cookie = parseCookies();
-  const [isVisible, setIsVisible] = useState(false);
-  const { setCartItems, cartItems, renderMe, orderObj } = useStatus();
+  const { setCartItems, cartItems, renderMe, orderObj, contactInfo } =
+    useStatus();
   const [orderDetail, setOrderDetail] = useState({});
 
   useEffect(() => {
@@ -21,279 +24,323 @@ const PaymentSuccessful = () => {
     }
   }, [orderObj]);
 
+  const [showAnimation, setShowAnimation] = useState(false);
+
   useEffect(() => {
-    setIsVisible(true);
+    setShowAnimation(true);
   }, []);
+
+  // helpers
+  const currency = (n) => `৳${Number(n || 0).toLocaleString()}`;
+  const payLabel = (v) =>
+    v === 1 || v === "1"
+      ? "Cash on Delivery"
+      : v === 2 || v === "2"
+      ? "Online Payment"
+      : "Unknown";
+
+  const items = orderDetail?.sale_product_list || [];
 
   return (
     <div className="min-h-[670px]">
-      <div className="max-w-7xl  py-4 sm:max-w-[40rem] xls:mx-w-[24rem] xms:max-w-[22rem] xs:max-w-[16rem] mx-auto h-full font-sans hidden">
-        <div className="flex justify-center items-center h-full pt-48">
-          <div className="space-y-3">
-            <div className="flex justify-center">
-              <BsFillCheckCircleFill size={40} className="text-green-500 " />
-            </div>
-            <div className="text-3xl font-semibold text-center dark:text-black">
-              Thank you we have received your Order
-            </div>
-            <div className="text-center text-black">
-              Your order is placed with{" "}
-              <span className="font-semibold">Cash on delivery.</span>
-            </div>
-            <div className="text-center text-black">
-              You will receive an SMS notification regarding the order.
-            </div>
-            <div className="text-center text-black">
-              Your order ID is{" "}
-              <span className="font-semibold">{orderDetail?.invoice_no}</span>{" "}
-              and total value is{" "}
-              <span className="font-semibold">{orderDetail?.grand_total}</span>
-            </div>
-            <div className="text-center text-black">
-              Your shipping address is{" "}
-              <span className="font-semibold">{orderDetail?.information}</span>
-            </div>
-            <div className="text-center text-black">
-              Please remembar this information for any kind of future
-              inconvenience regarding your order.
+      <div className="max-w-7xl py-4 sm:max-w-[40rem] xls:mx-w-[24rem] xms:max-w-[22rem] xs:max-w-[16rem] mx-auto h-full font-sans">
+        {/* Thank-you block */}
+        <div className="flex items-center justify-center h-full">
+          <div className="max-w-4xl px-6 mx-auto">
+            <div className="text-center">
+              <div
+                className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/10 mb-6 transition-all duration-1000 ${
+                  showAnimation ? "scale-100 opacity-100" : "scale-0 opacity-0"
+                }`}
+              >
+                <BsFillCheckCircleFill
+                  className={`h-8 w-8 text-green-600 transition-all duration-700 delay-300 ${
+                    showAnimation ? "scale-100" : "scale-0"
+                  }`}
+                />
+              </div>
+              <h1
+                className={`text-4xl font-bold mb-4 transition-all duration-700 delay-500 ${
+                  showAnimation
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+              >
+                Order Confirmed!
+              </h1>
+              <p
+                className={`text-muted-foreground text-lg mb-8 transition-all duration-700 delay-700 ${
+                  showAnimation
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+              >
+                Thank you for your purchase. Your order has been received and is
+                being processed.
+              </p>
+
+              <div
+                className={`max-w-lg mx-auto transition-all duration-700 delay-900 ${
+                  showAnimation
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col items-center">
+                    <div className="flex items-center justify-center w-8 h-8 mb-2 bg-green-500 rounded-full">
+                      <BsFillCheckCircleFill className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-xs font-medium text-green-600">
+                      Order Placed
+                    </span>
+                  </div>
+                  <div className="flex-1 h-0.5 bg-green-500 mx-4"></div>
+                  <div className="flex flex-col items-center">
+                    <div className="flex items-center justify-center w-8 h-8 mb-2 bg-green-500 rounded-full">
+                      <FaRegClock className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-xs font-medium text-green-600">
+                      Processing
+                    </span>
+                  </div>
+                  <div className="flex-1 h-0.5 bg-muted mx-4"></div>
+                  <div className="flex flex-col items-center">
+                    <div className="flex items-center justify-center w-8 h-8 mb-2 rounded-full bg-muted">
+                      <FaTruckFast className="w-4 h-4 text-muted-foreground" />
+                    </div>
+                    <span className="text-xs text-muted-foreground">
+                      Shipped
+                    </span>
+                  </div>
+                  <div className="flex-1 h-0.5 bg-muted mx-4"></div>
+                  <div className="flex flex-col items-center">
+                    <div className="flex items-center justify-center w-8 h-8 mb-2 rounded-full bg-muted">
+                      <GoHome className="w-4 h-4 text-muted-foreground" />
+                    </div>
+                    <span className="text-xs text-muted-foreground">
+                      Delivered
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <FaRegCalendarCheck className="w-4 h-4" />
+                  <span>Placed on {orderDetail?.sale_date || "-"}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <GoPackage className="w-4 h-4" />
+                  <span>Invoice #{orderDetail?.invoice_no || "-"}</span>
+                </div>
+                <div className="text-green-700 bg-green-100">Processing</div>
+              </div>
             </div>
           </div>
         </div>
-        <Link className="flex justify-center mt-10" href={`/`}>
-          <button className="bg-gray-800 text-white text-base px-4 py-2 rounded-md">
+
+        {/* ===== Invoice Card ===== */}
+        <section className="mt-10">
+          <div className="bg-white border shadow-sm rounded-xl">
+            {/* Header */}
+            <div className="flex flex-col gap-3 px-6 pt-6 md:flex-row md:items-center md:justify-between lg:justify-between xl:justify-between">
+              <div className="text-sm">
+                <p>
+                  <span className="text-gray-500">Invoice No:</span>{" "}
+                  <span className="font-medium">
+                    {orderDetail?.invoice_no || "-"}
+                  </span>
+                </p>
+                <p>
+                  <span className="text-gray-500">Date:</span>{" "}
+                  <span className="font-medium">
+                    {orderDetail?.sale_date || "-"}
+                  </span>
+                </p>
+                <p>
+                  <span className="text-gray-500">Payment:</span>{" "}
+                  <span className="font-medium">
+                    {payLabel(orderDetail?.payment_method)}
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            {/* Addresses */}
+            <div className="grid grid-cols-1 gap-6 px-6 mt-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+              <div className="space-y-1 text-sm">
+                <h3 className="font-semibold text-gray-800">From</h3>
+                <p className="text-gray-700">Laxin</p>
+                <p className="text-gray-700">{contactInfo?.phone || "-"}</p>
+                <p className="text-gray-700">{contactInfo?.email || ""}</p>
+                <p className="w-64 text-gray-700">
+                  {contactInfo?.address || "-"}
+                </p>
+              </div>
+              <div className="space-y-1 text-sm">
+                <h3 className="font-semibold text-gray-800">
+                  Billing / Customer
+                </h3>
+                <p className="text-gray-700">{orderDetail?.name || "-"}</p>
+                <p className="text-gray-700">{orderDetail?.phone || "-"}</p>
+                <p className="text-gray-700">
+                  {orderDetail?.information || "-"}
+                </p>
+              </div>
+            </div>
+
+            {/* Items Table */}
+            <div className="px-6 mt-6 overflow-x-auto">
+              <table className="min-w-full text-sm">
+                <thead>
+                  <tr className="text-gray-600 border-b bg-gray-50">
+                    <th className="px-3 py-3 font-medium text-left">Item</th>
+                    <th className="px-3 py-3 font-medium text-left">SKU</th>
+                    <th className="px-3 py-3 font-medium text-center">Qty</th>
+                    <th className="px-3 py-3 font-medium text-right">
+                      Unit Price
+                    </th>
+                    <th className="px-3 py-3 font-medium text-right">
+                      Discount
+                    </th>
+                    <th className="px-3 py-3 font-medium text-right">Tax</th>
+                    <th className="px-3 py-3 font-medium text-right">
+                      Line Total
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {items.map((row) => (
+                    <tr key={row.id} className="border-b last:border-0">
+                      <td className="px-3 py-3">
+                        <div className="font-medium text-gray-900">
+                          {row?.product?.product_name || "-"}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {row?.product?.product_code}
+                        </div>
+                      </td>
+                      <td className="px-3 py-3 text-gray-700">
+                        {row?.product?.sku || "-"}
+                      </td>
+                      <td className="px-3 py-3 text-center text-gray-700">
+                        {row?.qty}{" "}
+                        {row?.unit?.unit_name ? (
+                          <span className="text-gray-500">
+                            ({row.unit.unit_name})
+                          </span>
+                        ) : null}
+                      </td>
+                      <td className="px-3 py-3 text-right text-gray-700">
+                        {currency(row?.net_unit_price)}
+                      </td>
+                      <td className="px-3 py-3 text-right text-gray-700">
+                        -{currency(row?.discount || 0)}
+                      </td>
+                      <td className="px-3 py-3 text-right text-gray-700">
+                        {currency(row?.tax || 0)}
+                      </td>
+                      <td className="px-3 py-3 font-medium text-right text-gray-900">
+                        {currency(row?.total)}
+                      </td>
+                    </tr>
+                  ))}
+                  {items.length === 0 && (
+                    <tr>
+                      <td
+                        colSpan={7}
+                        className="px-3 py-6 text-center text-gray-500"
+                      >
+                        No items found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Summary */}
+            <div className="px-6 mt-6 mb-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                <div className="text-sm text-gray-600">
+                  <p>
+                    <span className="font-medium text-gray-800">Notes:</span>{" "}
+                    Keep this invoice for your records. For support contact our
+                    helpline.
+                  </p>
+                </div>
+                <div className="w-full md:justify-self-end md:w-80">
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Items</span>
+                      <span className="font-medium text-gray-900">
+                        {orderDetail?.item ?? 0}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Total Qty</span>
+                      <span className="font-medium text-gray-900">
+                        {orderDetail?.total_qty ?? 0}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Subtotal</span>
+                      <span className="font-medium text-gray-900">
+                        {currency(orderDetail?.total_price)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Shipping</span>
+                      <span className="font-medium text-gray-900">
+                        {currency(orderDetail?.shipping_cost)}
+                      </span>
+                    </div>
+                    {orderDetail?.coupon_discount ? (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">
+                          Coupon
+                          {orderDetail?.coupon_type
+                            ? ` (${orderDetail.coupon_type})`
+                            : ""}
+                          {orderDetail?.coupon_rate
+                            ? ` - ${orderDetail.coupon_rate}`
+                            : ""}
+                        </span>
+                        <span className="font-medium text-green-600">
+                          -{currency(orderDetail?.coupon_discount)}
+                        </span>
+                      </div>
+                    ) : null}
+                    {Number(orderDetail?.total_tax || 0) > 0 && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Tax</span>
+                        <span className="font-medium text-gray-900">
+                          {currency(orderDetail?.total_tax)}
+                        </span>
+                      </div>
+                    )}
+                    <div className="flex justify-between pt-2 text-base border-t">
+                      <span className="font-semibold text-gray-800">
+                        Grand Total
+                      </span>
+                      <span className="font-semibold">
+                        {currency(orderDetail?.grand_total)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* keep original home button as well if you want (or remove since we added above) */}
+        <Link className="flex justify-center mt-10 print:hidden" href={`/`}>
+          <button className="px-4 py-2 text-base text-white bg-gray-800 rounded-md">
             Return to home
           </button>
         </Link>
-      </div>
-
-      {/* Header Section */}
-      <div className="bg-black text-white py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <div
-            className={`transition-all duration-1000 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
-          >
-            {/* Success Icon */}
-            <div className="inline-flex items-center justify-center size-10 sm:size-20 bg-green-500 rounded-full mb-6 animate-pulse">
-              <svg
-                className="size-6 sm:size-10 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={3}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-            </div>
-
-            <h1 className="text-4xl md:text-5xl font-light tracking-wide mb-4">
-              Order Confirmed
-            </h1>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-              Thank you for choosing Laxzin. Your order has been successfully
-              placed and we're preparing it for delivery.
-            </p>
-          </div>
-        </div>
-      </div>
-      {/* Order Details Section */}
-      <div className="max-w-7xl mx-auto px-2 xl:px-0 py-8">
-        <div
-          className={`transition-all duration-1000 delay-300 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <SectionHeader title="Order Details" />
-
-          <div className="grid md:grid-cols-2 gap-8 mt-12">
-            {/* Order Information Card */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-shadow duration-300">
-              <h3 className="text-2xl font-light mb-6 text-gray-900">
-                Order Information
-              </h3>
-
-              <div className="space-y-4">
-                <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                  <span className="text-gray-600">Order ID</span>
-                  <span className="font-medium text-gray-900 font-mono">
-                    {orderDetail.invoice_no}
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                  <span className="text-gray-600">Total Amount</span>
-                  <span className="font-medium text-gray-900 text-xl">
-                    ৳{orderDetail.grand_total}
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center py-3">
-                  <span className="text-gray-600">Payment Method</span>
-                  <span className="font-medium text-gray-900">
-                    {orderDetail.paymentMethod}
-                  </span>
-                </div>
-
-                {/* <div className="flex justify-between items-center py-3">
-                  <span className="text-gray-600">Estimated Delivery</span>
-                  <span className="font-medium text-gray-900">
-                    {orderDetail.estimatedDelivery}
-                  </span>
-                </div> */}
-              </div>
-            </div>
-
-            {/* Shipping Information Card */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-shadow duration-300">
-              <h3 className="text-2xl font-light mb-6 text-gray-900">
-                Shipping Details
-              </h3>
-
-              <div className="space-y-4">
-                <div className="py-3 border-b border-gray-100">
-                  <span className="text-gray-600 block mb-2">
-                    Delivery Address
-                  </span>
-                  <span className="font-medium text-gray-900">
-                    {orderDetail.information}
-                  </span>
-                </div>
-
-                <div className="py-3 border-b border-gray-100">
-                  <span className="text-gray-600 block mb-2">
-                    SMS Notification
-                  </span>
-                  <span className="text-gray-900">
-                    You will receive SMS updates about your order status
-                  </span>
-                </div>
-
-                <div className="py-3">
-                  <span className="text-gray-600 block mb-2">
-                    Order Tracking
-                  </span>
-                  <span className="text-gray-900">
-                    Track your order status in your account dashboard
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* What's Next Section */}
-        <div
-          className={`transition-all duration-1000 delay-500 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="bg-gray-50 rounded-2xl p-8 mt-12">
-            <h3 className="text-2xl font-light mb-6 text-center text-gray-900">
-              What Happens Next?
-            </h3>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-medium">1</span>
-                </div>
-                <h4 className="font-medium text-gray-900 mb-2">
-                  Order Processing
-                </h4>
-                <p className="text-gray-600 text-sm">
-                  We'll prepare your order within 24 hours
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-medium">2</span>
-                </div>
-                <h4 className="font-medium text-gray-900 mb-2">Shipping</h4>
-                <p className="text-gray-600 text-sm">
-                  Your order will be shipped to your address
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-medium">3</span>
-                </div>
-                <h4 className="font-medium text-gray-900 mb-2">Delivery</h4>
-                <p className="text-gray-600 text-sm">
-                  Receive your Laxzin products at your doorstep
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Important Note */}
-        <div
-          className={`transition-all duration-1000 delay-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 mt-8">
-            <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <svg
-                  className="w-6 h-6 text-amber-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <h4 className="text-amber-800 font-medium mb-1">
-                  Important Information
-                </h4>
-                <p className="text-amber-700 text-sm">
-                  Please save your order ID ({orderDetail.invoice_no}) for
-                  future reference. You may need it for order tracking, returns,
-                  or customer support inquiries.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div
-          className={`transition-all duration-1000 delay-900 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center px-8 py-4 bg-black text-white rounded-full hover:bg-gray-800 transition-colors duration-300 font-medium"
-            >
-              Continue Shopping
-            </Link>
-
-            <Link
-              href="/shop"
-              className="inline-flex items-center justify-center px-8 py-4 border-2 border-black text-black rounded-full hover:bg-black hover:text-white transition-all duration-300 font-medium"
-            >
-              View All Products
-            </Link>
-          </div>
-        </div>
       </div>
     </div>
   );
