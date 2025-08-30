@@ -51,7 +51,6 @@ export default function FilterSidebar({
   maxPrice = 8000,
   enableCategoryFilter = true,
   categories = [],
-  defaultFilters = {},
   onChange = () => {},
   debounceMs = 300,
   loading = false,
@@ -61,40 +60,48 @@ export default function FilterSidebar({
   const catItems = useMemo(() => normItems(categories), [categories]);
 
   const [price, setPrice] = useState({
-    min: defaultFilters?.price?.min ?? minPrice,
-    max:
-      defaultFilters?.price?.max ??
-      Math.min(maxPrice, defaultFilters?.price?.max ?? maxPrice),
+    min: minPrice || 0,
+    max: maxPrice || 0,
   });
 
-  // selected category (string id or "all")
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  // Build filters
+  // Build filters object
   const filters = useMemo(
     () => ({
-      price: {
-        min: Number(price.min) || minPrice,
-        max: Number(price.max) || maxPrice,
-      },
-      categories: selectedCategory === "all" ? [] : [selectedCategory], // <-- fixed
+      minPrice: price.min,
+      maxPrice: price.max,
+      categories: selectedCategory === "all" ? "all" : selectedCategory,
     }),
-    [price, selectedCategory, minPrice, maxPrice]
+    [price.min, price.max, selectedCategory]
   );
 
   // Emit filters with debounce
   useEffect(() => {
-    const id = setTimeout(() => onChange(filters), debounceMs);
-    return () => clearTimeout(id);
-  }, [filters, onChange, debounceMs]);
+    const id = setTimeout(() => {
+      onChange(filters);
+    }, debounceMs);
 
-  const clamp = (val, lo, hi) => Math.min(Math.max(Number(val) || lo, lo), hi);
+    return () => clearTimeout(id);
+  }, [
+    filters.minPrice,
+    filters.maxPrice,
+    filters.categories,
+    onChange,
+    debounceMs,
+  ]);
+
+  const clamp = (val, lo, hi) => {
+    const num = Number(val);
+    if (isNaN(num)) return lo;
+    return Math.min(Math.max(num, lo), hi);
+  };
 
   return (
-    <div className="sticky top-[12vh] hidden md:block">
+    <div className={`sticky top-[12vh] hidden md:block ${className}`}>
       <div className="bg-gray-50 p-6 rounded-lg">
         {/* Categories */}
-        {enableCategoryFilter ? (
+        {enableCategoryFilter && (
           <div className="mb-8">
             <h3 className="text-lg font-semibold mb-4 tracking-wide">
               CATEGORIES
@@ -103,7 +110,7 @@ export default function FilterSidebar({
               <div>
                 <button
                   onClick={() => setSelectedCategory("all")}
-                  className={`w-full text-left px-4 py-2 transition-all duration-200 flex justify-between items-center ${
+                  className={`w-full text-left px-4 py-2 transition-all duration-200 flex justify-between items-center rounded-md ${
                     selectedCategory === "all"
                       ? "bg-black text-white"
                       : "hover:bg-gray-200"
@@ -112,23 +119,23 @@ export default function FilterSidebar({
                   <span>All</span>
                 </button>
               </div>
-              {catItems?.map((category) => (
+              {catItems.map((category) => (
                 <div key={category.id}>
                   <button
-                    onClick={() => setSelectedCategory(category.id)}
-                    className={`w-full text-left px-4 py-2 transition-all duration-200 flex justify-between items-center ${
-                      selectedCategory === category.id
+                    onClick={() => setSelectedCategory(category.slug)}
+                    className={`w-full text-left px-4 py-2 transition-all duration-200 flex justify-between items-center rounded-md ${
+                      selectedCategory === category.slug
                         ? "bg-black text-white"
                         : "hover:bg-gray-200"
                     }`}
                   >
-                    <span>{category?.name}</span>
+                    <span>{category.name}</span>
                   </button>
                 </div>
               ))}
             </div>
           </div>
-        ) : null}
+        )}
 
         {/* Price range */}
         <div className="mb-8">
@@ -185,7 +192,6 @@ export default function FilterSidebar({
             />
             <div className="flex justify-between mt-1 text-gray-600">
               <span>{minPrice}</span>
-              <span>{price.max}</span>
               <span>{maxPrice}+</span>
             </div>
             <Button

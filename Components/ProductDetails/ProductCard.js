@@ -91,10 +91,10 @@ const ProductCard = ({
   return (
     <div className="group border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300 bg-white">
       <div className="rounded-b-none flex flex-col overflow-hidden">
-        <Link href={`/product/${item?.slug}`} className="relative group">
+        <Link href={`/product/${item?.slug}`} className="relative group p-3">
           {item?.image?.length > 0 ? (
             <div
-              className={`h-56 xs:h-64 overflow-hidden rounded-xl ${sizeClasses[size]} relative`}
+              className={`h-56 xs:h-64 overflow-hidden rounded-lg ${sizeClasses[size]} relative`}
             >
               {showBadge && item?.badge && (
                 <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-10">
@@ -196,7 +196,7 @@ const ProductCard = ({
       {/* CARD BUTTON */}
       <div className="w-full p-3 pt-0">
         <button
-          className={`bg-primary text-white text-center w-full uppercase md:text-sm tracking-[0.1em] hover:bg-gray-700 rounded-md ${
+          className={`bg-primary text-white text-center w-full uppercase text-xs md:text-sm tracking-[0.1em] hover:bg-gray-700 rounded-md ${
             size === "small"
               ? "py-2 px-4 text-xs"
               : "py-2 xs:py-3 px-3 xs:px-6 text-sm"
