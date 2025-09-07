@@ -7,22 +7,76 @@ import { GoHome } from "react-icons/go";
 import { FaRegClock, FaTruckFast } from "react-icons/fa6";
 import { FaRegCalendarCheck } from "react-icons/fa";
 import { GoPackage } from "react-icons/go";
+import Button from "@/Components/Common/Button";
+
+// Example dummy orderDetails data
+const orderDetail = {
+  invoice_no: "INV-20250908-001",
+  sale_date: "2025-09-08",
+  payment_method: 1,
+  name: "John Doe",
+  phone: "01700000000",
+  information: "123 Main Street, Dhaka",
+  item: 2,
+  total_qty: 3,
+  total_price: 1500,
+  shipping_cost: 100,
+  coupon_discount: 200,
+  coupon_type: "Flat",
+  coupon_rate: "৳200",
+  total_tax: 50,
+  grand_total: 1450,
+  sale_product_list: [
+    {
+      id: 1,
+      qty: 2,
+      net_unit_price: 500,
+      discount: 50,
+      tax: 20,
+      total: 970,
+      product: {
+        product_name: "Product A",
+        product_code: "PA001",
+        sku: "SKU001",
+      },
+      unit: {
+        unit_name: "pcs",
+      },
+    },
+    {
+      id: 2,
+      qty: 1,
+      net_unit_price: 500,
+      discount: 0,
+      tax: 30,
+      total: 530,
+      product: {
+        product_name: "Product B",
+        product_code: "PB002",
+        sku: "SKU002",
+      },
+      unit: {
+        unit_name: "pcs",
+      },
+    },
+  ],
+};
 
 const PaymentSuccessful = () => {
   const cookie = parseCookies();
   const { setCartItems, cartItems, renderMe, orderObj, contactInfo } =
     useStatus();
-  const [orderDetail, setOrderDetail] = useState({});
+  // const [orderDetail, setOrderDetail] = useState({});
 
   useEffect(() => {
     setCartItems(cartItems);
   }, [renderMe]);
 
-  useEffect(() => {
-    if (cookie?.hasOwnProperty("orderObj")) {
-      setOrderDetail(JSON.parse(cookie.orderObj));
-    }
-  }, [orderObj]);
+  // useEffect(() => {
+  //   if (cookie?.hasOwnProperty("orderObj")) {
+  //     setOrderDetail(JSON.parse(cookie.orderObj));
+  //   }
+  // }, [orderObj]);
 
   const [showAnimation, setShowAnimation] = useState(false);
 
@@ -337,9 +391,7 @@ const PaymentSuccessful = () => {
 
         {/* keep original home button as well if you want (or remove since we added above) */}
         <Link className="flex justify-center mt-10 print:hidden" href={`/`}>
-          <button className="px-4 py-2 text-base text-white bg-gray-800 rounded-md">
-            Return to home
-          </button>
+          <Button>Return to home</Button>
         </Link>
       </div>
     </div>
