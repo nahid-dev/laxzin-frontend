@@ -309,7 +309,9 @@ const Navbar = ({ catData, contactInfo }) => {
               <RxHamburgerMenu
                 size={25}
                 className={`${
-                  isScrolled || !isHomePage ? "text-black" : "text-white"
+                  isScrolled || !isHomePage
+                    ? "text-black"
+                    : "text-white cursor-pointer"
                 }`}
               />
             </div>

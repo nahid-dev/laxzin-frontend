@@ -9,7 +9,7 @@ export default function Button({
   ...props
 }) {
   const baseClasses =
-    "font-light tracking-wider transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 rounded-md";
+    "font-light tracking-wider transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 rounded";
 
   const variants = {
     primary: "bg-black text-white hover:bg-gray-800",

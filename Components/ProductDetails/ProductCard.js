@@ -196,10 +196,10 @@ const ProductCard = ({
       {/* CARD BUTTON */}
       <div className="w-full">
         <button
-          className={`bg-primary text-white text-center w-full uppercase md:text-sm tracking-[0.1em] hover:bg-gray-700 rounded-md ${
+          className={`bg-primary text-white text-center w-full uppercase md:text-sm tracking-[0.1em] hover:bg-gray-700 rounded ${
             size === "small"
               ? "py-2 px-4 text-xs"
-              : "py-2 xs:py-3 px-3 xs:px-6 text-sm"
+              : "py-2 xs:py-3 px-2 sm:px-3 xs:px-6 text-xs sm:text-sm "
           }`}
           onClick={() => handleCart()}
         >
@@ -207,10 +207,10 @@ const ProductCard = ({
             "SHOP LIMITED EDITION"
           ) : (
             <div className="flex items-center justify-center gap-3">
-              <span>
+              <span className="hidden sm:block">
                 <SlHandbag size={18} className="text-white" />
               </span>
-              <span>add to cart</span>
+              <span className="text-nowrap">add to cart</span>
             </div>
           )}
         </button>

@@ -56,7 +56,7 @@ const HeroSection = ({ loading, imageHostName, slider }) => {
               </div>
             </SwiperSlide>
           ))}
-          <div className="hero-pagination swiper-pagination bg-black/50 px-4 py-1 rounded-full absolute bottom-5 !left-[45%] w-fit"></div>
+          <div className="hero-pagination hidden sm:block swiper-pagination bg-black/50 px-4 py-1 rounded-full absolute bottom-5 !left-[45%] w-fit"></div>
         </Swiper>
       )}
       {/* NAVIGATION BUTTONS */}
