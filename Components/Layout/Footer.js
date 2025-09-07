@@ -78,19 +78,21 @@ const Footer = ({ contactInfo }) => {
           <div className="grid grid-cols-5 gap-8">
             {/* Company Info */}
             <div className="space-y-4 col-span-5 md:col-span-1">
-              <div className="w-[140px] h-[60px]">
-                <Image
-                  src={
-                    isDevelopment
-                      ? "/assets/logo/laxzin-logo-white.png"
-                      : `${imageHostName}/storage/${contactInfo?.logo}`
-                  }
-                  height={800}
-                  width={800}
-                  className="h-full w-full object-cover cursor-pointer -ml-5"
-                  loading="lazy"
-                  alt="logo"
-                />
+              <div className="w-full flex justify-center sm:justify-start">
+                <div className="w-[140px] h-[60px]">
+                  <Image
+                    src={
+                      isDevelopment
+                        ? "/assets/logo/laxzin-logo-white.png"
+                        : `${imageHostName}/storage/${contactInfo?.logo}`
+                    }
+                    height={800}
+                    width={800}
+                    className="h-full w-full object-cover cursor-pointer -ml-5"
+                    loading="lazy"
+                    alt="logo"
+                  />
+                </div>
               </div>
 
               <p className="text-gray-400 text-sm font-light leading-relaxed">
@@ -98,7 +100,7 @@ const Footer = ({ contactInfo }) => {
                 Bangladesh. We bring you the finest quality cosmetics for your
                 daily beauty routine.
               </p>
-              <div className="flex items-center justify-start gap-5 py-5">
+              <div className="flex items-center justify-center sm:justify-start gap-5 py-5">
                 <Link href={`${data?.facebook}`} target="_blank">
                   <Image
                     src={"/assets/slider/facebook.webp"}
@@ -197,7 +199,7 @@ const Footer = ({ contactInfo }) => {
             </div>
 
             {/* Contact Info */}
-            <div className="space-y-4 col-span-5 lg:col-span-1">
+            <div className="space-y-4 col-span-3 lg:col-span-1">
               <h3 className={COL_HEADER_STYLE}>Contact Info</h3>
               <div className="flex flex-col gap-3">
                 <div className="flex items-center gap-3">

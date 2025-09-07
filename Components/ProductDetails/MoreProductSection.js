@@ -2,9 +2,12 @@ import React from "react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ProductCard from "./ProductCard";
-import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import {
+  MdOutlineKeyboardArrowLeft,
+  MdOutlineKeyboardArrowRight,
+} from "react-icons/md";
 
-const MoreProductSection = ({similarProd}) => {
+const MoreProductSection = ({ similarProd }) => {
   return (
     <div className="pb-10">
       <div className="uppercase xs:text-2xl font-bold text-base text-center pb-8 text-black">
@@ -87,7 +90,7 @@ const MoreProductSection = ({similarProd}) => {
             </button>
           </div>
 
-          <div className="md:hidden ">
+          <div className="md:hidden">
             <button className="button-prev-slide   text-black  absolute top-[47%] z-10 left-[-45px]  cursor-pointer">
               <MdOutlineKeyboardArrowLeft size={24} className="text-black " />
             </button>

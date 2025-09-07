@@ -15,7 +15,6 @@ const Shop = () => {
   const [page, setPage] = useState(1);
   const loadingMoreRef = useRef(false);
   const [searchValue, setSearchValue] = useState("");
-  console.log(products);
 
   const [filters, setFilters] = useState({
     price: { min: 0, max: 8000 },
@@ -31,11 +30,11 @@ const Shop = () => {
 
   // Function to build API query string
   const buildQuery = (pageNum = 1) => {
-    const categoryString = filters.categories.join(",");
+    const categoryString = filters.categories;
     return `get-all-product?page=${pageNum}&min_price=${
-      filters.price.min
+      filters.minPrice
     }&max_price=${
-      filters.price.max
+      filters.maxPrice
     }&categories=${categoryString}&product_name=${encodeURIComponent(
       searchValue
     )}`;
@@ -91,7 +90,7 @@ const Shop = () => {
       <CommonbgBanner
         name="shop"
         helperText="Discover our premium collection of natural beauty products crafted for your daily routine"
-        enableSearch={true}
+        enableSearch={false}
         searchValue={searchValue}
         onInputChange={handleInputChange}
       />

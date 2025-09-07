@@ -2,10 +2,10 @@ import postRequest from "@/lib/postRequest";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import CommonModal from "../Common/Modal";
+import Link from "next/link";
 
 export default function CommunitySection() {
   const [email, setEmail] = useState("");
-  const [openModal, setOpenModal] = useState(false);
 
   const handleSubscribe = async () => {
     const res = await postRequest(`subscribe`, {
@@ -20,11 +20,11 @@ export default function CommunitySection() {
     }
   };
   return (
-    <section className=" bg-gray-50 pb-16">
+    <section className=" bg-white py-8 sm:py-10 md:py-16">
       <div className="max-w-7xl mx-auto px-2 lg:px-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Join Our Community Card */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border">
             <div className="flex items-center mb-6">
               <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mr-4">
                 <svg
@@ -107,23 +107,15 @@ export default function CommunitySection() {
               your authentic beauty journey.
             </p>
 
-            <button
-              onClick={() => setOpenModal(true)}
-              className="w-full bg-white text-black py-3 rounded-lg font-light tracking-wide hover:bg-gray-100 transition-colors duration-300"
+            <Link
+              href="/brand-partner"
+              className="w-full block text-center bg-white text-black py-3 rounded-lg font-light tracking-wide hover:bg-gray-100 transition-colors duration-300"
             >
               Become A Brand Partner
-            </button>
+            </Link>
           </div>
         </div>
-          </div>
-          <CommonModal
-              openResponsive={openModal}
-              setOpenResponsive={setOpenModal}
-          >
-              <div>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, odio.
-              </div>
-          </CommonModal>
+      </div>
     </section>
   );
 }

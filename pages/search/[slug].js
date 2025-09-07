@@ -1,5 +1,6 @@
 
 
+import CommonbgBanner from "@/Components/Common/CommonbgBanner";
 import ProductCard from "@/Components/ProductDetails/ProductCard";
 import request from "@/lib/request";
 import { useRouter } from "next/router";
@@ -8,44 +9,52 @@ import { ThreeDots } from "react-loader-spinner";
 
 const Search = () => {
   const router = useRouter();
-
   const { slug } = router?.query;
-
+  const [searchValue, setSearchValue] = useState("");
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  
-useEffect(() => {
-  if (slug) {
-    const getData = async () => {
-      let enecodedSlug;
+  useEffect(() => {
+    if (slug && typeof slug === "string") {
+      setSearchValue(slug);
+    }
+  }, [slug]);
 
+  useEffect(() => {
+    if (!slug) return;
+    const fetchData = async () => {
+      setLoading(true);
       try {
-        enecodedSlug = encodeURIComponent(slug);
+        const encoded = encodeURIComponent(slug);
+        const res = await request(`search/product?product_name=${encoded}`);
+        setData(res?.data || []);
       } catch (err) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const res = await request(
-          `search/product?product_name=${enecodedSlug}`
-        );
-        setData(res?.data);
-      } catch (err) {
-        console.error("Error fetching data:", err.message);
+        console.log("Error fetching data:", err?.message);
       } finally {
         setLoading(false);
       }
     };
+    fetchData();
+  }, [slug]);
 
-    getData();
-  }
-}, [slug]);
+  const handleSearchInputChange = (val) => {
+    setSearchValue(val);
+    router.push(`/search/${encodeURIComponent(val)}`, undefined, {
+      shallow: true,
+    });
+  };
 
   return (
     <>
-      <div className="min-h-[700px] bg-white sm:pt-[100px] pt-[20px] text-black">
+      {/* Banner section */}
+      <CommonbgBanner
+        name={"Search Product"}
+        helperText={"Find your desire product with one search"}
+        searchValue={searchValue}
+        onInputChange={handleSearchInputChange}
+        enableSearch={true}
+      />
+      <div className="max-w-7xl mx-auto px-2 sm:px-0 text-black">
         <div className="xl:max-w-[70rem] lg:max-w-[65rem] md:max-w-[50rem] sm:max-w-[36rem] max-w-[15rem] mx-auto">
           <div className="px-2 py-4">
             {loading ? (

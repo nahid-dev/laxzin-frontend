@@ -3,21 +3,15 @@ import request from "@/lib/request";
 import { useEffect, useState } from "react";
 
 const Faq = () => {
- 
-   const [data, setData] = useState(null);
+  const [data, setData] = useState(null);
 
-   useEffect(() => {
-     const getData = async () => {
-       let res = await request(`faq`);
-
-      //  console.log("res",res);
-      
-       setData(res?.data);
-     };
-     getData();
-   }, [1]);
-
-
+  useEffect(() => {
+    const getData = async () => {
+      let res = await request(`faq`);
+      setData(res?.data);
+    };
+    getData();
+  }, [1]);
 
   return (
     <div className="bg-gray-100 min-h-[670px]">
@@ -31,7 +25,7 @@ const Faq = () => {
             <div
               className="text-base text-black"
               dangerouslySetInnerHTML={{ __html: data?.details }}
-            ></div>
+            />
           </div>
         </div>
       </section>

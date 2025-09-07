@@ -23,6 +23,7 @@
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
     "firebase": "^11.6.1",
+    "formik": "^2.4.6",
     "html-react-parser": "^4.2.2",
     "jwt-decode": "^3.1.2",
     "lottie-react": "^2.4.0",
@@ -51,7 +52,7 @@
     "slick-carousel": "^1.8.1",
     "swiper": "^11.0.7",
     "swr": "^2.3.6",
-    "yup": "^1.0.0"
+    "yup": "^1.7.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",

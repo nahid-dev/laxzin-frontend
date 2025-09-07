@@ -1,33 +1,14 @@
-import {
-  MdChevronRight,
-  MdOutlineKeyboardArrowLeft,
-  MdOutlineKeyboardArrowRight,
-} from "react-icons/md";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-import ProductCard from "@/Components/ProductDetails/ProductCard";
 import { imageHostName } from "@/lib/config";
 import request from "@/lib/request";
 
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-
-import PublishedCategoryCard from "@/Components/PublishedCategoryCard";
-import { IoSparkles } from "react-icons/io5";
-import { FaBolt, FaLeaf, FaStar, FaTags, FaThLarge } from "react-icons/fa";
-import SectionHeader from "@/Components/SectionHeader";
-import SlideSectionHeader from "@/Components/SlideSectionHeader";
 import TrustBadgeSection from "@/Components/TrustBadgeSection";
-import { dummyData, skinCareData } from "@/options";
 
-import CountdownBox from "@/Components/CountdownBox";
-import SectionSubHeader from "@/Components/SectionSubHeader";
 import HeroSection from "@/Components/Home/HeroSection";
 import FeatureSection from "@/Components/Home/FeatureSection";
 import CategoryBanner from "@/Components/Home/CategoryBanner";
@@ -38,6 +19,8 @@ import OurStorySection from "@/Components/Home/OurStorySection";
 import ContactUsSection from "@/Components/Home/ContuctUsSection";
 import ProductVideoSection from "@/Components/Home/ProductVideoSection";
 import CommunitySection from "@/Components/Home/CommunitySection";
+import SkinTypeSection from "@/Components/Home/SkinTypeSection";
+import { skinTypes } from "@/options";
 
 export default function Home() {
   const [step, setStep] = useState("featured");
@@ -69,10 +52,6 @@ export default function Home() {
     setIsMounted(true);
   }, []);
 
-  const handleClick = (value) => {
-    setStep(value);
-  };
-
   return (
     <main className="min-h-[700px]">
       {/* HERO SLIDER SECTION */}
@@ -81,9 +60,12 @@ export default function Home() {
         imageHostName={imageHostName}
         slider={slider}
       />
-      {/* TRUST BADGE SECTION */}
-      <TrustBadgeSection />
-
+      {/* SKIN TYPE SECTION */}
+      <SkinTypeSection
+        secTitle={"Skin Type"}
+        secDesc={"Find products perfect for your unique skin needs"}
+        data={skinTypes}
+      />
       {/* FEATURE SECTION */}
       <FeatureSection featureProducts={featureProducts} loading={loading} />
       {/* Category Banners */}
@@ -119,7 +101,7 @@ export default function Home() {
       </section>
       {/* BEST SELLING */}
       <BestSellersSection bestSellers={bestSellers} loading={loading} />
-      {/* LIMITED EDITION */}
+      {/* SEASONAL PRODUCTS */}
       <LimitedEdition limitedEdition={popularProducts} />
       {/* PRODUCT VIDEO SECTION */}
       <ProductVideoSection />
@@ -127,8 +109,16 @@ export default function Home() {
       <TrendingNowSection trendingProducts={featureProducts} />
       {/* OUR STORY SECTION */}
       <OurStorySection />
+      {/* YOUR CONCERN SECTION */}
+      <SkinTypeSection
+        secTitle={"Your Concern"}
+        secDesc={"Find products perfect for your concern skin type"}
+        data={skinTypes}
+      />
       {/* CONTACT US SECTION */}
       <ContactUsSection />
+      {/* TRUST BADGE SECTION */}
+      <TrustBadgeSection />
       {/* COMMUNITY SECTION */}
       <CommunitySection />
     </main>

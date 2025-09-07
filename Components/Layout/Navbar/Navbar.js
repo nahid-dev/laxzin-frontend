@@ -85,9 +85,9 @@ const Navbar = ({ catData, contactInfo }) => {
       className={`w-full z-50 transition-all duration-300 ${
         isHomePage
           ? isScrolled
-            ? "sticky top-0 backdrop-blur-md bg-white/95"
+            ? "sticky top-0 backdrop-blur-md bg-white/95 shadow-lg"
             : "absolute top-0"
-          : "sticky top-0 backdrop-blur-md bg-white/95"
+          : "sticky top-0 backdrop-blur-md bg-white/95 shadow-lg"
       }`}
     >
       <header id="header" className={`z-10 px-2 py-2 w-full`}>
@@ -256,11 +256,9 @@ const Navbar = ({ catData, contactInfo }) => {
               </div>
             </div>
             {/* SHOP NOW BUTTON */}
-            {!token ? (
-              <Button onClick={() => router.push("/shop")} className="md:ml-5">
-                SHOP NOW
-              </Button>
-            ) : null}
+            <Button onClick={() => router.push("/shop")} className="md:ml-5">
+              SHOP NOW
+            </Button>
           </div>
         </div>
 

@@ -1,22 +1,21 @@
 import React from "react";
 import SectionHeader from "../SectionHeader";
 import ProductCard from "../ProductDetails/ProductCard";
+import SlideWrapper from "../Common/SlideWrapper";
 
 const BestSellersSection = ({ bestSellers, loading }) => {
   return (
-    <section className="py-8 md:py-12 lg:py-24">
+    <section className="py-8 md:py-12 lg:py-16">
       <div className="max-w-7xl mx-auto px-2 xl:px-0">
         <SectionHeader
           title="BEST SELLERS"
           subtitle="Customer favorites at special prices"
         />
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div>
           {loading ? (
             <div>Loading...</div>
           ) : (
-            bestSellers
-              ?.slice(0, 4)
-              ?.map((item, index) => <ProductCard key={index} item={item} />)
+            <SlideWrapper slideData={bestSellers} />
           )}
         </div>
       </div>

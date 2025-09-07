@@ -10,8 +10,8 @@ import PlaceholderImage from "@/public/image/placeholder_600x.webp";
 import { SlHandbag } from "react-icons/sl";
 
 const sizeClasses = {
-  small: "h-64 sm:h-72",
-  default: "h-72 sm:h-80",
+  small: "h-44 sm:h-48",
+  default: "h-48 sm:h-56",
   large: "h-80 sm:h-96",
 };
 
@@ -89,12 +89,12 @@ const ProductCard = ({
   };
 
   return (
-    <div className="group border p-3 border-gray-200 rounded-lg">
+    <div className="group border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300 bg-white">
       <div className="rounded-b-none flex flex-col overflow-hidden">
-        <Link href={`/product/${item?.slug}`} className="relative group">
+        <Link href={`/product/${item?.slug}`} className="relative group p-3">
           {item?.image?.length > 0 ? (
             <div
-              className={`h-72 xs:h-80 overflow-hidden rounded-xl ${sizeClasses[size]} relative`}
+              className={`h-56 xs:h-64 overflow-hidden rounded-lg ${sizeClasses[size]} relative`}
             >
               {showBadge && item?.badge && (
                 <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-10">
@@ -140,7 +140,7 @@ const ProductCard = ({
           )}
         </Link>
         {/* CARD CONTENT */}
-        <div className="flex-1 mt-1">
+        <div className="flex-1 mt-1 px-3">
           <div className="text-primary h-[40px]">
             <p
               className={`font-medium text-gray-900 my-2 leading-none ${
@@ -194,7 +194,7 @@ const ProductCard = ({
         </div>
       </div>
       {/* CARD BUTTON */}
-      <div className="w-full">
+      <div className="w-full p-3 pt-0">
         <button
           className={`bg-primary text-white text-center w-full uppercase md:text-sm tracking-[0.1em] hover:bg-gray-700 rounded ${
             size === "small"

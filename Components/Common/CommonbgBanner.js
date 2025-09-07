@@ -5,9 +5,10 @@ import useTypewriterPlaceholder from "@/hooks/useTypewriterPlaceholder";
 const CommonbgBanner = ({
   name,
   helperText,
-  enableSearch,
+  enableSearch = false,
   searchValue = "",
   onInputChange,
+  nameClass = "",
 }) => {
   const placeholder = useTypewriterPlaceholder(
     ["Search products...", "Enter product name..."],
@@ -30,7 +31,9 @@ const CommonbgBanner = ({
               <div className="h-px w-16 bg-gradient-to-l from-transparent to-white/30"></div>
             </div>
 
-            <h1 className="text-2xl md:text-6xl font-thin tracking-[0.2em] mb-6 relative text-white uppercase">
+            <h1
+              className={`text-2xl md:text-6xl font-thin tracking-[0.2em] mb-6 relative text-white uppercase ${nameClass}`}
+            >
               {name}
               <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-white to-transparent"></div>
             </h1>

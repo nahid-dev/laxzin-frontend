@@ -10,7 +10,6 @@ function StatusProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [isPopupShow, setIsPopupShow] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
   const [type, setType] = useState(cookie?.type ? cookie?.type : null);
   const [promoValue, setPromoValue] = useState(
     cookie?.promovalue ? cookie?.promovalue : null
@@ -18,20 +17,14 @@ function StatusProvider({ children }) {
   const [couponId, setCouponId] = useState(
     cookie?.couponid ? cookie?.couponid : ""
   );
-
   const [orderObj, setOrderObj] = useState(cookie.orderObj);
-
   const [renderMe, setIsRenderMe] = useState(false);
-
   const [drawerOpen, setDrawerOpen] = useState(false);
-
   const [searchModal, setSearchModal] = useState(false);
-
   const [resetToken, setResetToken] = useState(
     cookie?.resetToken ? cookie?.resetToken : ""
   );
-
-  const [token, setToken] = useState(cookie?.token ? cookie?.token : "");
+  const [token, setToken] = useState("");
   const [userData, setUserData] = useState(cookie?.user ? cookie?.user : "");
   const [image, setImage] = useState(cookie?.image ? cookie?.image : "");
   const [userNo, setuserNo] = useState(cookie?.userNo ? cookie?.userNo : "");
@@ -40,9 +33,7 @@ function StatusProvider({ children }) {
   );
   const [userId, setUserId] = useState(cookie?.userId ? cookie?.userId : null);
   const [profileMenu, setProfileMenu] = useState(false);
-
   const [sideCategory, setSideCategory] = useState(false);
-
   const [tabIndex, setTabIndex] = useState(1);
   const [contactInfo, setContactInfo] = useState(null);
 
@@ -50,10 +41,12 @@ function StatusProvider({ children }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const cookie = parseCookies();
+      const token = cookie?.token ? cookie?.token : "";
       const items = cookie?.hasOwnProperty("lexzinCart")
         ? [...JSON.parse(cookie?.lexzinCart)]
         : [];
       setCartItems(items);
+      setToken(token);
     }
   }, []);
 

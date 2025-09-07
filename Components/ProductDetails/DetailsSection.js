@@ -492,9 +492,7 @@ const Details = ({
             )}
           </>
         ) : variationQty > 0 ? (
-          <div className=" text-red-500 xls:text-xs xms:text-xs xs:text-xs py-1">
-            (In stock)
-          </div>
+          <div className="text-green-600 text-sm font-medium">In stock</div>
         ) : (
           <div className=" text-red-500 xls:text-xs xms:text-xs xs:text-xs py-1">
             Out of stock
