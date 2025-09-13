@@ -345,6 +345,7 @@ const Checkout = () => {
       success: true,
       message: "Order placed successfully!",
       error: "Something went wrong. Please try again later!",
+      product_details: {},
     };
 
     if (res?.success) {

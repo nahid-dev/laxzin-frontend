@@ -103,7 +103,7 @@ const Navbar = ({ catData, contactInfo }) => {
                 src={
                   isDevelopment
                     ? "/assets/logo/laxzin-logo-black.png"
-                    : `${imageHostName}/storage/${contactInfo?.logo}`
+                    : "/assets/logo/laxzin-logo-black.png"
                 }
                 height={800}
                 width={800}
